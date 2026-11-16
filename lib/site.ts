@@ -8,6 +8,8 @@ export const site = {
   operator: "Portfolix Enterprise Pvt Ltd",
   operatorDetail:
     "Operated by Portfolix Enterprise Pvt Ltd, Kochi, India, with Portfolix.Media and Portfolix.Tech.",
+  responseTime: "[RESPONSE TIME, e.g. 2 working days]",
+  address: "[ADDRESS]",
 } as const;
 
 export const social = {
@@ -36,6 +38,13 @@ export const primaryNav = [
   { href: "/learn", label: "Learn" },
   { href: "/brands", label: "For Brands" },
   { href: "/about", label: "About" },
+] as const;
+
+export const supportNav = [
+  { href: "/help", label: "Help" },
+  { href: "/contact", label: "Contact" },
+  { href: "/partners", label: "Partners" },
+  { href: "/resources", label: "Resources" },
 ] as const;
 
 export const legalNav = [
@@ -139,20 +148,6 @@ export const learnSessions = [
     kind: "Bootcamp",
     when: "[PLACEHOLDER dates]",
   },
-] as const;
-
-export const brandServices = [
-  "Influencer marketing",
-  "Influencer negotiation",
-  "Social media marketing",
-  "Ad campaigns and ad management",
-  "Ad video production",
-  "UGC content",
-] as const;
-
-export const creatorServices = [
-  "Profile audit and optimisation",
-  "Social media management — collabs, messages, posting, and growth",
 ] as const;
 
 export const values = [

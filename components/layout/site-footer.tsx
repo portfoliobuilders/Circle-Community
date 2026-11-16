@@ -3,7 +3,8 @@ import Link from "next/link";
 
 import { Container } from "@/components/site/container";
 import { SocialLink } from "@/components/site/social-link";
-import { legalNav, site, social } from "@/lib/site";
+import { NewsletterForm } from "@/components/forms/newsletter-form";
+import { legalNav, site, social, supportNav } from "@/lib/site";
 
 const socialItems = [
   social.instagram,
@@ -45,11 +46,26 @@ export function SiteFooter() {
         </div>
         <div>
           <h2 className="text-small font-medium text-text">Contact</h2>
-          <p className="mt-3">
-            <SocialLink href={social.email.href}>
-              {social.email.href.replace(/^mailto:/, "")}
-            </SocialLink>
-          </p>
+          <ul className="mt-3 space-y-1">
+            {supportNav.map((item) => (
+              <li key={item.href}>
+                <Link
+                  href={item.href}
+                  className="inline-flex min-h-11 items-center text-small text-silver underline-offset-4 hover:text-text hover:underline"
+                >
+                  {item.label}
+                </Link>
+              </li>
+            ))}
+            <li>
+              <SocialLink href={social.email.href}>
+                {social.email.href.replace(/^mailto:/, "")}
+              </SocialLink>
+            </li>
+          </ul>
+          <div className="mt-4">
+            <NewsletterForm source="footer" />
+          </div>
         </div>
         <div>
           <h2 className="text-small font-medium text-text">Legal</h2>

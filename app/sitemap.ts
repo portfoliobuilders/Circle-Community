@@ -1,5 +1,6 @@
 import type { MetadataRoute } from "next";
 
+import { agencyServices, servicePath } from "@/lib/content/agency-services";
 import { site } from "@/lib/site";
 
 const paths = [
@@ -9,9 +10,14 @@ const paths = [
   "/creators",
   "/learn",
   "/join",
+  "/help",
+  "/contact",
+  "/partners",
+  "/resources",
   "/legal/terms",
   "/legal/privacy",
   "/legal/community-guidelines",
+  ...agencyServices.map((service) => servicePath(service)),
 ];
 
 export default function sitemap(): MetadataRoute.Sitemap {

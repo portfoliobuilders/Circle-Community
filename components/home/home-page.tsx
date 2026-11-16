@@ -1,5 +1,6 @@
 import Link from "next/link";
 
+import { NewsletterForm } from "@/components/forms/newsletter-form";
 import { OrbitDecor } from "@/components/orbit-decor";
 import { Container } from "@/components/site/container";
 import { PillLink } from "@/components/site/pill-link";
@@ -38,6 +39,18 @@ export function HomePage() {
               Explore the community
             </PillLink>
           </div>
+        </Container>
+      </section>
+
+      <section className="border-t border-border">
+        <Container className="py-12 sm:py-16">
+          <h2 className="font-display max-w-3xl text-title font-medium tracking-tight uppercase sm:text-display-sm">
+            Bring the right people together, and create something bigger.
+          </h2>
+          <p className="mt-4 max-w-2xl text-silver">
+            For creators, freelancers, service providers, and brands who want
+            collabs, free learning, and a community that shows up.
+          </p>
         </Container>
       </section>
 
@@ -163,6 +176,23 @@ export function HomePage() {
         </Container>
       </section>
 
+      <section className="border-t border-border">
+        <Container className="grid gap-8 py-16 sm:py-20 lg:grid-cols-[1.4fr_auto] lg:items-center">
+          <div>
+            <h2 className="font-display text-title font-medium tracking-tight uppercase sm:text-display-sm">
+              For creators
+            </h2>
+            <ul className="mt-4 max-w-xl list-disc space-y-2 pl-5 text-silver">
+              <li>Collabs: apply, bid, or barter.</li>
+              <li>Free webinars and bootcamps.</li>
+              <li>Partner perks on studios, gear, and tools.</li>
+              <li>Points, badges, and leaderboards for real work.</li>
+            </ul>
+          </div>
+          <PillLink href="/join">Join free</PillLink>
+        </Container>
+      </section>
+
       <section className="border-t border-border bg-surface">
         <Container className="grid gap-8 py-16 sm:py-20 lg:grid-cols-[1.4fr_auto] lg:items-center">
           <div>
@@ -175,7 +205,9 @@ export function HomePage() {
               free. Agency services are quoted separately.
             </p>
           </div>
-          <PillLink href="/brands">Read the brand page</PillLink>
+          <PillLink href="/brands" variant="secondary">
+            Read the brand page
+          </PillLink>
         </Container>
       </section>
 
@@ -201,6 +233,20 @@ export function HomePage() {
             >
               Follow on Instagram
             </SocialLink>
+          </div>
+        </Container>
+      </section>
+
+      <section className="border-t border-border">
+        <Container className="py-16 sm:py-20">
+          <h2 className="font-display text-title font-medium tracking-tight uppercase sm:text-display-sm">
+            Newsletter
+          </h2>
+          <p className="mt-4 max-w-xl text-silver">
+            Notes from CIRCLE. We only write after you confirm the email.
+          </p>
+          <div className="mt-6">
+            <NewsletterForm source="home" tone="lime" />
           </div>
         </Container>
       </section>

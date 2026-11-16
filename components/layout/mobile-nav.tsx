@@ -42,6 +42,15 @@ export function MobileNav() {
           listClassName="flex-col items-stretch gap-1"
           onNavigate={() => setOpen(false)}
         />
+        <div className="px-4">
+          <Link
+            href="/help"
+            onClick={() => setOpen(false)}
+            className="inline-flex min-h-11 items-center text-small text-silver"
+          >
+            Help
+          </Link>
+        </div>
         <div className="mt-auto p-4">
           <Link
             href="/join"

@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 
+import { NewsletterForm } from "@/components/forms/newsletter-form";
 import { Container } from "@/components/site/container";
 import { PillLink } from "@/components/site/pill-link";
 import { SocialLink } from "@/components/site/social-link";
@@ -46,6 +47,15 @@ export default function JoinPage() {
           Follow on Instagram
         </SocialLink>
       </div>
+      <section className="mt-16 max-w-md">
+        <h2 className="font-display text-title-sm font-medium">Newsletter</h2>
+        <p className="mt-3 text-silver">
+          The post-signup screen is not built yet. Confirm here if you want news.
+        </p>
+        <div className="mt-6">
+          <NewsletterForm source="join" />
+        </div>
+      </section>
     </Container>
   );
 }

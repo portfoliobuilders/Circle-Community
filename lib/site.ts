@@ -25,7 +25,7 @@ export const social = {
   },
   linkedin: { label: "LinkedIn", href: "[LINKEDIN_URL]" },
   youtube: { label: "YouTube", href: "[YOUTUBE_URL]" },
-  email: { label: "Email", href: "info@circlecommunity.in" },
+  email: { label: "Email", href: "mailto:info@circlecommunity.in" },
 } as const;
 
 export const primaryNav = [

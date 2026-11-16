@@ -47,9 +47,7 @@ export function SiteFooter() {
           <h2 className="text-small font-medium text-text">Contact</h2>
           <p className="mt-3">
             <SocialLink href={social.email.href}>
-              {social.email.href.startsWith("[")
-                ? social.email.href
-                : social.email.href}
+              {social.email.href.replace(/^mailto:/, "")}
             </SocialLink>
           </p>
         </div>

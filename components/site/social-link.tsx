@@ -22,8 +22,10 @@ export function SocialLink({ href, children, className }: SocialLinkProps) {
     );
   }
 
-  const isEmail = href.includes("@") && !href.startsWith("http");
-  const url = isEmail ? `mailto:${href}` : href;
+  const isEmail =
+    href.startsWith("mailto:") ||
+    (href.includes("@") && !href.startsWith("http"));
+  const url = href.startsWith("mailto:") || !isEmail ? href : `mailto:${href}`;
 
   return (
     <a

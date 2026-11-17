@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import { AdminDenied } from "@/components/admin/admin-denied";
 import { ChallengeForm } from "@/components/challenges/challenge-form";
 import { Container } from "@/components/site/container";
@@ -9,7 +10,21 @@ export const metadata = {
   robots: noIndex,
 };
 
-export default async function AdminChallengesPage() {
+export default function AdminChallengesPage() {
+  return (
+    <Suspense
+      fallback={
+        <Container className="py-16">
+          <p className="text-silver">Loading challenge administration...</p>
+        </Container>
+      }
+    >
+      <AdminChallengesBody />
+    </Suspense>
+  );
+}
+
+async function AdminChallengesBody() {
   const gate = await requireAdmin();
   if (!gate.ok) {
     return (

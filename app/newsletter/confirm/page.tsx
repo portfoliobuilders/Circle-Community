@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { Suspense } from "react";
 
 import { Container } from "@/components/site/container";
 import { confirmNewsletter } from "@/lib/actions/support";
@@ -9,7 +10,22 @@ export const metadata: Metadata = {
   robots: noIndex,
 };
 
-export default async function ConfirmNewsletterPage({
+export default function ConfirmNewsletterPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ token?: string }>;
+}) {
+  return (
+    <Container className="py-24">
+      <h1 className="font-display text-display-sm font-medium uppercase">Newsletter</h1>
+      <Suspense fallback={<p className="mt-4 max-w-xl text-silver">Confirming subscription...</p>}>
+        <ConfirmNewsletterContent searchParams={searchParams} />
+      </Suspense>
+    </Container>
+  );
+}
+
+async function ConfirmNewsletterContent({
   searchParams,
 }: {
   searchParams: Promise<{ token?: string }>;
@@ -22,10 +38,5 @@ export default async function ConfirmNewsletterPage({
     invalid: "That confirmation link is not valid.",
   }[result];
 
-  return (
-    <Container className="py-24">
-      <h1 className="font-display text-display-sm font-medium uppercase">Newsletter</h1>
-      <p className="mt-4 max-w-xl text-silver">{copy}</p>
-    </Container>
-  );
+  return <p className="mt-4 max-w-xl text-silver">{copy}</p>;
 }

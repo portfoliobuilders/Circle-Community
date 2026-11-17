@@ -33,6 +33,7 @@ export const social = {
 export const primaryNav = [
   { href: "/directory", label: "Directory" },
   { href: "/collabs", label: "Collabs" },
+  { href: "/clipping", label: "Clipping" },
   { href: "/events", label: "Events" },
   { href: "/learn", label: "Learn" },
   { href: "/help", label: "FAQ" },
@@ -41,6 +42,7 @@ export const primaryNav = [
 ] as const;
 
 export const supportNav = [
+  { href: "/clipping", label: "Clipping" },
   { href: "/journal", label: "Journal" },
   { href: "/guides", label: "Guides" },
   { href: "/giveaways", label: "Giveaways" },

@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { Suspense } from "react";
 
 import { JsonLd } from "@/components/seo/json-ld";
 import { Container } from "@/components/site/container";
@@ -27,6 +28,8 @@ const labels: Record<string, string> = {
   guides: "Guides",
   promoters: "Promoters",
   collabs: "Collabs",
+  clipping: "Clipping",
+  campaigns: "Campaigns",
   events: "Events",
   recognition: "Points",
   help: "FAQ",
@@ -59,6 +62,14 @@ function crumbLabel(segment: string) {
 }
 
 export function Breadcrumbs() {
+  return (
+    <Suspense fallback={null}>
+      <BreadcrumbsContent />
+    </Suspense>
+  );
+}
+
+function BreadcrumbsContent() {
   const pathname = usePathname();
   if (!pathname || pathname === "/") return null;
 

@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { Suspense } from "react";
 
 import { Container } from "@/components/site/container";
 import { unsubscribeNewsletter } from "@/lib/actions/support";
@@ -9,7 +10,22 @@ export const metadata: Metadata = {
   robots: noIndex,
 };
 
-export default async function UnsubscribePage({
+export default function UnsubscribePage({
+  searchParams,
+}: {
+  searchParams: Promise<{ token?: string }>;
+}) {
+  return (
+    <Container className="py-24">
+      <h1 className="font-display text-display-sm font-medium uppercase">Newsletter</h1>
+      <Suspense fallback={<p className="mt-4 max-w-xl text-silver">Processing unsubscribe...</p>}>
+        <UnsubscribeContent searchParams={searchParams} />
+      </Suspense>
+    </Container>
+  );
+}
+
+async function UnsubscribeContent({
   searchParams,
 }: {
   searchParams: Promise<{ token?: string }>;
@@ -18,13 +34,10 @@ export default async function UnsubscribePage({
   const result = token ? await unsubscribeNewsletter(token) : "invalid";
 
   return (
-    <Container className="py-24">
-      <h1 className="font-display text-display-sm font-medium uppercase">Newsletter</h1>
-      <p className="mt-4 max-w-xl text-silver">
-        {result === "unsubscribed"
-          ? "You are unsubscribed. We will not send news to that address."
-          : "That unsubscribe link is not valid."}
-      </p>
-    </Container>
+    <p className="mt-4 max-w-xl text-silver">
+      {result === "unsubscribed"
+        ? "You are unsubscribed. We will not send news to that address."
+        : "That unsubscribe link is not valid."}
+    </p>
   );
 }

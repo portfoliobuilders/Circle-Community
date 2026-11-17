@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import { AdminDenied } from "@/components/admin/admin-denied";
 import { MessageStatusForm } from "@/components/admin/message-status-form";
 import { Container } from "@/components/site/container";
@@ -20,7 +21,21 @@ type MessageRow = {
   created_at: string;
 };
 
-export default async function AdminMessagesPage() {
+export default function AdminMessagesPage() {
+  return (
+    <Suspense
+      fallback={
+        <Container className="py-16">
+          <p className="text-silver">Loading messages...</p>
+        </Container>
+      }
+    >
+      <AdminMessagesBody />
+    </Suspense>
+  );
+}
+
+async function AdminMessagesBody() {
   const gate = await requireAdmin();
   if (!gate.ok) {
     return (

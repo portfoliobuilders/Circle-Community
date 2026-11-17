@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import { AdminDenied } from "@/components/admin/admin-denied";
 import { EventForm } from "@/components/events/event-form";
 import { Container } from "@/components/site/container";
@@ -9,7 +10,21 @@ export const metadata = {
   robots: noIndex,
 };
 
-export default async function AdminEventsPage() {
+export default function AdminEventsPage() {
+  return (
+    <Suspense
+      fallback={
+        <Container className="py-16">
+          <p className="text-silver">Loading event administration...</p>
+        </Container>
+      }
+    >
+      <AdminEventsBody />
+    </Suspense>
+  );
+}
+
+async function AdminEventsBody() {
   const gate = await requireAdmin();
   if (!gate.ok) {
     return (

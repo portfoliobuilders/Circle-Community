@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import { Suspense } from "react";
 
 import { MobileNav } from "@/components/layout/mobile-nav";
 import { PrimaryNav } from "@/components/layout/primary-nav";
@@ -32,7 +33,9 @@ export function SiteHeader() {
             className="size-8 lg:hidden"
           />
         </Link>
-        <PrimaryNav className="hidden min-w-0 flex-1 lg:block" />
+        <Suspense fallback={<div className="hidden min-w-0 flex-1 lg:block" />}>
+          <PrimaryNav className="hidden min-w-0 flex-1 lg:block" />
+        </Suspense>
         <div className="ml-auto flex shrink-0 items-center gap-2">
           <PillLink href="/login" variant="secondary" className="hidden sm:inline-flex">
             Sign in
@@ -40,7 +43,9 @@ export function SiteHeader() {
           <PillLink href="/join" className="hidden sm:inline-flex">
             Join CIRCLE
           </PillLink>
-          <MobileNav />
+          <Suspense fallback={null}>
+            <MobileNav />
+          </Suspense>
         </div>
       </Container>
     </header>

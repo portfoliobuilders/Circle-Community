@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { Suspense } from "react";
 
 import { NewsletterForm } from "@/components/forms/newsletter-form";
 import { FaqList } from "@/components/help/faq-list";
@@ -13,28 +14,16 @@ export const metadata: Metadata = pageMetadata(
   "/help",
 );
 
-export default async function HelpPage() {
-  const faqs = await getPublishedFaqs();
-  const jsonLd = {
-    "@context": "https://schema.org",
-    "@type": "FAQPage",
-    mainEntity: faqs.map((faq) => ({
-      "@type": "Question",
-      name: faq.question,
-      acceptedAnswer: { "@type": "Answer", text: faq.answer_md },
-    })),
-  };
-
+export default function HelpPage() {
   return (
     <Container className="py-16 sm:py-24">
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
       <p className="text-small tracking-[0.18em] text-silver uppercase">Help</p>
       <h1 className="font-display mt-4 max-w-3xl text-display-sm font-medium tracking-tight uppercase sm:text-display">
         FAQ
       </h1>
-      <div className="mt-10">
-        <FaqList faqs={faqs} />
-      </div>
+      <Suspense fallback={<p className="mt-10 text-silver">Loading questions...</p>}>
+        <HelpFaqContent />
+      </Suspense>
       <section className="mt-16 rounded-2xl border border-border p-6 sm:p-10">
         <h2 className="font-display text-title-sm font-medium">Still need help?</h2>
         <p className="mt-3 max-w-xl text-silver">
@@ -54,5 +43,27 @@ export default async function HelpPage() {
         </div>
       </section>
     </Container>
+  );
+}
+
+async function HelpFaqContent() {
+  const faqs = await getPublishedFaqs();
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: faqs.map((faq) => ({
+      "@type": "Question",
+      name: faq.question,
+      acceptedAnswer: { "@type": "Answer", text: faq.answer_md },
+    })),
+  };
+
+  return (
+    <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
+      <div className="mt-10">
+        <FaqList faqs={faqs} />
+      </div>
+    </>
   );
 }

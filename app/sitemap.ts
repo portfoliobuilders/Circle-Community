@@ -14,6 +14,8 @@ const paths = [
   "/membership",
   "/directory",
   "/collabs",
+  "/clipping",
+  "/clipping/campaigns",
   "/events",
   "/giveaways",
   "/affiliates",

@@ -11,7 +11,7 @@ import { clientIp } from "@/lib/request";
 import { findService, servicePath } from "@/lib/content/agency-services";
 import { site } from "@/lib/site";
 import { createAdminClient } from "@/lib/supabase/admin";
-import { isSupabaseConfigured } from "@/lib/supabase/env";
+import { hasServiceRole, isSupabaseConfigured } from "@/lib/supabase/env";
 import { createSessionClient } from "@/lib/supabase/server";
 import {
   contactSchema,
@@ -50,10 +50,10 @@ export async function submitContact(input: unknown): Promise<FormState> {
   }
   if (parsed.data.company_website) return { status: "success", message: "received" };
 
-  if (!isSupabaseConfigured()) {
+  if (!isSupabaseConfigured() || !hasServiceRole()) {
     return {
       status: "error",
-      message: "The contact form is not connected to the database yet.",
+      message: "The contact form needs the Supabase secret key before it can save messages.",
     };
   }
 
@@ -90,10 +90,10 @@ export async function submitPartnership(input: unknown): Promise<FormState> {
   }
   if (parsed.data.company_website) return { status: "success", message: "received" };
 
-  if (!isSupabaseConfigured()) {
+  if (!isSupabaseConfigured() || !hasServiceRole()) {
     return {
       status: "error",
-      message: "The partnership form is not connected to the database yet.",
+      message: "The partnership form needs the Supabase secret key before it can save enquiries.",
     };
   }
 
@@ -197,10 +197,10 @@ export async function subscribeNewsletter(input: unknown): Promise<FormState> {
   }
   if (parsed.data.company_website) return { status: "success", message: "pending" };
 
-  if (!isSupabaseConfigured()) {
+  if (!isSupabaseConfigured() || !hasServiceRole()) {
     return {
       status: "error",
-      message: "The newsletter is not connected to the database yet.",
+      message: "The newsletter needs the Supabase secret key before it can save subscribers.",
     };
   }
 
@@ -254,7 +254,7 @@ export async function subscribeNewsletter(input: unknown): Promise<FormState> {
 }
 
 export async function confirmNewsletter(token: string) {
-  if (!token || !isSupabaseConfigured()) return "invalid" as const;
+  if (!token || !isSupabaseConfigured() || !hasServiceRole()) return "invalid" as const;
   const admin = createAdminClient();
   const hashed = hashToken(token);
   const { data } = await admin
@@ -282,7 +282,7 @@ export async function confirmNewsletter(token: string) {
 }
 
 export async function unsubscribeNewsletter(token: string) {
-  if (!token || !isSupabaseConfigured()) return "invalid" as const;
+  if (!token || !isSupabaseConfigured() || !hasServiceRole()) return "invalid" as const;
   const admin = createAdminClient();
   const hashed = hashToken(token);
   const { data } = await admin
@@ -356,8 +356,8 @@ export async function setOwnNewsletter(enabled: boolean): Promise<FormState> {
   const { data } = await supabase.auth.getUser();
   const email = data.user?.email?.toLowerCase();
   if (!email) return { status: "error", message: "Sign in before changing the newsletter." };
-  if (!isSupabaseConfigured()) {
-    return { status: "error", message: "The newsletter is not connected to the database yet." };
+  if (!isSupabaseConfigured() || !hasServiceRole()) {
+    return { status: "error", message: "The newsletter needs the Supabase secret key before it can be changed." };
   }
 
   if (!enabled) {

@@ -5,6 +5,7 @@ import { pageMetadata } from "@/lib/seo";
 export const metadata: Metadata = pageMetadata(
   "Community guidelines",
   "Draft community guidelines for CIRCLE. This page needs legal review before it is treated as policy.",
+  "/guidelines",
 );
 
 const headings = [

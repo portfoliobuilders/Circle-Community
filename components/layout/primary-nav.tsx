@@ -21,7 +21,7 @@ export function PrimaryNav({
 
   return (
     <nav aria-label="Primary" className={className}>
-      <ul className={cn("flex items-center gap-1", listClassName)}>
+      <ul className={cn("flex flex-wrap items-center gap-x-1 gap-y-1", listClassName)}>
         {primaryNav.map((item) => {
           const active =
             !item.href.includes("#") &&
@@ -37,7 +37,7 @@ export function PrimaryNav({
                 }}
                 className={cn(
                   "inline-flex min-h-11 items-center rounded-full px-3 text-small text-silver transition-colors hover:text-text",
-                  active && "text-text",
+                  active && "text-text underline decoration-text underline-offset-8",
                 )}
               >
                 {item.label}

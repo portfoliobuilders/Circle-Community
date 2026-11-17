@@ -149,6 +149,7 @@
     @apply font-sans;
     color-scheme: dark;
     background: #080808;
+    scroll-padding-top: 7.5rem;
   }
 
   body {
@@ -158,9 +159,18 @@
   }
 
   a:focus-visible,
-  button:focus-visible {
+  button:focus-visible,
+  input:focus-visible,
+  textarea:focus-visible,
+  select:focus-visible {
     outline: 2px solid #ffffff;
     outline-offset: 3px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
   }
 
   ::selection {

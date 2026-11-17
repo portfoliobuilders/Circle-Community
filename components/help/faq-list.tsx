@@ -76,11 +76,15 @@ export function FaqList({ faqs }: { faqs: Faq[] }) {
                     <span aria-hidden="true" className="text-silver">{open ? "–" : "+"}</span>
                   </button>
                 </h3>
-                {open ? (
-                  <div id={panelId} role="region" aria-labelledby={buttonId} className="pb-4 text-silver whitespace-pre-wrap">
-                    {faq.answer_md}
-                  </div>
-                ) : null}
+                <div
+                  id={panelId}
+                  role="region"
+                  aria-labelledby={buttonId}
+                  hidden={!open}
+                  className="pb-4 text-silver whitespace-pre-wrap"
+                >
+                  {faq.answer_md}
+                </div>
               </div>
             );
           })

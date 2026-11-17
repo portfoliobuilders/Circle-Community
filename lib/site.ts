@@ -31,16 +31,23 @@ export const social = {
 } as const;
 
 export const primaryNav = [
-  { href: "/#community", label: "Community" },
-  { href: "/#collabs", label: "Collabs" },
-  { href: "/#services", label: "Services" },
-  { href: "/#events", label: "Events" },
+  { href: "/directory", label: "Directory" },
+  { href: "/collabs", label: "Collabs" },
+  { href: "/events", label: "Events" },
   { href: "/learn", label: "Learn" },
+  { href: "/help", label: "FAQ" },
   { href: "/brands", label: "For Brands" },
   { href: "/about", label: "About" },
 ] as const;
 
 export const supportNav = [
+  { href: "/journal", label: "Journal" },
+  { href: "/guides", label: "Guides" },
+  { href: "/giveaways", label: "Giveaways" },
+  { href: "/leaderboard", label: "Leaderboard" },
+  { href: "/challenges", label: "Challenges" },
+  { href: "/affiliates", label: "Affiliates" },
+  { href: "/promoters", label: "Promoters" },
   { href: "/help", label: "Help" },
   { href: "/contact", label: "Contact" },
   { href: "/partners", label: "Partners" },
@@ -50,7 +57,9 @@ export const supportNav = [
 export const legalNav = [
   { href: "/legal/terms", label: "Terms" },
   { href: "/legal/privacy", label: "Privacy" },
-  { href: "/legal/community-guidelines", label: "Community guidelines" },
+  { href: "/legal/cookies", label: "Cookies" },
+  { href: "/guidelines", label: "Community guidelines" },
+  { href: "/legal/grievance", label: "Grievance officer" },
 ] as const;
 
 export const offerings = [

@@ -2,10 +2,11 @@ import type { Metadata } from "next";
 
 import { Container } from "@/components/site/container";
 import { unsubscribeNewsletter } from "@/lib/actions/support";
+import { noIndex } from "@/lib/seo";
 
 export const metadata: Metadata = {
   title: "Unsubscribe",
-  robots: { index: false, follow: false },
+  robots: noIndex,
 };
 
 export default async function UnsubscribePage({

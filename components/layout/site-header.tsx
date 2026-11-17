@@ -9,7 +9,7 @@ import { PillLink } from "@/components/site/pill-link";
 export function SiteHeader() {
   return (
     <header className="sticky top-0 z-40 border-b border-border bg-bg/90 backdrop-blur-md">
-      <Container className="flex h-16 items-center gap-3 lg:h-32">
+      <Container className="flex h-16 items-center gap-3 lg:h-auto lg:min-h-28 lg:py-3">
         <Link
           href="/"
           aria-label="CIRCLE, home"
@@ -33,7 +33,10 @@ export function SiteHeader() {
           />
         </Link>
         <PrimaryNav className="hidden min-w-0 flex-1 lg:block" />
-        <div className="ml-auto flex items-center gap-2">
+        <div className="ml-auto flex shrink-0 items-center gap-2">
+          <PillLink href="/login" variant="secondary" className="hidden sm:inline-flex">
+            Sign in
+          </PillLink>
           <PillLink href="/join" className="hidden sm:inline-flex">
             Join CIRCLE
           </PillLink>

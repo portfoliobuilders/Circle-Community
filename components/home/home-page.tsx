@@ -1,18 +1,38 @@
 import Link from "next/link";
 
 import { NewsletterForm } from "@/components/forms/newsletter-form";
+import { JsonLd } from "@/components/seo/json-ld";
 import { OrbitDecor } from "@/components/orbit-decor";
 import { Container } from "@/components/site/container";
 import { PillLink } from "@/components/site/pill-link";
 import { SocialLink } from "@/components/site/social-link";
-import {
-  collabSteps,
-  offerings,
-  social,
-  upcomingEvents,
-} from "@/lib/site";
+import { faqSeed } from "@/lib/content/faqs";
+import { collabSteps, offerings, social } from "@/lib/site";
+
+const offeringHrefs: Record<string, string> = {
+  "Collabs & bids": "/collabs",
+  "Barter collabs": "/collabs",
+  "Services directory": "/directory",
+  "Events & awards": "/events",
+  "Free webinars & bootcamps": "/learn",
+  "Perks & discounts": "/partners",
+  "Recognition & leaderboards": "/leaderboard",
+  "Trust & safety": "/guidelines",
+};
+const homeFaqIds = [
+  "00000000-0000-4000-8000-000000000001",
+  "00000000-0000-4000-8000-000000000002",
+  "00000000-0000-4000-8000-000000000003",
+  "00000000-0000-4000-8000-000000000006",
+  "00000000-0000-4000-8000-000000000004",
+  "00000000-0000-4000-8000-000000000007",
+];
 
 export function HomePage() {
+  const homeFaqs = homeFaqIds.flatMap((id) => {
+    const faq = faqSeed.find((item) => item.id === id);
+    return faq ? [faq] : [];
+  });
   return (
     <>
       <section className="relative overflow-hidden">
@@ -35,8 +55,8 @@ export function HomePage() {
           </p>
           <div className="mt-8 flex flex-col gap-3 sm:flex-row">
             <PillLink href="/join">Join the circle</PillLink>
-            <PillLink href="/#community" variant="secondary">
-              Explore the community
+            <PillLink href="/directory" variant="secondary">
+              Find creators
             </PillLink>
           </div>
         </Container>
@@ -45,16 +65,32 @@ export function HomePage() {
       <section className="border-t border-border">
         <Container className="py-12 sm:py-16">
           <h2 className="font-display max-w-3xl text-title font-medium tracking-tight uppercase sm:text-display-sm">
-            Bring the right people together, and create something bigger.
+            Start with the work
           </h2>
           <p className="mt-4 max-w-2xl text-silver">
-            For creators, freelancers, service providers, and brands who want
-            collabs, free learning, and a community that shows up.
+            Find a creator, post a brief, or read how the community works. Membership stays free.
           </p>
+          <ul className="mt-8 grid gap-3 sm:grid-cols-3">
+            <li>
+              <Link href="/directory" className="flex min-h-11 items-center rounded-2xl border border-border px-5 hover:bg-surface">
+                Find creators
+              </Link>
+            </li>
+            <li>
+              <Link href="/collabs" className="flex min-h-11 items-center rounded-2xl border border-border px-5 hover:bg-surface">
+                Open collabs
+              </Link>
+            </li>
+            <li>
+              <Link href="/journal" className="flex min-h-11 items-center rounded-2xl border border-border px-5 hover:bg-surface">
+                Read the journal
+              </Link>
+            </li>
+          </ul>
         </Container>
       </section>
 
-      <section id="community" className="scroll-mt-20 border-t border-border">
+      <section id="community" className="scroll-mt-32 border-t border-border">
         <Container className="py-16 sm:py-24">
           <h2 className="font-display text-title font-medium tracking-tight uppercase sm:text-display-sm">
             Who we bring together
@@ -84,6 +120,12 @@ export function HomePage() {
                 studio floors, and podcast setups. List a service with a price
                 from and a city.
               </p>
+              <Link
+                href="/directory"
+                className="mt-4 inline-flex min-h-11 items-center text-small text-text underline-offset-4 hover:underline"
+              >
+                Browse the directory
+              </Link>
             </article>
             <article>
               <h3 className="font-display text-title-sm font-medium">Brands</h3>
@@ -106,25 +148,27 @@ export function HomePage() {
         </Container>
       </section>
 
-      <section id="services" className="scroll-mt-20 border-t border-border">
+      <section id="services" className="scroll-mt-32 border-t border-border">
         <Container className="py-16 sm:py-24">
           <h2 className="font-display text-title font-medium tracking-tight uppercase sm:text-display-sm">
             What you get
           </h2>
-          <ul className="mt-10 grid gap-px overflow-hidden rounded-2xl border border-border bg-border sm:grid-cols-2 lg:grid-cols-4">
+            <ul className="mt-10 grid gap-px overflow-hidden rounded-2xl border border-border bg-border sm:grid-cols-2 lg:grid-cols-4">
             {offerings.map((item) => (
-              <li key={item.title} className="bg-surface p-5">
-                <h3 className="font-display text-lead font-medium">
-                  {item.title}
-                </h3>
-                <p className="mt-2 text-small text-silver">{item.body}</p>
+              <li key={item.title} className="bg-surface">
+                <Link href={offeringHrefs[item.title] ?? "/"} className="block p-5 hover:bg-bg">
+                  <h3 className="font-display text-lead font-medium">
+                    {item.title}
+                  </h3>
+                  <p className="mt-2 text-small text-silver">{item.body}</p>
+                </Link>
               </li>
             ))}
           </ul>
         </Container>
       </section>
 
-      <section id="collabs" className="scroll-mt-20 border-t border-border">
+      <section id="collabs" className="scroll-mt-32 border-t border-border">
         <Container className="py-16 sm:py-24">
           <h2 className="font-display text-title font-medium tracking-tight uppercase sm:text-display-sm">
             How collabs work
@@ -142,37 +186,27 @@ export function HomePage() {
               </li>
             ))}
           </ol>
+          <p className="mt-10">
+            <PillLink href="/collabs" variant="secondary">
+              Open the collab board
+            </PillLink>
+          </p>
         </Container>
       </section>
 
-      <section id="events" className="scroll-mt-20 border-t border-border">
+      <section id="events" className="scroll-mt-32 border-t border-border">
         <Container className="py-16 sm:py-24">
-          <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
-            <h2 className="font-display text-title font-medium tracking-tight uppercase sm:text-display-sm">
-              Upcoming events
-            </h2>
-            <p className="text-small text-silver">Placeholder schedule</p>
-          </div>
-          <ul className="mt-8 divide-y divide-border border-y border-border">
-            {upcomingEvents.map((event) => (
-              <li
-                key={event.title}
-                className="grid gap-2 py-5 sm:grid-cols-[8rem_1fr_auto] sm:items-baseline sm:gap-6"
-              >
-                <p className="text-small text-silver">{event.type}</p>
-                <h3 className="font-display text-lead font-medium">
-                  {event.title}
-                </h3>
-                <p className="text-small text-silver">
-                  {event.when}
-                  <span className="px-2" aria-hidden="true">
-                    ·
-                  </span>
-                  {event.where}
-                </p>
-              </li>
-            ))}
-          </ul>
+          <h2 className="font-display text-title font-medium tracking-tight uppercase sm:text-display-sm">
+            Events
+          </h2>
+          <p className="mt-4 max-w-2xl text-silver">
+            Meetups, webinars, and bootcamps are listed when the team publishes them. Nothing is scheduled until it appears there.
+          </p>
+          <p className="mt-8">
+            <PillLink href="/events" variant="secondary">
+              See events
+            </PillLink>
+          </p>
         </Container>
       </section>
 
@@ -217,8 +251,7 @@ export function HomePage() {
             Join the circle
           </h2>
           <p className="mt-4 max-w-xl text-silver">
-            Membership is free. There is no paywall. Follow along while
-            accounts open.
+            Membership is free. There is no paywall. Create an account and open the board.
           </p>
           <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
             <SocialLink
@@ -234,6 +267,38 @@ export function HomePage() {
               Follow on Instagram
             </SocialLink>
           </div>
+        </Container>
+      </section>
+
+      <section id="faq" className="scroll-mt-32 border-t border-border">
+        <Container className="py-16 sm:py-20">
+          <h2 className="font-display text-title font-medium tracking-tight uppercase sm:text-display-sm">
+            FAQ
+          </h2>
+          <JsonLd
+            data={{
+              "@context": "https://schema.org",
+              "@type": "FAQPage",
+              mainEntity: homeFaqs.map((faq) => ({
+                "@type": "Question",
+                name: faq.question,
+                acceptedAnswer: { "@type": "Answer", text: faq.answer_md },
+              })),
+            }}
+          />
+          <dl className="mt-8 divide-y divide-border border-y border-border">
+            {homeFaqs.map((faq) => (
+              <div key={faq.id} className="py-5">
+                <dt className="font-medium">{faq.question}</dt>
+                <dd className="mt-2 max-w-2xl text-silver whitespace-pre-wrap">{faq.answer_md}</dd>
+              </div>
+            ))}
+          </dl>
+          <p className="mt-6">
+            <Link href="/help" className="text-small text-silver underline-offset-4 hover:text-text hover:underline">
+              Read all questions
+            </Link>
+          </p>
         </Container>
       </section>
 

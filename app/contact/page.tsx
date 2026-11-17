@@ -9,6 +9,7 @@ import { site, social } from "@/lib/site";
 export const metadata: Metadata = pageMetadata(
   "Contact",
   "Write to CIRCLE about membership, partnerships, brands, press, or a problem.",
+  "/contact",
 );
 
 const channels = [

@@ -10,6 +10,7 @@ import { social } from "@/lib/site";
 export const metadata: Metadata = pageMetadata(
   "Join",
   "CIRCLE membership is free. Create an account, join the WhatsApp Channel, or follow on Instagram.",
+  "/membership",
 );
 
 export default function JoinPage() {

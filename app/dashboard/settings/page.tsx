@@ -1,16 +1,17 @@
 import { NewsletterToggle } from "@/components/dashboard/newsletter-toggle";
 import { Container } from "@/components/site/container";
-import { isSupabaseConfigured } from "@/lib/supabase/env";
+import { hasServiceRole, isSupabaseConfigured } from "@/lib/supabase/env";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { createSessionClient } from "@/lib/supabase/server";
+import { noIndex } from "@/lib/seo";
 
 export const metadata = {
   title: "Settings",
-  robots: { index: false, follow: false },
+  robots: noIndex,
 };
 
 export default async function SettingsPage() {
-  if (!isSupabaseConfigured()) {
+  if (!isSupabaseConfigured() || !hasServiceRole()) {
     return (
       <Container className="py-24">
         <h1 className="font-display text-title font-medium uppercase">Settings</h1>
@@ -28,7 +29,7 @@ export default async function SettingsPage() {
       <Container className="py-24">
         <h1 className="font-display text-title font-medium uppercase">Settings</h1>
         <p className="mt-4 max-w-xl text-silver">
-          Sign in to turn the newsletter on or off. Account sign-in is not on this site yet.
+          <a className="text-text underline" href="/login">Sign in</a> to turn the newsletter on or off.
         </p>
       </Container>
     );

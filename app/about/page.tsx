@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 
 import { Container } from "@/components/site/container";
 import { pageMetadata } from "@/lib/seo";
@@ -7,6 +8,7 @@ import { site, values } from "@/lib/site";
 export const metadata: Metadata = pageMetadata(
   "About",
   "CIRCLE is a free community run by Portfolix Enterprise Pvt Ltd in Kochi, connecting creators, service providers, and brands.",
+  "/about",
 );
 
 export default function AboutPage() {
@@ -61,7 +63,11 @@ export default function AboutPage() {
           Who runs it
         </h2>
         <p className="mt-4 text-silver">
-          {site.operatorDetail} The site is {site.domain}.
+          {site.operatorDetail} The site is {site.domain}. Email{" "}
+          <a className="text-text underline" href="mailto:info@circlecommunity.in">info@circlecommunity.in</a>.
+          Read <Link className="text-text underline" href="/membership">membership</Link>,{" "}
+          <Link className="text-text underline" href="/help">help</Link>, and{" "}
+          <Link className="text-text underline" href="/contact">contact</Link>.
         </p>
       </section>
     </Container>

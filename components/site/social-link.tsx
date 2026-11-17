@@ -17,7 +17,7 @@ export function SocialLink({ href, children, className }: SocialLinkProps) {
     return (
       <span className={classes}>
         {children}
-        <span className="sr-only">, link not published yet, {href}</span>
+        <span className="sr-only">, not published yet</span>
       </span>
     );
   }

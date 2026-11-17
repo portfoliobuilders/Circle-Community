@@ -3,10 +3,11 @@ import { MessageStatusForm } from "@/components/admin/message-status-form";
 import { Container } from "@/components/site/container";
 import { requireAdmin } from "@/lib/auth/admin";
 import { createSessionClient } from "@/lib/supabase/server";
+import { noIndex } from "@/lib/seo";
 
 export const metadata = {
   title: "Messages",
-  robots: { index: false, follow: false },
+  robots: noIndex,
 };
 
 type MessageRow = {

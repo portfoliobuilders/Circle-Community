@@ -1,5 +1,11 @@
 import { Container } from "@/components/site/container";
 import { PillLink } from "@/components/site/pill-link";
+import { noIndex } from "@/lib/seo";
+
+export const metadata = {
+  title: "Page not found",
+  robots: noIndex,
+};
 
 export default function NotFound() {
   return (

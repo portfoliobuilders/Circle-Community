@@ -4,7 +4,7 @@ import Link from "next/link";
 import { Container } from "@/components/site/container";
 import { SocialLink } from "@/components/site/social-link";
 import { NewsletterForm } from "@/components/forms/newsletter-form";
-import { legalNav, site, social, supportNav } from "@/lib/site";
+import { isPlaceholder, legalNav, site, social, supportNav } from "@/lib/site";
 
 const socialItems = [
   social.instagram,
@@ -37,15 +37,15 @@ export function SiteFooter() {
             {socialItems.map((item) => (
               <li key={item.label} className="flex flex-col">
                 <SocialLink href={item.href}>{item.label}</SocialLink>
-                {item.href.startsWith("[") ? (
-                  <span className="text-small text-silver">{item.href}</span>
+                {isPlaceholder(item.href) ? (
+                  <span className="text-small text-silver">Not published yet</span>
                 ) : null}
               </li>
             ))}
           </ul>
         </div>
         <div>
-          <h2 className="text-small font-medium text-text">Contact</h2>
+          <h2 className="text-small font-medium text-text">Explore</h2>
           <ul className="mt-3 space-y-1">
             {supportNav.map((item) => (
               <li key={item.href}>

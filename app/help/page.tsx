@@ -8,8 +8,9 @@ import { getPublishedFaqs } from "@/lib/content/load-faqs";
 import { pageMetadata } from "@/lib/seo";
 
 export const metadata: Metadata = pageMetadata(
-  "Help",
+  "FAQ",
   "Answers about joining CIRCLE, collabs, payments, points, verification, and account deletion.",
+  "/help",
 );
 
 export default async function HelpPage() {
@@ -29,7 +30,7 @@ export default async function HelpPage() {
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
       <p className="text-small tracking-[0.18em] text-silver uppercase">Help</p>
       <h1 className="font-display mt-4 max-w-3xl text-display-sm font-medium tracking-tight uppercase sm:text-display">
-        Questions, answered
+        FAQ
       </h1>
       <div className="mt-10">
         <FaqList faqs={faqs} />

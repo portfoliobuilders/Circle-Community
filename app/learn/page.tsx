@@ -14,6 +14,7 @@ const topics = [
 export const metadata: Metadata = pageMetadata(
   "Learn",
   "Free CIRCLE webinars and bootcamps on AI tools, earning from home, becoming a creator, and running collabs.",
+  "/learn",
 );
 
 export default function LearnPage() {

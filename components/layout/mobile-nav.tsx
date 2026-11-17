@@ -13,6 +13,7 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
+import { supportNav } from "@/lib/site";
 export function MobileNav() {
   const [open, setOpen] = useState(false);
 
@@ -23,7 +24,7 @@ export function MobileNav() {
           <Button
             variant="outline"
             size="icon"
-            className="lg:hidden"
+            className="size-11 lg:hidden"
             aria-label={open ? "Close menu" : "Open menu"}
           />
         }
@@ -32,23 +33,37 @@ export function MobileNav() {
       </SheetTrigger>
       <SheetContent
         side="right"
-        className="bg-surface text-text border-border gap-0"
+        className="bg-surface text-text border-border flex flex-col gap-0 overflow-y-auto"
       >
         <SheetHeader className="pr-14">
           <SheetTitle className="font-display text-title-sm">Menu</SheetTitle>
         </SheetHeader>
         <PrimaryNav
-          className="px-2"
-          listClassName="flex-col items-stretch gap-1"
+          className="overflow-y-auto px-2"
+          listClassName="flex-col items-stretch gap-0"
           onNavigate={() => setOpen(false)}
         />
+        <p className="px-5 pt-4 text-small text-silver">Also</p>
+        <ul className="px-2">
+          {supportNav.slice(0, 6).map((item) => (
+            <li key={item.href}>
+              <Link
+                href={item.href}
+                onClick={() => setOpen(false)}
+                className="inline-flex min-h-11 items-center px-3 text-small text-silver"
+              >
+                {item.label}
+              </Link>
+            </li>
+          ))}
+        </ul>
         <div className="px-4">
           <Link
-            href="/help"
+            href="/login"
             onClick={() => setOpen(false)}
             className="inline-flex min-h-11 items-center text-small text-silver"
           >
-            Help
+            Sign in
           </Link>
         </div>
         <div className="mt-auto p-4">

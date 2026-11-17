@@ -7,6 +7,7 @@ import { pageMetadata } from "@/lib/seo";
 export const metadata: Metadata = pageMetadata(
   "Partners",
   "Partner with CIRCLE on member perks, event venues, awards, or free learning. No audience numbers are published.",
+  "/partners",
 );
 
 const audiences = [

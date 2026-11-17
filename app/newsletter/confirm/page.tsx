@@ -2,10 +2,11 @@ import type { Metadata } from "next";
 
 import { Container } from "@/components/site/container";
 import { confirmNewsletter } from "@/lib/actions/support";
+import { noIndex } from "@/lib/seo";
 
 export const metadata: Metadata = {
   title: "Confirm newsletter",
-  robots: { index: false, follow: false },
+  robots: noIndex,
 };
 
 export default async function ConfirmNewsletterPage({

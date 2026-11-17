@@ -2,10 +2,11 @@ import { AdminDenied } from "@/components/admin/admin-denied";
 import { FaqEditor } from "@/components/admin/faq-editor";
 import { Container } from "@/components/site/container";
 import { getAdminFaqs } from "@/lib/content/load-faqs";
+import { noIndex } from "@/lib/seo";
 
 export const metadata = {
   title: "FAQs",
-  robots: { index: false, follow: false },
+  robots: noIndex,
 };
 
 export default async function AdminFaqsPage() {

@@ -4,6 +4,8 @@ import { Inter, Space_Grotesk } from "next/font/google";
 
 import { SiteFooter } from "@/components/layout/site-footer";
 import { SiteHeader } from "@/components/layout/site-header";
+import { Breadcrumbs } from "@/components/seo/breadcrumbs";
+import { SiteJsonLd } from "@/components/seo/site-json-ld";
 import { site } from "@/lib/site";
 
 import "./globals.css";
@@ -38,6 +40,18 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
   },
+  alternates: { canonical: "/" },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+      "max-video-preview": -1,
+    },
+  },
 };
 
 export default function RootLayout({ children }: { children: ReactNode }) {
@@ -54,7 +68,9 @@ export default function RootLayout({ children }: { children: ReactNode }) {
           Skip to content
         </a>
         <SiteHeader />
+        <SiteJsonLd />
         <main id="content" className="flex-1">
+          <Breadcrumbs />
           {children}
         </main>
         <SiteFooter />

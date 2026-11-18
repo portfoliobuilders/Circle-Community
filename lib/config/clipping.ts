@@ -18,11 +18,11 @@ export const CLIPPING_CONFIG = {
     bidCloseSchedule: "Friday 18:00 IST for the following week",
   },
   pr: {
-    enabled: false,
+    enabled: true,
     minFollowers: 10000,
     followerRecheckDays: 90,
     liveDays: 7,
-    minFeePerPostInr: null as number | null, // [PLACEHOLDER: Fill before enabling PR]
+    minFeePerPostInr: 500, // Minimum floor fee per deliverable post
     ownerFeePct: 10,
     creatorFeePct: 10,
     maxRevisions: 1,

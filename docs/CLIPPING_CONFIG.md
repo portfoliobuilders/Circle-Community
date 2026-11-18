@@ -26,7 +26,7 @@
 | `PROMO_SLOT_COUNT` | `3` | `integer` | Number of top sponsored positions available on `/clipping/campaigns` and the hub live strip. | `[CONFIRM or ADJUST]` |
 | `PROMO_MIN_BID_INR` | `[PLACEHOLDER]` | `integer \| null` | Minimum bid in INR for a 1-week promoted slot. | `[PLACEHOLDER: DECIDE e.g. 1000]` |
 | `PROMO_BID_CLOSE` | `"Friday 18:00 IST"` | `string` | Weekly auction close cutoff. Slots run Monday 00:00 to Sunday 23:59 Asia/Kolkata for the following week. | **LOCKED** |
-| `PR_ENABLED` | `false` | `boolean` | Master toggle controlling Social media PR. While `false`, all PR routes return 404, PR cards/tabs are hidden, and `/clipping` displays clipping only. | `[TOGGLE when PR2 is deployed]` |
+| `PR_ENABLED` | `true` | `boolean` | Master toggle controlling Social media PR. While `false`, all PR routes return 404, PR cards/tabs are hidden, and `/clipping` displays clipping only. | `[ENABLED in PR2]` |
 | `PR_MIN_FOLLOWERS` | `10000` | `integer` | Minimum verified follower count required on an approved `creator_platforms` account to apply or quote for PR campaigns. Default and absolute floor. | **LOCKED (10,000)** |
 | `PR_FOLLOWER_RECHECK_DAYS` | `90` | `integer` (days) | Maximum validity window of an admin follower count verification. Must be re-verified within 90 days and re-checked prior to each payout. | **LOCKED (90 days)** |
 | `PR_LIVE_DAYS` | `7` | `integer` (days) | Maturation window: days after post URL submission that the post must remain live, public, and unedited with required disclosures before creator fee locks into wallet. | **LOCKED (7 days)** |

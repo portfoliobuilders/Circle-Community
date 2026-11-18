@@ -23,6 +23,7 @@ export const metadata: Metadata = pageMetadata(
 interface PageProps {
   searchParams: Promise<{
     platform?: string;
+    campaign_type?: string;
     category?: string;
     language?: string;
     minRate?: string;
@@ -99,6 +100,7 @@ async function CampaignsContent({ searchParams }: PageProps) {
   const params = await searchParams;
 
   const currentPlatform = params.platform || "all";
+  const currentType = (params.campaign_type as "all" | "clipping" | "social_pr") || "all";
   const currentCategory = params.category;
   const currentLanguage = params.language;
   const minRate = params.minRate ? Number(params.minRate) : undefined;
@@ -108,6 +110,7 @@ async function CampaignsContent({ searchParams }: PageProps) {
   const q = params.q;
 
   const filters: CampaignFilters = {
+    campaign_type: currentType,
     platform: currentPlatform === "all" ? "all" : (currentPlatform as PlatformType),
     category: currentCategory,
     language: currentLanguage,
@@ -123,6 +126,7 @@ async function CampaignsContent({ searchParams }: PageProps) {
 
   const isFiltered = Boolean(
     q ||
+      currentType !== "all" ||
       currentCategory ||
       currentLanguage ||
       minRate !== undefined ||

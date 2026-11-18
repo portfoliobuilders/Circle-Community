@@ -2,6 +2,7 @@ import Link from "next/link";
 import { formatInr } from "@/lib/format";
 import { BudgetRing } from "./budget-ring";
 import { CampaignAge } from "./campaign-age";
+import { CLIPPING_CONFIG } from "@/lib/config/clipping";
 import type { Campaign } from "@/lib/clipping/types";
 
 interface CampaignCardProps {
@@ -10,6 +11,9 @@ interface CampaignCardProps {
 }
 
 export function CampaignCard({ campaign, showPromotedBadge = true }: CampaignCardProps) {
+  const isPr = campaign.campaign_type === "social_pr";
+  const prGross = campaign.fee_per_post_inr || 0;
+  const prNet = prGross - Math.floor((prGross * CLIPPING_CONFIG.pr.creatorFeePct) / 100);
 
   return (
     <article className="group relative flex flex-col justify-between rounded-2xl border border-border bg-card p-5 transition-all duration-200 hover:-translate-y-1 hover:border-silver/40 motion-reduce:transition-none motion-reduce:hover:translate-y-0">
@@ -23,12 +27,17 @@ export function CampaignCard({ campaign, showPromotedBadge = true }: CampaignCar
       </Link>
 
       <div>
-        {/* Top Header: Category, Promoted & Age */}
+        {/* Top Header: Category, Campaign Type, Promoted & Age */}
         <div className="flex items-center justify-between gap-2 text-xs">
           <div className="flex items-center gap-2 flex-wrap">
             <span className="rounded-full bg-border/60 px-2.5 py-1 text-[11px] font-medium tracking-wide text-silver">
               {campaign.category}
             </span>
+            {isPr ? (
+              <span className="rounded-full bg-blue-500/10 px-2.5 py-0.5 text-[11px] font-semibold tracking-wider text-blue-400 uppercase border border-blue-500/30">
+                Social PR · {campaign.deliverable_type || "Post"}
+              </span>
+            ) : null}
             {showPromotedBadge && campaign.isPromoted && (
               <span className="rounded-full bg-lime/10 px-2.5 py-0.5 text-[11px] font-semibold tracking-wider text-lime uppercase border border-lime/30">
                 Promoted
@@ -71,25 +80,65 @@ export function CampaignCard({ campaign, showPromotedBadge = true }: CampaignCar
 
         {/* Rate Box: NET rate first */}
         <div className="mt-4 rounded-xl border border-border/80 bg-surface/80 p-3.5">
-          <div className="flex items-baseline justify-between gap-2 flex-wrap">
-            <div>
-              <p className="text-[11px] font-medium tracking-wide uppercase text-silver">
-                Net Pay Rate
-              </p>
-              <div className="flex items-baseline gap-1.5 mt-0.5">
-                <span className="font-display text-xl font-bold tracking-tight text-lime">
-                  {formatInr(campaign.netRateInrPer1k)}
-                </span>
-                <span className="text-xs text-silver">/ 1K views</span>
+          {isPr ? (
+            <div className="flex items-baseline justify-between gap-2 flex-wrap">
+              <div>
+                <p className="text-[11px] font-medium tracking-wide uppercase text-silver">
+                  {campaign.pricing_mode === "quote" ? "Pricing Model" : "Net Fee per Post"}
+                </p>
+                <div className="flex items-baseline gap-1.5 mt-0.5">
+                  {campaign.pricing_mode === "quote" ? (
+                    <span className="font-display text-xl font-bold tracking-tight text-lime">
+                      Quote Mode
+                    </span>
+                  ) : (
+                    <>
+                      <span className="font-display text-xl font-bold tracking-tight text-lime">
+                        {formatInr(prNet)}
+                      </span>
+                      <span className="text-xs text-silver">/ approved post</span>
+                    </>
+                  )}
+                </div>
+              </div>
+              <div className="text-right">
+                {campaign.pricing_mode === "quote" ? (
+                  <span className="text-[11px] text-silver font-mono">
+                    Budget: {formatInr(campaign.budget_inr)}
+                  </span>
+                ) : (
+                  <span className="text-[11px] text-silver font-mono">
+                    Gross: {formatInr(prGross)}
+                  </span>
+                )}
+                <p className="text-[10px] text-silver/70">
+                  {campaign.pricing_mode === "quote"
+                    ? "Creators pitch quote"
+                    : "after CIRCLE 10% fee"}
+                </p>
               </div>
             </div>
-            <div className="text-right">
-              <span className="text-[11px] text-silver font-mono">
-                Gross: {formatInr(campaign.rate_inr_per_1k)}
-              </span>
-              <p className="text-[10px] text-silver/70">after 10% platform fee</p>
+          ) : (
+            <div className="flex items-baseline justify-between gap-2 flex-wrap">
+              <div>
+                <p className="text-[11px] font-medium tracking-wide uppercase text-silver">
+                  Net Pay Rate
+                </p>
+                <div className="flex items-baseline gap-1.5 mt-0.5">
+                  <span className="font-display text-xl font-bold tracking-tight text-lime">
+                    {formatInr(campaign.netRateInrPer1k)}
+                  </span>
+                  <span className="text-xs text-silver">/ 1K views</span>
+                </div>
+              </div>
+              <div className="text-right">
+                <span className="text-[11px] text-silver font-mono">
+                  Gross: {formatInr(campaign.rate_inr_per_1k)}
+                </span>
+                <p className="text-[10px] text-silver/70">after 10% platform fee</p>
+              </div>
             </div>
-          </div>
+          )}
         </div>
       </div>
 
@@ -104,12 +153,12 @@ export function CampaignCard({ campaign, showPromotedBadge = true }: CampaignCar
                 {formatInr(campaign.budget_reserved_inr)} / {formatInr(campaign.budget_inr)}
               </span>
               <span className="text-[11px] text-silver">
-                {campaign.budgetUsedPct}% budget used
+                {campaign.budgetUsedPct}% budget reserved
               </span>
             </div>
           </div>
 
-          {/* Platforms & Clips */}
+          {/* Platforms & Badges */}
           <div className="flex flex-col items-end gap-1">
             <div className="flex items-center gap-1.5">
               {campaign.platforms.includes("youtube_shorts") && (
@@ -135,9 +184,15 @@ export function CampaignCard({ campaign, showPromotedBadge = true }: CampaignCar
                 </span>
               )}
             </div>
-            <span className="text-[11px] text-silver font-mono">
-              {campaign.approvedClipCount} {campaign.approvedClipCount === 1 ? "clip" : "clips"} approved
-            </span>
+            {isPr ? (
+              <span className="text-[11px] text-lime font-mono">
+                {campaign.slots} {campaign.slots === 1 ? "slot" : "slots"} (≥10K flws)
+              </span>
+            ) : (
+              <span className="text-[11px] text-silver font-mono">
+                {campaign.approvedClipCount} {campaign.approvedClipCount === 1 ? "clip" : "clips"} approved
+              </span>
+            )}
           </div>
         </div>
 
@@ -145,13 +200,13 @@ export function CampaignCard({ campaign, showPromotedBadge = true }: CampaignCar
         <div className="mt-4 flex items-center justify-between">
           <span className="text-xs text-silver">
             {campaign.budgetLeftInr > 0 ? (
-              <span className="text-lime">● Open for submissions</span>
+              <span className="text-lime">● Open for {isPr ? "applications" : "submissions"}</span>
             ) : (
               <span className="text-silver/60">● Budget exhausted</span>
             )}
           </span>
           <span className="inline-flex min-h-9 items-center justify-center rounded-full border border-border px-4 text-xs font-medium text-white transition-colors group-hover:border-lime group-hover:bg-lime group-hover:text-bg">
-            View campaign
+            {isPr ? "View PR campaign" : "View campaign"}
           </span>
         </div>
       </div>

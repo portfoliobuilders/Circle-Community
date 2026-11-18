@@ -70,7 +70,7 @@ export function HomePage() {
           <p className="mt-4 max-w-2xl text-silver">
             Find a creator, post a brief, or read how the community works. Membership stays free.
           </p>
-          <ul className="mt-8 grid gap-3 sm:grid-cols-3">
+          <ul className="mt-8 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
             <li>
               <Link href="/directory" className="flex min-h-11 items-center rounded-2xl border border-border px-5 hover:bg-surface">
                 Find creators
@@ -79,6 +79,11 @@ export function HomePage() {
             <li>
               <Link href="/collabs" className="flex min-h-11 items-center rounded-2xl border border-border px-5 hover:bg-surface">
                 Open collabs
+              </Link>
+            </li>
+            <li>
+              <Link href="/giveaways" className="flex min-h-11 items-center rounded-2xl border border-border px-5 hover:bg-surface">
+                Community giveaways
               </Link>
             </li>
             <li>
@@ -218,6 +223,7 @@ export function HomePage() {
             </h2>
             <ul className="mt-4 max-w-xl list-disc space-y-2 pl-5 text-silver">
               <li>Collabs: apply, bid, or barter.</li>
+              <li>Giveaways: list community prizes or discover opportunities.</li>
               <li>Free webinars and bootcamps.</li>
               <li>Partner perks on studios, gear, and tools.</li>
               <li>Points, badges, and leaderboards for real work.</li>

@@ -5,9 +5,11 @@ import { Breadcrumbs } from "@/components/seo/breadcrumbs";
 import { noIndex, pageMetadata } from "@/lib/seo";
 import { formatInr, formatKolkata } from "@/lib/format";
 import { CLIPPING_CONFIG } from "@/lib/config/clipping";
-import { getCampaignBySlug, getTopClips } from "@/lib/clipping/data";
+import { getCampaignBySlug, getTopClips, getClipperPlatforms } from "@/lib/clipping/data";
+import { getOwnProfile } from "@/lib/data/marketplace";
 import { BudgetRing } from "@/components/clipping/budget-ring";
 import { JoinDialog } from "@/components/clipping/join-dialog";
+import { PrApplyDialog } from "@/components/clipping/pr-apply-dialog";
 import { SampleBanner } from "@/components/clipping/sample-banner";
 
 interface PageProps {
@@ -46,7 +48,13 @@ export default async function CampaignDetailPage({ params }: PageProps) {
     notFound();
   }
 
+  const { userId } = await getOwnProfile();
+  const userPlatforms = userId ? await getClipperPlatforms(userId) : [];
   const topClips = await getTopClips(campaign.id);
+
+  const isPr = campaign.campaign_type === "social_pr";
+  const prGross = campaign.fee_per_post_inr || 0;
+  const prNet = prGross - Math.floor((prGross * CLIPPING_CONFIG.pr.creatorFeePct) / 100);
 
   return (
     <>
@@ -133,20 +141,47 @@ export default async function CampaignDetailPage({ params }: PageProps) {
 
               {/* Right Column: Rate Card & Join CTA */}
               <div className="w-full lg:w-80 shrink-0 rounded-2xl border border-border bg-surface p-6 flex flex-col gap-5">
-                <div>
-                  <span className="text-xs font-semibold uppercase tracking-wider text-silver">
-                    Clipper Net Rate
-                  </span>
-                  <div className="flex items-baseline gap-2 mt-1">
-                    <span className="font-display text-3xl font-extrabold tracking-tight text-lime">
-                      {formatInr(campaign.netRateInrPer1k)}
+                {isPr ? (
+                  <div>
+                    <span className="text-xs font-semibold uppercase tracking-wider text-silver">
+                      {campaign.pricing_mode === "quote" ? "Compensation Model" : "Net Payout per Post"}
                     </span>
-                    <span className="text-sm text-silver font-medium">/ 1,000 views</span>
+                    <div className="flex items-baseline gap-2 mt-1">
+                      {campaign.pricing_mode === "quote" ? (
+                        <span className="font-display text-2xl font-extrabold tracking-tight text-lime">
+                          Creator Quotes
+                        </span>
+                      ) : (
+                        <>
+                          <span className="font-display text-3xl font-extrabold tracking-tight text-lime">
+                            {formatInr(prNet)}
+                          </span>
+                          <span className="text-sm text-silver font-medium">/ post</span>
+                        </>
+                      )}
+                    </div>
+                    <p className="mt-1 text-xs text-silver">
+                      {campaign.pricing_mode === "quote"
+                        ? "Pitch your bespoke angle and custom quote"
+                        : `Gross fee: ${formatInr(prGross)} · Net after CIRCLE 10% platform fee`}
+                    </p>
                   </div>
-                  <p className="mt-1 text-xs text-silver">
-                    Gross rate: {formatInr(campaign.rate_inr_per_1k)} · CIRCLE 10% fee deducted on lock
-                  </p>
-                </div>
+                ) : (
+                  <div>
+                    <span className="text-xs font-semibold uppercase tracking-wider text-silver">
+                      Clipper Net Rate
+                    </span>
+                    <div className="flex items-baseline gap-2 mt-1">
+                      <span className="font-display text-3xl font-extrabold tracking-tight text-lime">
+                        {formatInr(campaign.netRateInrPer1k)}
+                      </span>
+                      <span className="text-sm text-silver font-medium">/ 1,000 views</span>
+                    </div>
+                    <p className="mt-1 text-xs text-silver">
+                      Gross rate: {formatInr(campaign.rate_inr_per_1k)} · CIRCLE 10% fee deducted on lock
+                    </p>
+                  </div>
+                )}
 
                 {/* Budget Gauge */}
                 <div className="border-t border-border pt-4">
@@ -165,41 +200,78 @@ export default async function CampaignDetailPage({ params }: PageProps) {
 
                 {/* Primary CTA */}
                 <div className="pt-2">
-                  <JoinDialog campaignTitle={campaign.title} />
+                  {isPr ? (
+                    <PrApplyDialog
+                      campaign={campaign}
+                      userPlatforms={userPlatforms}
+                      isLoggedIn={!!userId}
+                    />
+                  ) : (
+                    <JoinDialog campaignTitle={campaign.title} />
+                  )}
                 </div>
               </div>
             </div>
           </div>
 
           {/* Key Parameters Row */}
-          <div className="mt-8 grid grid-cols-2 md:grid-cols-4 gap-4">
-            <div className="rounded-xl border border-border bg-card p-4">
-              <span className="text-xs text-silver font-mono uppercase">Per-Clip View Cap</span>
-              <p className="font-display mt-1 text-lg font-bold text-white">
-                {campaign.per_clip_view_cap.toLocaleString("en-IN")} views
-              </p>
+          {isPr ? (
+            <div className="mt-8 grid grid-cols-2 md:grid-cols-4 gap-4">
+              <div className="rounded-xl border border-border bg-card p-4">
+                <span className="text-xs text-silver font-mono uppercase">Deliverable Format</span>
+                <p className="font-display mt-1 text-lg font-bold text-white capitalize">
+                  {campaign.deliverable_type || "Post"}
+                </p>
+              </div>
+              <div className="rounded-xl border border-border bg-card p-4">
+                <span className="text-xs text-silver font-mono uppercase">Total Slots</span>
+                <p className="font-display mt-1 text-lg font-bold text-white">
+                  {campaign.slots} creator {campaign.slots === 1 ? "slot" : "slots"}
+                </p>
+              </div>
+              <div className="rounded-xl border border-border bg-card p-4">
+                <span className="text-xs text-silver font-mono uppercase">Follower Floor</span>
+                <p className="font-display mt-1 text-lg font-bold text-lime">
+                  ≥ {(campaign.min_followers || 10000).toLocaleString("en-IN")} verified
+                </p>
+              </div>
+              <div className="rounded-xl border border-border bg-card p-4">
+                <span className="text-xs text-silver font-mono uppercase">Draft Approval</span>
+                <p className="font-display mt-1 text-sm font-semibold text-white">
+                  {campaign.content_approval_required ? "Review required" : "Direct posting"}
+                </p>
+              </div>
             </div>
-            <div className="rounded-xl border border-border bg-card p-4">
-              <span className="text-xs text-silver font-mono uppercase">Clipper Cap</span>
-              <p className="font-display mt-1 text-lg font-bold text-white">
-                {campaign.per_clipper_cap_inr
-                  ? formatInr(campaign.per_clipper_cap_inr)
-                  : "No individual cap"}
-              </p>
+          ) : (
+            <div className="mt-8 grid grid-cols-2 md:grid-cols-4 gap-4">
+              <div className="rounded-xl border border-border bg-card p-4">
+                <span className="text-xs text-silver font-mono uppercase">Per-Clip View Cap</span>
+                <p className="font-display mt-1 text-lg font-bold text-white">
+                  {campaign.per_clip_view_cap.toLocaleString("en-IN")} views
+                </p>
+              </div>
+              <div className="rounded-xl border border-border bg-card p-4">
+                <span className="text-xs text-silver font-mono uppercase">Clipper Cap</span>
+                <p className="font-display mt-1 text-lg font-bold text-white">
+                  {campaign.per_clipper_cap_inr
+                    ? formatInr(campaign.per_clipper_cap_inr)
+                    : "No individual cap"}
+                </p>
+              </div>
+              <div className="rounded-xl border border-border bg-card p-4">
+                <span className="text-xs text-silver font-mono uppercase">Min Views to Qualify</span>
+                <p className="font-display mt-1 text-lg font-bold text-white">
+                  {campaign.min_views_to_qualify.toLocaleString("en-IN")} views
+                </p>
+              </div>
+              <div className="rounded-xl border border-border bg-card p-4">
+                <span className="text-xs text-silver font-mono uppercase">Timeline</span>
+                <p className="font-display mt-1 text-sm font-semibold text-white">
+                  {campaign.ends_at ? `Ends ${formatKolkata(campaign.ends_at)}` : "Ongoing"}
+                </p>
+              </div>
             </div>
-            <div className="rounded-xl border border-border bg-card p-4">
-              <span className="text-xs text-silver font-mono uppercase">Min Views to Qualify</span>
-              <p className="font-display mt-1 text-lg font-bold text-white">
-                {campaign.min_views_to_qualify.toLocaleString("en-IN")} views
-              </p>
-            </div>
-            <div className="rounded-xl border border-border bg-card p-4">
-              <span className="text-xs text-silver font-mono uppercase">Timeline</span>
-              <p className="font-display mt-1 text-sm font-semibold text-white">
-                {campaign.ends_at ? `Ends ${formatKolkata(campaign.ends_at)}` : "Ongoing"}
-              </p>
-            </div>
-          </div>
+          )}
 
           {/* Two-Column Detail Grid */}
           <div className="mt-8 grid grid-cols-1 lg:grid-cols-3 gap-8">

@@ -240,4 +240,49 @@ export interface CampaignFilters {
   q?: string;
 }
 
+// -------------------------------------------------------------
+// Social Media PR Entities
+// -------------------------------------------------------------
+
+export type PrApplicationStatus = "applied" | "accepted" | "rejected" | "withdrawn" | "cancelled";
+export type PrDraftStatus = "none" | "submitted" | "approved" | "changes_requested";
+export type PrDeliverableStatus = "pending" | "live_verified" | "payable" | "paid" | "failed";
+
+export interface PrDeliverableLiveCheck {
+  checked_at: string;
+  is_live: boolean;
+  has_disclosure: boolean;
+  notes?: string;
+}
+
+export interface PrDeliverable {
+  id: string;
+  application_id: string;
+  draft_path?: string | null;
+  draft_status: PrDraftStatus;
+  revision_count: number;
+  post_url?: string | null;
+  post_id_normalised?: string | null;
+  posted_at_submitted?: string | null;
+  live_checks: PrDeliverableLiveCheck[];
+  status: PrDeliverableStatus;
+  fail_reason?: string | null;
+  created_at: string;
+}
+
+export interface PrApplication {
+  id: string;
+  campaign_id: string;
+  creator_id: string;
+  platform_account_id: string;
+  pitch: string;
+  quote_inr?: number | null;
+  status: PrApplicationStatus;
+  created_at: string;
+  campaign?: { id: string; title: string; fee_per_post_inr?: number | null; pricing_mode?: string | null };
+  creator?: { display_name?: string | null };
+  platform_account?: CreatorPlatform;
+  deliverable?: PrDeliverable | null;
+}
+
 export type CampaignSort = "newest" | "highest_rate" | "most_budget_left";

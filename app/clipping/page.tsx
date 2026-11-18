@@ -43,9 +43,58 @@ export default async function ClippingHubPage() {
               </p>
               <div className="mt-8 flex flex-wrap items-center gap-4">
                 <PillLink href="#campaigns">Browse campaigns</PillLink>
-                <PillLink href="/brands" variant="secondary">
+                <PillLink href="/dashboard/clipping/campaigns/new" variant="secondary">
                   Launch a campaign
                 </PillLink>
+              </div>
+
+              {/* Dual Tracks: Clipping vs Social Media PR */}
+              <div className="mt-12 grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="rounded-2xl border border-border bg-card/60 p-6 backdrop-blur-sm">
+                  <div className="flex items-center justify-between">
+                    <span className="font-mono text-xs font-semibold uppercase tracking-wider text-lime">
+                      Model 01
+                    </span>
+                    <span className="rounded-full bg-surface px-2.5 py-0.5 text-xs text-silver">
+                      No Follower Minimum
+                    </span>
+                  </div>
+                  <h2 className="font-display mt-3 text-lg font-bold text-white uppercase">
+                    Video Clipping · Pay-per-view
+                  </h2>
+                  <p className="mt-2 text-xs text-silver leading-relaxed">
+                    Turn long-form podcast discussions and founder stories into viral vertical edits. Earn ₹10–₹200 per 1,000 verified views with automated view cap safeguards.
+                  </p>
+                  <div className="mt-4 pt-3 border-t border-border flex items-center justify-between text-xs">
+                    <span className="text-silver">Pacing: Performance-based</span>
+                    <Link href="/clipping/campaigns?campaign_type=clipping" className="text-lime hover:underline font-medium">
+                      View clipping briefs →
+                    </Link>
+                  </div>
+                </div>
+
+                <div className="rounded-2xl border border-lime/30 bg-card/60 p-6 backdrop-blur-sm">
+                  <div className="flex items-center justify-between">
+                    <span className="font-mono text-xs font-semibold uppercase tracking-wider text-lime">
+                      Model 02
+                    </span>
+                    <span className="rounded-full border border-lime/30 bg-lime/10 px-2.5 py-0.5 text-xs font-mono font-medium text-lime">
+                      10,000+ Verified Followers
+                    </span>
+                  </div>
+                  <h2 className="font-display mt-3 text-lg font-bold text-white uppercase">
+                    Social Media PR · Pay-per-post
+                  </h2>
+                  <p className="mt-2 text-xs text-silver leading-relaxed">
+                    Established theme pages and creators earn a guaranteed fixed fee or accepted quote per post. Upfront escrow payment released after a 7-day live verification hold.
+                  </p>
+                  <div className="mt-4 pt-3 border-t border-border flex items-center justify-between text-xs">
+                    <span className="text-silver">Standard: ASCI #ad disclosure</span>
+                    <Link href="/clipping/campaigns?campaign_type=social_pr" className="text-lime hover:underline font-medium">
+                      View PR openings →
+                    </Link>
+                  </div>
+                </div>
               </div>
             </div>
           </Container>

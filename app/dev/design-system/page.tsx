@@ -22,6 +22,16 @@ import {
   CategoryMarquee,
 } from "@/components/ui-motion"
 import { MotionConfigProvider } from "@/lib/motion"
+import {
+  OrbitScene,
+  ConnectionGraph,
+  DataRingGroup,
+  StepSequence,
+  UIPreview,
+  PhotoSlot,
+  StatementLine,
+  SectionHeader,
+} from "@/components/visual"
 import { Menu } from "lucide-react"
 
 export default function DesignSystemShowcasePage() {
@@ -506,6 +516,103 @@ export default function DesignSystemShowcasePage() {
                 Animated Accordion
               </h3>
               <AnimatedAccordion items={sampleFaqs} />
+            </div>
+          </section>
+
+          {/* Section 8: Visual Element Library */}
+          <section className="space-y-12">
+            <SectionHeader
+              eyebrow="08 // VISUAL ELEMENT LIBRARY"
+              title="Show the product, cut the prose"
+              subline="Geometric SVG diagrams, real data meters, and product frames replacing text blocks."
+            />
+
+            {/* Statement Line */}
+            <StatementLine
+              indexLabel="01 // CHAPTER"
+              statement="Where verified creators meet direct brand budgets."
+              highlightWord="verified"
+              subline="High-contrast editorial typography moments used as chapter dividers."
+            />
+
+            {/* Orbit Scene */}
+            <div className="p-8 rounded-2xl bg-surface border border-border">
+              <span className="font-mono text-xs text-lime">ORBIT SCENE (ECOSYSTEM ENGINE)</span>
+              <p className="text-xs text-silver mt-1 mb-6">
+                Concentric orbital SVG with mouse-tracking perspective tilt (max 4°) and static open fallback.
+              </p>
+              <OrbitScene size={480} />
+            </div>
+
+            {/* Connection Graph */}
+            <div className="space-y-3">
+              <span className="font-mono text-xs text-lime">CONNECTION GRAPH (WORKFLOW MECHANICS)</span>
+              <p className="text-xs text-silver">
+                Progressive line drawing between marketplace participants.
+              </p>
+              <ConnectionGraph />
+            </div>
+
+            {/* Step Sequence */}
+            <div className="space-y-3">
+              <span className="font-mono text-xs text-lime">STEP SEQUENCE (01, 02, 03 HORIZONTAL)</span>
+              <StepSequence
+                steps={[
+                  { number: "01 //", title: "Discover & Filter", description: "Browse verified collab briefs by category, rate range, and platform." },
+                  { number: "02 //", title: "Direct Pitch", description: "Apply with 18+ bio-code confirmation and negotiable rate cards." },
+                  { number: "03 //", title: "Complete Deliverable", description: "Submit deliverables, receive peer payout, and earn leaderboard points." },
+                ]}
+              />
+            </div>
+
+            {/* Data Ring Group */}
+            <div className="space-y-3">
+              <span className="font-mono text-xs text-lime">DATA RING GROUP (MULTI-METRIC PROGRESS)</span>
+              <DataRingGroup
+                title="Active Campaign Performance"
+                subtitle="Live metrics computed directly from database entries."
+                items={[
+                  { id: "r1", label: "Budget Reserved", value: 45000, percentage: 65, prefix: "₹" },
+                  { id: "r2", label: "Payouts Invoiced", value: 24000, percentage: 35, prefix: "₹" },
+                  { id: "r3", label: "Views Milestone", value: 120000, percentage: 80, suffix: " views", color: "silver" },
+                ]}
+              />
+            </div>
+
+            {/* UI Preview Frame & Photo Slot */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-stretch">
+              {/* UI Preview */}
+              <div className="space-y-3">
+                <span className="font-mono text-xs text-lime">UI PREVIEW (MINI-COMPONENT FRAME)</span>
+                <UIPreview title="collab_brief.tsx" badge="Live Component">
+                  <div className="p-4 rounded-xl bg-surface border border-border">
+                    <div className="flex items-center justify-between mb-2">
+                      <span className="text-xs font-mono text-lime">FIXED INR</span>
+                      <span className="text-xs font-mono text-silver">#ad ASCI</span>
+                    </div>
+                    <h4 className="font-display font-semibold text-lg text-white">
+                      Kochi Tech Meetup Video Reel
+                    </h4>
+                    <p className="text-xs text-silver mt-1">
+                      1x 60s vertical reel reviewing acoustic setup.
+                    </p>
+                    <div className="mt-4 pt-3 border-t border-border flex justify-between text-xs font-mono">
+                      <span className="text-white font-bold">₹15,000</span>
+                      <span className="text-silver">2 Spots Left</span>
+                    </div>
+                  </div>
+                </UIPreview>
+              </div>
+
+              {/* Photo Slot */}
+              <div className="space-y-3">
+                <span className="font-mono text-xs text-lime">PHOTO SLOT (REAL COMMUNITY ARCHIVE)</span>
+                <PhotoSlot
+                  label="[PHOTO: Community Meetup, Kochi]"
+                  caption="Aspect-ratio locked frame · Strictly zero stock or AI faces."
+                  aspectRatio="video"
+                />
+              </div>
             </div>
           </section>
         </main>

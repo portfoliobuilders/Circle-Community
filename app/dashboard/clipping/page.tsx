@@ -8,10 +8,12 @@ import {
   getClipperPlatforms,
   getClipperSubmissions,
   getClipperWalletSummary,
+  getPrApplicationsForCreator,
 } from "@/lib/clipping/data";
 import { ClipperWalletCard } from "@/components/clipping/dashboard/clipper-wallet-card";
 import { LinkedPlatforms } from "@/components/clipping/dashboard/linked-platforms";
 import { ClipperSubmissionsList } from "@/components/clipping/dashboard/clipper-submissions-list";
+import { CreatorPrDeliverablesList } from "@/components/clipping/dashboard/creator-pr-deliverables-list";
 
 export const metadata: Metadata = {
   title: "Clipper Studio & Wallet",
@@ -99,10 +101,11 @@ async function ClipperDashboardContent() {
     );
   }
 
-  const [wallet, platforms, submissions] = await Promise.all([
+  const [wallet, platforms, submissions, prApplications] = await Promise.all([
     getClipperWalletSummary(userId),
     getClipperPlatforms(userId),
     getClipperSubmissions(userId),
+    getPrApplicationsForCreator(userId),
   ]);
 
   return (
@@ -113,7 +116,10 @@ async function ClipperDashboardContent() {
       {/* Linked Accounts */}
       <LinkedPlatforms initialPlatforms={platforms} />
 
-      {/* Submissions List */}
+      {/* PR Deliverables */}
+      <CreatorPrDeliverablesList applications={prApplications} />
+
+      {/* Video Clipping Submissions List */}
       <ClipperSubmissionsList submissions={submissions} />
     </div>
   );

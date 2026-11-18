@@ -46,6 +46,7 @@ export function FilterControls({ onApplied }: FilterControlsProps) {
   const searchParams = useSearchParams();
   const [isPending, startTransition] = useTransition();
 
+  const currentType = searchParams.get("campaign_type") || "all";
   const currentCategory = searchParams.get("category") || "All";
   const currentLanguage = searchParams.get("language") || "all";
   const minRate = Number(searchParams.get("minRate")) || 10;
@@ -56,7 +57,13 @@ export function FilterControls({ onApplied }: FilterControlsProps) {
   function updateQuery(updates: Record<string, string | null>) {
     const params = new URLSearchParams(searchParams.toString());
     Object.entries(updates).forEach(([key, value]) => {
-      if (value === null || value === "" || (key === "category" && value === "All") || (key === "language" && value === "all")) {
+      if (
+        value === null ||
+        value === "" ||
+        (key === "campaign_type" && value === "all") ||
+        (key === "category" && value === "All") ||
+        (key === "language" && value === "all")
+      ) {
         params.delete(key);
       } else {
         params.set(key, value);
@@ -82,6 +89,7 @@ export function FilterControls({ onApplied }: FilterControlsProps) {
   }
 
   const hasActiveFilters =
+    currentType !== "all" ||
     currentCategory !== "All" ||
     currentLanguage !== "all" ||
     minRate > 10 ||
@@ -107,6 +115,23 @@ export function FilterControls({ onApplied }: FilterControlsProps) {
             <span>Reset filters</span>
           </button>
         )}
+      </div>
+
+      {/* Campaign Model / Type */}
+      <div className="flex flex-col gap-2">
+        <label htmlFor="type-select" className="text-xs font-medium text-silver">
+          Campaign Model
+        </label>
+        <select
+          id="type-select"
+          value={currentType}
+          onChange={(e) => updateQuery({ campaign_type: e.target.value === "all" ? null : e.target.value })}
+          className="min-h-11 w-full rounded-xl border border-border bg-card px-3 text-sm text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-lime"
+        >
+          <option value="all">All Campaign Models</option>
+          <option value="clipping">Video Clipping (Pay-per-view)</option>
+          <option value="social_pr">Social Media PR (Pay-per-post, 10K+)</option>
+        </select>
       </div>
 
       {/* Sort By */}

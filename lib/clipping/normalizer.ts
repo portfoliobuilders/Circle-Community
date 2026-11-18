@@ -95,3 +95,13 @@ export function normalizeClipUrl(url: string, targetPlatform?: PlatformType): No
     error: "Unsupported platform. Only YouTube Shorts and Instagram Reels URLs are permitted.",
   };
 }
+
+export function slugify(text: string): string {
+  return text
+    .toLowerCase()
+    .trim()
+    .replace(/[^\w\s-]/g, "")
+    .replace(/[\s_-]+/g, "-")
+    .replace(/^-+|-+$/g, "")
+    .slice(0, 80);
+}

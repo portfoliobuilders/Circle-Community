@@ -59,6 +59,18 @@ export default function CreatorsPage() {
         ))}
       </ul>
 
+      <section className="mt-16 rounded-2xl border border-border bg-surface p-6 sm:p-10">
+        <p className="text-small tracking-[0.18em] text-silver uppercase">Audience growth</p>
+        <h2 className="font-display mt-3 text-title-sm font-medium">Community giveaways</h2>
+        <p className="mt-3 max-w-xl text-silver">
+          Hosting a giveaway on Instagram Reels or YouTube Shorts? List it on CIRCLE to get discovered by creators and community members across India.
+        </p>
+        <div className="mt-6 flex flex-col gap-3 sm:flex-row">
+          <PillLink href="/giveaways">Browse giveaways</PillLink>
+          <PillLink href="/giveaways/new" variant="secondary">List a giveaway</PillLink>
+        </div>
+      </section>
+
       <section
         id="lead-form"
         className="mt-16 scroll-mt-24 max-w-2xl rounded-2xl border border-border p-6 sm:p-10"

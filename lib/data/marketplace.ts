@@ -172,18 +172,84 @@ export type GiveawayRow = {
   ends_at: string | null;
   social_url: string;
   status: string;
+  created_at: string;
 };
 
+export const sampleDevGiveaways: GiveawayRow[] = [
+  {
+    id: "00000000-0000-0000-0000-000000000091",
+    owner_id: "00000000-0000-0000-0000-000000000001",
+    title: "[SAMPLE] Creator Studio Kit & Microphone Bundle",
+    summary: "Giving away a creator audio setup including USB microphone and boom arm to one community creator. Follow on Instagram, tag 2 fellow creators in the comments, and share the reel to your story.",
+    prize: "Creator Mic & Boom Arm",
+    ends_at: "2026-12-15T18:00:00+05:30",
+    social_url: "https://instagram.com/sample_creator",
+    status: "open",
+    created_at: "2026-11-15T10:00:00+05:30",
+  },
+  {
+    id: "00000000-0000-0000-0000-000000000092",
+    owner_id: "00000000-0000-0000-0000-000000000002",
+    title: "[SAMPLE] 1-Year Creative Suite Pro License",
+    summary: "Gifting an annual creative software subscription to an aspiring video editor in the CIRCLE community. Check out the YouTube Short to participate.",
+    prize: "1-Yr Software License",
+    ends_at: "2026-12-20T20:00:00+05:30",
+    social_url: "https://youtube.com/sample_channel",
+    status: "open",
+    created_at: "2026-11-16T12:00:00+05:30",
+  },
+  {
+    id: "00000000-0000-0000-0000-000000000093",
+    owner_id: "00000000-0000-0000-0000-000000000003",
+    title: "[SAMPLE] Portable LED RGB Light & Tripod Setup",
+    summary: "Portable bi-color pocket light for mobile filmmakers and vloggers. Enter by commenting your favorite video editing tip on our reel.",
+    prize: "LED Pocket Light + Mini Tripod",
+    ends_at: "2026-12-25T23:59:00+05:30",
+    social_url: "https://instagram.com/sample_filmmaker",
+    status: "open",
+    created_at: "2026-11-17T09:00:00+05:30",
+  },
+];
+
 export async function listGiveaways() {
-  if (!isSupabaseConfigured()) return { rows: [] as GiveawayRow[], error: "Supabase is not configured." };
+  if (!isSupabaseConfigured()) {
+    if (process.env.NODE_ENV !== "production") {
+      return { rows: sampleDevGiveaways, error: null };
+    }
+    return { rows: [] as GiveawayRow[], error: "Supabase is not configured." };
+  }
   const supabase = createAnonClient();
   const { data, error } = await supabase
     .from("giveaways")
-    .select("id, owner_id, title, summary, prize, ends_at, social_url, status")
+    .select("id, owner_id, title, summary, prize, ends_at, social_url, status, created_at")
     .eq("status", "open")
     .order("created_at", { ascending: false });
-  if (error) return { rows: [], error: missingTable(error) ? unavailable : "Giveaways could not be loaded." };
+  if (error) {
+    if (process.env.NODE_ENV !== "production") {
+      return { rows: sampleDevGiveaways, error: null };
+    }
+    return { rows: [], error: missingTable(error) ? unavailable : "Giveaways could not be loaded." };
+  }
+  if ((!data || data.length === 0) && process.env.NODE_ENV !== "production") {
+    return { rows: sampleDevGiveaways, error: null };
+  }
   return { rows: (data ?? []) as GiveawayRow[], error: null };
+}
+
+export async function getGiveaway(id: string) {
+  if (process.env.NODE_ENV !== "production") {
+    const sample = sampleDevGiveaways.find((g) => g.id === id);
+    if (sample) return { row: sample, error: null };
+  }
+  if (!isSupabaseConfigured()) return { row: null, error: "Supabase is not configured." };
+  const supabase = createAnonClient();
+  const { data, error } = await supabase
+    .from("giveaways")
+    .select("id, owner_id, title, summary, prize, ends_at, social_url, status, created_at")
+    .eq("id", id)
+    .maybeSingle();
+  if (error) return { row: null, error: missingTable(error) ? unavailable : "That giveaway could not be loaded." };
+  return { row: data as GiveawayRow | null, error: null };
 }
 
 export type AffiliateRow = {

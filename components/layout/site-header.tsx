@@ -9,7 +9,7 @@ import { PillLink } from "@/components/site/pill-link";
 
 export function SiteHeader() {
   return (
-    <header className="sticky top-0 z-40 border-b border-border bg-bg/90 backdrop-blur-md">
+    <header className="sticky top-0 z-40 border-b border-border bg-bg/95">
       <Container className="flex h-16 items-center gap-3 lg:h-auto lg:min-h-28 lg:py-3">
         <Link
           href="/"

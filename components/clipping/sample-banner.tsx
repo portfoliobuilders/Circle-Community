@@ -6,7 +6,7 @@ export function SampleBanner() {
   return (
     <aside
       aria-label="Preview notice"
-      className="sticky top-16 z-40 w-full border-b border-border bg-[#121212]/95 px-4 py-2.5 backdrop-blur-md"
+      className="sticky top-16 z-40 w-full border-b border-border bg-[#121212]/95 px-4 py-2.5"
     >
       <div className="mx-auto flex max-w-7xl items-center justify-between gap-3 text-xs text-silver">
         <div className="flex items-center gap-2">

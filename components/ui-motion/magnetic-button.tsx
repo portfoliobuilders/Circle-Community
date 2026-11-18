@@ -33,6 +33,7 @@ export function MagneticButton({
   className,
   href,
   onClick,
+  type = "button",
   ...props
 }: MagneticButtonProps) {
   const ref = React.useRef<HTMLButtonElement | HTMLAnchorElement | null>(null)
@@ -109,13 +110,13 @@ export function MagneticButton({
   return (
     <motion.button
       ref={ref as React.Ref<HTMLButtonElement>}
-      type={props.type || "button"}
+      type={type}
       onClick={onClick}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
       className={baseClasses}
       {...motionProps}
-      {...(props as any)}
+      {...props}
     >
       {children}
     </motion.button>

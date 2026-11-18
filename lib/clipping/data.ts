@@ -1,5 +1,5 @@
 import { isSupabaseConfigured } from "@/lib/supabase/env";
-import { createSessionClient } from "@/lib/supabase/server";
+import { createAnonClient, createSessionClient } from "@/lib/supabase/server";
 import { CLIPPING_CONFIG } from "@/lib/config/clipping";
 import { sampleCampaigns, sampleTopClips } from "./sample-data";
 import type {
@@ -11,6 +11,8 @@ import type {
   CreatorPlatform,
   PayoutRequest,
   PlatformType,
+  PrApplication,
+  PrDeliverable,
   SourceLink,
   SubmissionStatus,
   TopClip,
@@ -163,7 +165,7 @@ export async function listCampaigns(
 ): Promise<{ campaigns: Campaign[]; total: number }> {
   if (isSupabaseConfigured()) {
     try {
-      const supabase = await createSessionClient();
+      const supabase = createAnonClient();
       let query = supabase
         .from("clip_campaigns")
         .select(`
@@ -271,7 +273,7 @@ export async function listCampaigns(
 export async function getCampaignBySlug(slug: string): Promise<Campaign | null> {
   if (isSupabaseConfigured()) {
     try {
-      const supabase = await createSessionClient();
+      const supabase = createAnonClient();
       const { data, error } = await supabase
         .from("clip_campaigns")
         .select(`
@@ -290,6 +292,36 @@ export async function getCampaignBySlug(slug: string): Promise<Campaign | null> 
   }
 
   const campaign = sampleCampaigns.find((c) => c.slug === slug);
+  if (!campaign) return null;
+
+  return {
+    ...campaign,
+    isPromoted: CLIPPING_CONFIG.promotedSlots.enabled ? campaign.isPromoted : false,
+  };
+}
+
+export async function getCampaignById(id: string): Promise<Campaign | null> {
+  if (isSupabaseConfigured()) {
+    try {
+      const supabase = createAnonClient();
+      const { data, error } = await supabase
+        .from("clip_campaigns")
+        .select(`
+          *,
+          owner:profiles(display_name)
+        `)
+        .eq("id", id)
+        .single();
+
+      if (!error && data) {
+        return mapCampaignRow(data);
+      }
+    } catch {
+      // Fall through
+    }
+  }
+
+  const campaign = sampleCampaigns.find((c) => c.id === id);
   if (!campaign) return null;
 
   return {
@@ -459,6 +491,58 @@ export async function getCampaignSubmissions(campaignId: string): Promise<ClipSu
 }
 
 // -------------------------------------------------------------
+// Social Media PR Data Helpers
+// -------------------------------------------------------------
+
+export async function getPrApplicationsForCreator(userId: string): Promise<PrApplication[]> {
+  if (!isSupabaseConfigured()) return [];
+  const supabase = await createSessionClient();
+  const { data } = await supabase
+    .from("pr_applications")
+    .select(`
+      *,
+      campaign:clip_campaigns(id, title, fee_per_post_inr, pricing_mode),
+      deliverable:pr_deliverables(*)
+    `)
+    .eq("creator_id", userId)
+    .order("created_at", { ascending: false });
+
+  if (!data) return [];
+  return data as unknown as PrApplication[];
+}
+
+export async function getPrApplicationsForCampaign(campaignId: string): Promise<PrApplication[]> {
+  if (!isSupabaseConfigured()) return [];
+  const supabase = await createSessionClient();
+  const { data } = await supabase
+    .from("pr_applications")
+    .select(`
+      *,
+      creator:profiles(display_name),
+      platform_account:creator_platforms(*),
+      deliverable:pr_deliverables(*)
+    `)
+    .eq("campaign_id", campaignId)
+    .order("created_at", { ascending: false });
+
+  if (!data) return [];
+  return data as unknown as PrApplication[];
+}
+
+export async function getPrDeliverable(deliverableId: string): Promise<PrDeliverable | null> {
+  if (!isSupabaseConfigured()) return null;
+  const supabase = await createSessionClient();
+  const { data, error } = await supabase
+    .from("pr_deliverables")
+    .select("*")
+    .eq("id", deliverableId)
+    .single();
+
+  if (error || !data) return null;
+  return data as unknown as PrDeliverable;
+}
+
+// -------------------------------------------------------------
 // Admin Hub Data Helpers
 // -------------------------------------------------------------
 
@@ -467,7 +551,7 @@ export async function getAdminClippingOverview() {
     return {
       pendingCampaigns: [],
       pendingPlatforms: [],
-      pendingSnapshots: [],
+      pendingPrDeliverables: [],
       pendingPayouts: [],
       recentActions: [],
     };
@@ -475,7 +559,7 @@ export async function getAdminClippingOverview() {
 
   const supabase = await createSessionClient();
 
-  const [campaignsRes, platformsRes, payoutsRes, actionsRes] = await Promise.all([
+  const [campaignsRes, platformsRes, prDelivRes, payoutsRes, actionsRes] = await Promise.all([
     supabase
       .from("clip_campaigns")
       .select(`*, owner:profiles(display_name)`)
@@ -485,6 +569,18 @@ export async function getAdminClippingOverview() {
       .from("creator_platforms")
       .select(`*, profile:profiles(display_name)`)
       .eq("verified", false)
+      .order("created_at", { ascending: false }),
+    supabase
+      .from("pr_deliverables")
+      .select(`
+        *,
+        application:pr_applications (
+          creator:profiles(display_name),
+          campaign:clip_campaigns(id, title)
+        )
+      `)
+      .eq("status", "pending")
+      .not("post_url", "is", null)
       .order("created_at", { ascending: false }),
     supabase
       .from("clip_payout_requests")
@@ -501,6 +597,7 @@ export async function getAdminClippingOverview() {
   return {
     pendingCampaigns: campaignsRes.data || [],
     pendingPlatforms: platformsRes.data || [],
+    pendingPrDeliverables: prDelivRes.data || [],
     pendingPayouts: (payoutsRes.data || []) as (PayoutRequest & { profile?: { display_name: string } })[],
     recentActions: actionsRes.data || [],
   };

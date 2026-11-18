@@ -17,6 +17,8 @@ export const metadata: Metadata = pageMetadata(
   "/clipping"
 );
 
+export const instant = false;
+
 export default async function ClippingHubPage() {
   const { campaigns } = await listCampaigns();
 

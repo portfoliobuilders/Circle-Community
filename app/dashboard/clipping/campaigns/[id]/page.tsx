@@ -4,17 +4,21 @@ import { notFound } from "next/navigation";
 import { Container } from "@/components/site/container";
 import { noIndex } from "@/lib/seo";
 import { getOwnProfile } from "@/lib/data/marketplace";
-import { getCampaignSubmissions } from "@/lib/clipping/data";
+import { getCampaignSubmissions, getPrApplicationsForCampaign } from "@/lib/clipping/data";
 import { isSupabaseConfigured } from "@/lib/supabase/env";
 import { createSessionClient } from "@/lib/supabase/server";
 import { formatInr } from "@/lib/format";
 import { OwnerSubmissionsReviewer } from "@/components/clipping/dashboard/owner-submissions-reviewer";
+import { OwnerPrCampaignManager } from "@/components/clipping/dashboard/owner-pr-campaign-manager";
+import type { Campaign } from "@/lib/clipping/types";
 
 export const metadata: Metadata = {
   title: "Review Campaign Submissions",
   description: "Review, approve, and track vertical video clips submitted by creators.",
   robots: noIndex,
 };
+
+export const instant = false;
 
 export default async function CampaignSubmissionsPage({
   params,

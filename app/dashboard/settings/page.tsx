@@ -10,6 +10,8 @@ export const metadata = {
   robots: noIndex,
 };
 
+export const instant = false;
+
 export default async function SettingsPage() {
   if (!isSupabaseConfigured() || !hasServiceRole()) {
     return (

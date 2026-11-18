@@ -36,8 +36,8 @@ export function PrimaryNav({
                   window.setTimeout(() => onNavigate?.(), 0);
                 }}
                 className={cn(
-                  "inline-flex min-h-11 items-center rounded-full px-3 text-small text-silver transition-colors hover:text-text",
-                  active && "text-text underline decoration-text underline-offset-8",
+                  "inline-flex min-h-10 items-center rounded-full px-3 text-xs font-medium text-silver transition-colors hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-white",
+                  active && "text-white underline decoration-lime decoration-2 underline-offset-8 font-semibold",
                 )}
               >
                 {item.label}

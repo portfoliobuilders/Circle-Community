@@ -2,11 +2,49 @@ import Image from "next/image";
 import Link from "next/link";
 
 import { Container } from "@/components/site/container";
-import { SocialLink } from "@/components/site/social-link";
 import { NewsletterForm } from "@/components/forms/newsletter-form";
-import { isPlaceholder, legalNav, site, social, supportNav } from "@/lib/site";
+import { isPlaceholder, site, social } from "@/lib/site";
 
-const socialItems = [
+const platformLinks = [
+  { href: "/directory", label: "Creator Directory" },
+  { href: "/collabs", label: "Collab Briefs" },
+  { href: "/events", label: "Community Events" },
+  { href: "/learn", label: "Free Academy" },
+  { href: "/giveaways", label: "Giveaways" },
+  { href: "/help", label: "Help & FAQ" },
+];
+
+const clippingPrLinks = [
+  { href: "/clipping", label: "Clipping & PR Hub" },
+  { href: "/clipping/campaigns", label: "Active Campaigns" },
+  { href: "/clipping/social-pr", label: "Social Media PR (10K+)" },
+  { href: "/clipping/how-it-works", label: "How It Works" },
+  { href: "/clipping/for-brands", label: "For Campaign Owners" },
+  { href: "/clipping/calculator", label: "Earnings Calculator" },
+  { href: "/clipping/rules", label: "Platform Rules & ASCI" },
+  { href: "/clipping/faq", label: "Clipping FAQ" },
+  { href: "/clipping/guides", label: "Creator Guides" },
+  { href: "/clipping/leaderboard", label: "Leaderboard" },
+];
+
+const communityLinks = [
+  { href: "/affiliates", label: "Affiliate Offers" },
+  { href: "/promoters", label: "1K+ Promoters" },
+  { href: "/partners", label: "Partner Perks" },
+  { href: "/leaderboard", label: "Points Leaderboard" },
+  { href: "/journal", label: "Journal & Updates" },
+  { href: "/resources", label: "Creator Toolkit" },
+];
+
+const legalLinks = [
+  { href: "/legal/terms", label: "Terms of Service" },
+  { href: "/legal/privacy", label: "Privacy Policy" },
+  { href: "/legal/cookies", label: "Cookie Policy" },
+  { href: "/legal/grievance", label: "Grievance Redressal" },
+  { href: "/guidelines", label: "Community Guidelines" },
+];
+
+const activeSocials = [
   social.instagram,
   social.whatsappChannel,
   social.whatsappCommunity,
@@ -16,71 +54,156 @@ const socialItems = [
 
 export function SiteFooter() {
   return (
-    <footer className="border-t border-border">
-      <Container className="grid gap-10 py-12 sm:grid-cols-2 lg:grid-cols-4">
-        <div className="sm:col-span-2 lg:col-span-1">
-          <Image
-            src="/brand/logo-white.png"
-            alt="CIRCLE"
-            width={300}
-            height={300}
-            className="size-[120px]"
-          />
-          <p className="mt-3 max-w-xs text-small text-silver">
-            {site.tagline}. A Portfolix initiative.
-          </p>
-          <p className="mt-3 text-small text-silver">{site.operatorDetail}</p>
-        </div>
-        <div>
-          <h2 className="text-small font-medium text-text">Social</h2>
-          <ul className="mt-3 space-y-1">
-            {socialItems.map((item) => (
-              <li key={item.label} className="flex flex-col">
-                <SocialLink href={item.href}>{item.label}</SocialLink>
-                {isPlaceholder(item.href) ? (
-                  <span className="text-small text-silver">Not published yet</span>
-                ) : null}
-              </li>
-            ))}
-          </ul>
-        </div>
-        <div>
-          <h2 className="text-small font-medium text-text">Explore</h2>
-          <ul className="mt-3 space-y-1">
-            {supportNav.map((item) => (
-              <li key={item.href}>
-                <Link
-                  href={item.href}
-                  className="inline-flex min-h-11 items-center text-small text-silver underline-offset-4 hover:text-text hover:underline"
-                >
-                  {item.label}
-                </Link>
-              </li>
-            ))}
-            <li>
-              <SocialLink href={social.email.href}>
+    <footer className="border-t border-border bg-bg text-text">
+      {/* 1. Full-Width Newsletter Strip */}
+      <div className="border-b border-border bg-surface/30 py-10 md:py-12">
+        <Container className="flex flex-col md:flex-row md:items-center justify-between gap-6">
+          <div className="max-w-md">
+            <span className="font-mono text-xs font-semibold uppercase tracking-wider text-lime">
+              Stay Connected
+            </span>
+            <h3 className="font-display text-xl sm:text-2xl font-bold tracking-tight text-white mt-1">
+              Subscribe to CIRCLE updates
+            </h3>
+            <p className="text-xs sm:text-sm text-silver mt-1.5 leading-relaxed">
+              Weekly verified brand collabs, funded video clipping briefs, and community workshop alerts.
+            </p>
+          </div>
+          <div className="w-full md:w-auto md:min-w-[360px]">
+            <NewsletterForm source="footer" tone="lime" />
+          </div>
+        </Container>
+      </div>
+
+      {/* 2. Main 5-Column Balanced Navigation */}
+      <Container className="py-12 md:py-16">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-8 lg:gap-10">
+          {/* Column 1: Brand & Operator Summary */}
+          <div className="flex flex-col gap-4">
+            <Link href="/" aria-label="CIRCLE Home" className="w-fit">
+              <Image
+                src="/brand/logo-white.png"
+                alt="CIRCLE"
+                width={120}
+                height={36}
+                className="h-9 w-auto object-contain"
+              />
+            </Link>
+            <p className="text-xs text-silver leading-relaxed max-w-xs mt-1">
+              {site.tagline}. An invite-free creator and brand collaboration network.
+            </p>
+            <p className="text-xs text-silver/80 leading-relaxed max-w-xs">
+              {site.operatorDetail}
+            </p>
+            <div className="mt-2 text-xs font-mono">
+              <a
+                href={social.email.href}
+                className="text-silver hover:text-white transition-colors underline underline-offset-4"
+              >
                 {social.email.href.replace(/^mailto:/, "")}
-              </SocialLink>
-            </li>
-          </ul>
-          <div className="mt-4">
-            <NewsletterForm source="footer" />
+              </a>
+            </div>
+          </div>
+
+          {/* Column 2: Platform Engine */}
+          <div>
+            <h4 className="font-mono text-xs font-semibold uppercase tracking-wider text-white">
+              Platform
+            </h4>
+            <ul className="mt-4 space-y-2.5">
+              {platformLinks.map((item) => (
+                <li key={item.href}>
+                  <Link
+                    href={item.href}
+                    className="text-xs text-silver hover:text-white transition-colors"
+                  >
+                    {item.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Column 3: Clipping & PR */}
+          <div>
+            <h4 className="font-mono text-xs font-semibold uppercase tracking-wider text-lime">
+              Clipping & PR
+            </h4>
+            <ul className="mt-4 space-y-2.5">
+              {clippingPrLinks.map((item) => (
+                <li key={item.href}>
+                  <Link
+                    href={item.href}
+                    className="text-xs text-silver hover:text-white transition-colors"
+                  >
+                    {item.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Column 4: Community & Opportunities */}
+          <div>
+            <h4 className="font-mono text-xs font-semibold uppercase tracking-wider text-white">
+              Community
+            </h4>
+            <ul className="mt-4 space-y-2.5">
+              {communityLinks.map((item) => (
+                <li key={item.href}>
+                  <Link
+                    href={item.href}
+                    className="text-xs text-silver hover:text-white transition-colors"
+                  >
+                    {item.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Column 5: Legal & Compliance */}
+          <div>
+            <h4 className="font-mono text-xs font-semibold uppercase tracking-wider text-white">
+              Trust & Legal
+            </h4>
+            <ul className="mt-4 space-y-2.5">
+              {legalLinks.map((item) => (
+                <li key={item.href}>
+                  <Link
+                    href={item.href}
+                    className="text-xs text-silver hover:text-white transition-colors"
+                  >
+                    {item.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+            <div className="mt-6 pt-4 border-t border-border/60">
+              <span className="block font-mono text-[11px] uppercase tracking-wider text-silver/70 mb-2">
+                Connect
+              </span>
+              <div className="flex flex-wrap gap-2 text-xs">
+                {activeSocials.map((item) => (
+                  <a
+                    key={item.label}
+                    href={item.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="rounded-full border border-border bg-surface px-2.5 py-1 text-[11px] text-silver hover:text-white hover:border-silver/40 transition-colors"
+                  >
+                    {item.label}
+                  </a>
+                ))}
+              </div>
+            </div>
           </div>
         </div>
-        <div>
-          <h2 className="text-small font-medium text-text">Legal</h2>
-          <ul className="mt-3 space-y-1">
-            {legalNav.map((item) => (
-              <li key={item.href}>
-                <Link
-                  href={item.href}
-                  className="inline-flex min-h-11 items-center text-small text-silver underline-offset-4 hover:text-text hover:underline"
-                >
-                  {item.label}
-                </Link>
-              </li>
-            ))}
-          </ul>
+
+        {/* 3. Base Copyright Strip */}
+        <div className="mt-12 pt-8 border-t border-border flex flex-col sm:flex-row items-center justify-between gap-4 text-xs font-mono text-silver/60">
+          <p>© 2026 Portfolix Enterprise Pvt Ltd. All rights reserved.</p>
+          <p className="text-[11px]">Designed for high-retention performance</p>
         </div>
       </Container>
     </footer>

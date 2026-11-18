@@ -36,9 +36,6 @@ export const primaryNav = [
   { href: "/clipping", label: "Clipping" },
   { href: "/events", label: "Events" },
   { href: "/learn", label: "Learn" },
-  { href: "/help", label: "Help" },
-  { href: "/brands", label: "For Brands" },
-  { href: "/about", label: "About" },
 ] as const;
 
 export const supportNav = [

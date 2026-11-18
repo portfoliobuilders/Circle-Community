@@ -1,108 +1,246 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { Check } from "lucide-react";
 
 import { JsonLd } from "@/components/seo/json-ld";
 import { Container } from "@/components/site/container";
 import { PillLink } from "@/components/site/pill-link";
-import { SocialLink } from "@/components/site/social-link";
+import { AnimatedAccordion } from "@/components/ui-motion/animated-accordion";
 import { faqSeed } from "@/lib/content/faqs";
-import { servicePath, servicesFor } from "@/lib/content/agency-services";
 import { pageMetadata } from "@/lib/seo";
-import { social } from "@/lib/site";
 
 export const metadata: Metadata = pageMetadata(
-  "Membership",
-  "CIRCLE membership is free. No subscription paywalls. Transparent 10% platform fee applies only to completed marketplace deals.",
+  "Membership & Fees",
+  "CIRCLE membership is free to join. No monthly paywalls. A 10% platform fee applies only to completed collab and clipping deals.",
   "/membership",
 );
 
-const freeItems = [
-  "Profile and verified directory listing",
-  "Access to open collab briefs (10% platform fee on completed deals)",
-  "Access to video clipping campaigns (10% performance fee upon payout)",
-  "Free community webinars and bootcamps",
-  "Partner discounts on studios, gear, and software",
-  "Points, badges, and monthly leaderboards",
-  "Annual community awards eligibility",
-];
-
-const neverCharge = [
-  "Joining CIRCLE or browsing directory listings",
-  "Creating or maintaining a creator profile",
-  "Applying or pitching for collabs",
-  "Attending community learning webinars",
-  "Profile identity verification",
-];
-
-const excerptIds = [
+const excerptFaqIds = [
   "00000000-0000-4000-8000-000000000001",
   "00000000-0000-4000-8000-000000000006",
   "00000000-0000-4000-8000-000000000003",
-  "00000000-0000-4000-8000-000000000009",
+  "00000000-0000-4000-8000-000000000007",
 ];
 
 export default function MembershipPage() {
-  const faqs = faqSeed.filter((faq) => excerptIds.includes(faq.id));
-  const paid = [...servicesFor("brand"), ...servicesFor("creator")];
+  const faqs = faqSeed.filter((faq) => excerptFaqIds.includes(faq.id));
+
+  const accordionItems = faqs.map((faq) => ({
+    id: faq.id,
+    title: faq.question,
+    content: (
+      <div className="text-xs sm:text-sm text-silver leading-relaxed whitespace-pre-wrap">
+        {faq.answer_md}
+      </div>
+    ),
+  }));
 
   return (
     <Container className="py-16 sm:py-24">
-      <p className="text-small tracking-[0.18em] text-silver uppercase">Membership</p>
-      <h1 className="font-display mt-4 max-w-3xl text-display-sm font-medium tracking-tight uppercase sm:text-display">
-        Membership is free
-      </h1>
-      <p className="mt-6 max-w-2xl text-lead text-silver">
-        No monthly subscriptions and no paywalled listings. Transparent 10% platform fee applies only to completed marketplace deals.
-      </p>
-      <div className="mt-12 grid gap-10 lg:grid-cols-2">
-        <section className="rounded-2xl border border-border bg-surface p-6 sm:p-8">
-          <h2 className="font-display text-title-sm font-medium">Free for every member</h2>
-          <ul className="mt-4 list-disc space-y-2 pl-5 text-silver">
-            {freeItems.map((item) => (
-              <li key={item}>{item}</li>
-            ))}
-          </ul>
-        </section>
-        <section className="rounded-2xl border border-border p-6 sm:p-8">
-          <h2 className="font-display text-title-sm font-medium">
-            Optional paid services
-          </h2>
-          <p className="mt-3 text-small text-silver">
-            Portfolix Media and Portfolix Tech. Each price is &quot;Quote on request&quot;.
-          </p>
-          <ul className="mt-4 space-y-2">
-            {paid.map((service) => (
-              <li key={service.slug}>
-                <Link href={servicePath(service)} className="inline-flex min-h-11 items-center underline-offset-4 hover:underline">
-                  {service.title}
-                </Link>
-                <span className="block text-small text-silver">Quote on request</span>
-              </li>
-            ))}
-          </ul>
-        </section>
-      </div>
-      <section className="mt-12 rounded-2xl border border-border bg-surface p-6 sm:p-8">
-        <h2 className="font-display text-title-sm font-medium">Transparent marketplace fees</h2>
-        <p className="mt-2 text-silver">
-          Joining CIRCLE and maintaining a directory profile is free. When deals complete, CIRCLE charges a clear 10% platform fee to protect transactions:
+      {/* 1. Statement Header */}
+      <div className="max-w-2xl">
+        <span className="font-mono text-xs uppercase tracking-widest text-silver">
+          Fair Marketplace · Zero Paywalls
+        </span>
+        <h1 className="font-display mt-4 text-3xl sm:text-5xl font-bold tracking-tight uppercase text-white">
+          Membership is free
+        </h1>
+        <p className="mt-4 text-base sm:text-lg text-silver leading-relaxed">
+          No monthly subscriptions and no paywalled directory listings. A transparent 10% platform fee applies only when you earn or hire through completed marketplace deals.
         </p>
-        <ul className="mt-4 list-disc space-y-2 pl-5 text-silver">
-          <li><strong>Brand collabs:</strong> 10% platform fee deducted on completed creator payouts.</li>
-          <li><strong>Video clipping:</strong> 10% platform fee deducted from verified locked clip earnings.</li>
-          <li><strong>Campaign owners:</strong> 10% service fee on campaign budgets covering automated view auditing.</li>
-        </ul>
+      </div>
+
+      {/* 2. Three-Tier Value Comparison Matrix (Bento Layout) */}
+      <div className="mt-12 grid grid-cols-1 md:grid-cols-3 gap-6">
+        {/* Tier 1: Free Community Member */}
+        <div className="rounded-2xl border border-border bg-surface/50 p-6 sm:p-7 flex flex-col justify-between">
+          <div>
+            <div className="flex items-center justify-between mb-4">
+              <span className="font-mono text-xs font-semibold uppercase tracking-wider text-white">
+                Community
+              </span>
+              <span className="font-mono text-xs font-bold text-lime">₹0 / month</span>
+            </div>
+            <h2 className="font-display text-xl font-bold text-white uppercase">
+              Free Member
+            </h2>
+            <p className="mt-2 text-xs text-silver leading-relaxed">
+              For creators, freelancers, and studios listing their craft in the national directory.
+            </p>
+
+            <ul className="mt-6 space-y-2.5 text-xs text-silver">
+              <li className="flex items-center gap-2">
+                <Check className="size-3.5 text-lime shrink-0" />
+                <span>Verified profile in public directory</span>
+              </li>
+              <li className="flex items-center gap-2">
+                <Check className="size-3.5 text-lime shrink-0" />
+                <span>Apply or bid for brand collabs</span>
+              </li>
+              <li className="flex items-center gap-2">
+                <Check className="size-3.5 text-lime shrink-0" />
+                <span>Free webinars, workshops, and bootcamps</span>
+              </li>
+              <li className="flex items-center gap-2">
+                <Check className="size-3.5 text-lime shrink-0" />
+                <span>Partner perks on studio floors & gear</span>
+              </li>
+            </ul>
+          </div>
+
+          <div className="mt-8 pt-6 border-t border-border">
+            <span className="block text-[11px] font-mono text-silver mb-3">
+              Fee: 10% on completed collab payouts
+            </span>
+            <Link
+              href="/signup?role=creator"
+              className="inline-flex min-h-11 w-full items-center justify-center rounded-full bg-lime text-xs font-bold text-bg hover:bg-lime/90 transition-colors"
+            >
+              Join free
+            </Link>
+          </div>
+        </div>
+
+        {/* Tier 2: Video Clipper */}
+        <div className="rounded-2xl border border-lime/40 bg-surface/90 p-6 sm:p-7 flex flex-col justify-between relative shadow-lg">
+          <div>
+            <div className="flex items-center justify-between mb-4">
+              <span className="font-mono text-xs font-semibold uppercase tracking-wider text-lime">
+                Performance
+              </span>
+              <span className="font-mono text-xs font-bold text-lime">Pay-Per-View</span>
+            </div>
+            <h2 className="font-display text-xl font-bold text-white uppercase">
+              Video Clipper
+            </h2>
+            <p className="mt-2 text-xs text-silver leading-relaxed">
+              For video editors editing short-form YouTube Shorts & Instagram Reels from source footage.
+            </p>
+
+            <ul className="mt-6 space-y-2.5 text-xs text-silver">
+              <li className="flex items-center gap-2">
+                <Check className="size-3.5 text-lime shrink-0" />
+                <span>Access funded campaign asset drives</span>
+              </li>
+              <li className="flex items-center gap-2">
+                <Check className="size-3.5 text-lime shrink-0" />
+                <span>Earn ₹10–₹200 per 1,000 verified views</span>
+              </li>
+              <li className="flex items-center gap-2">
+                <Check className="size-3.5 text-lime shrink-0" />
+                <span>Automated view snapshot verification</span>
+              </li>
+              <li className="flex items-center gap-2">
+                <Check className="size-3.5 text-lime shrink-0" />
+                <span>Weekly direct UPI ledger payouts</span>
+              </li>
+            </ul>
+          </div>
+
+          <div className="mt-8 pt-6 border-t border-border">
+            <span className="block text-[11px] font-mono text-lime mb-3">
+              Fee: 10% deducted on Day 7 lock
+            </span>
+            <Link
+              href="/clipping"
+              className="inline-flex min-h-11 w-full items-center justify-center rounded-full bg-lime text-xs font-bold text-bg hover:bg-lime/90 transition-colors"
+            >
+              Browse clipping briefs
+            </Link>
+          </div>
+        </div>
+
+        {/* Tier 3: Brand & Agency Client */}
+        <div className="rounded-2xl border border-border bg-surface/50 p-6 sm:p-7 flex flex-col justify-between">
+          <div>
+            <div className="flex items-center justify-between mb-4">
+              <span className="font-mono text-xs font-semibold uppercase tracking-wider text-white">
+                Advertisers
+              </span>
+              <span className="font-mono text-xs font-bold text-silver">Custom Scope</span>
+            </div>
+            <h2 className="font-display text-xl font-bold text-white uppercase">
+              Brand & Agency
+            </h2>
+            <p className="mt-2 text-xs text-silver leading-relaxed">
+              For brands hiring creators directly or commissioning dedicated Portfolix managed campaigns.
+            </p>
+
+            <ul className="mt-6 space-y-2.5 text-xs text-silver">
+              <li className="flex items-center gap-2">
+                <Check className="size-3.5 text-lime shrink-0" />
+                <span>Post self-serve collabs with budget floors</span>
+              </li>
+              <li className="flex items-center gap-2">
+                <Check className="size-3.5 text-lime shrink-0" />
+                <span>Launch performance clipping campaigns</span>
+              </li>
+              <li className="flex items-center gap-2">
+                <Check className="size-3.5 text-lime shrink-0" />
+                <span>Direct creator contact without markups</span>
+              </li>
+              <li className="flex items-center gap-2">
+                <Check className="size-3.5 text-lime shrink-0" />
+                <span>Optional managed production services</span>
+              </li>
+            </ul>
+          </div>
+
+          <div className="mt-8 pt-6 border-t border-border">
+            <span className="block text-[11px] font-mono text-silver mb-3">
+              Fee: 10% on brief budgets
+            </span>
+            <Link
+              href="/brands"
+              className="inline-flex min-h-11 w-full items-center justify-center rounded-full border border-border bg-bg text-xs font-semibold text-white hover:bg-surface transition-colors"
+            >
+              Explore brand options
+            </Link>
+          </div>
+        </div>
+      </div>
+
+      {/* 3. Fee Transparency Strip */}
+      <section className="mt-14 rounded-2xl border border-border bg-surface/30 p-6 sm:p-10">
+        <div className="max-w-3xl">
+          <span className="font-mono text-xs font-semibold uppercase tracking-wider text-lime">
+            Commercial Standards
+          </span>
+          <h2 className="font-display text-2xl sm:text-3xl font-bold uppercase tracking-tight text-white mt-2">
+            Why CIRCLE charges a 10% platform fee
+          </h2>
+          <p className="mt-4 text-xs sm:text-sm text-silver leading-relaxed">
+            We don&apos;t charge monthly memberships, profile listing costs, or application fees. The 10% platform fee on completed deals sustains our fraud review team, manual creator bio verification, automated view snapshot auditing, and escrow disbursement security.
+          </p>
+
+          <div className="mt-6 grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div className="rounded-xl border border-border bg-bg/80 p-4">
+              <span className="font-mono text-xs font-semibold text-white">What is free to access</span>
+              <p className="mt-1 text-xs text-silver">
+                Creating your profile, appearing in search, pitching on briefs, and attending all community workshops.
+              </p>
+            </div>
+            <div className="rounded-xl border border-border bg-bg/80 p-4">
+              <span className="font-mono text-xs font-semibold text-white">When the 10% fee applies</span>
+              <p className="mt-1 text-xs text-silver">
+                Only when deliverables are completed and approved, or upon the Day 7 view lock on clipping payouts.
+              </p>
+            </div>
+          </div>
+        </div>
       </section>
-      <section className="mt-12">
-        <h2 className="font-display text-title-sm font-medium">What CIRCLE will never charge you for</h2>
-        <ul className="mt-4 list-disc space-y-2 pl-5 text-silver">
-          {neverCharge.map((item) => (
-            <li key={item}>{item}</li>
-          ))}
-        </ul>
-      </section>
-      <section className="mt-12">
-        <h2 className="font-display text-title-sm font-medium">Common questions</h2>
+
+      {/* 4. Common Questions Accordion */}
+      <section className="mt-16 max-w-3xl">
+        <div className="mb-8">
+          <span className="font-mono text-xs font-semibold uppercase tracking-wider text-lime">
+            Membership FAQ
+          </span>
+          <h2 className="font-display text-2xl font-bold text-white mt-1">
+            Questions about membership
+          </h2>
+        </div>
+
         <JsonLd
           data={{
             "@context": "https://schema.org",
@@ -114,35 +252,19 @@ export default function MembershipPage() {
             })),
           }}
         />
-        <ul className="mt-4 divide-y divide-border border-y border-border">
-          {faqs.map((faq) => (
-            <li key={faq.id} className="py-4">
-              <h3 className="font-medium">{faq.question}</h3>
-              <p className="mt-2 text-silver">{faq.answer_md}</p>
-            </li>
-          ))}
-        </ul>
-        <p className="mt-4">
-          <Link href="/help" className="text-small text-silver underline">All questions</Link>
-        </p>
+
+        <AnimatedAccordion items={accordionItems} />
+
+        <div className="mt-8 flex items-center justify-between">
+          <Link
+            href="/help"
+            className="font-mono text-xs text-silver hover:text-white underline underline-offset-4"
+          >
+            Read all questions in Help Center →
+          </Link>
+          <PillLink href="/signup">Create free account</PillLink>
+        </div>
       </section>
-      <div className="mt-10">
-        <PillLink href="/signup">Create free account</PillLink>
-      </div>
-      <div className="mt-8 flex flex-col items-start gap-3">
-        <SocialLink
-          href={social.whatsappChannel.href}
-          className="justify-center rounded-full border border-border px-5 no-underline hover:bg-surface hover:no-underline"
-        >
-          Join WhatsApp Channel
-        </SocialLink>
-        <SocialLink
-          href={social.instagram.href}
-          className="justify-center rounded-full border border-border px-5 no-underline hover:bg-surface hover:no-underline"
-        >
-          Follow on Instagram
-        </SocialLink>
-      </div>
     </Container>
   );
 }

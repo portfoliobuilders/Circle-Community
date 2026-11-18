@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { formatInr } from "@/lib/format";
 import { BudgetRing } from "./budget-ring";
+import { CampaignAge } from "./campaign-age";
 import type { Campaign } from "@/lib/clipping/types";
 
 interface CampaignCardProps {
@@ -8,21 +9,7 @@ interface CampaignCardProps {
   showPromotedBadge?: boolean;
 }
 
-function formatAge(isoDate: string): string {
-  const diffMs = Date.now() - new Date(isoDate).getTime();
-  const diffDays = Math.max(0, Math.floor(diffMs / (1000 * 60 * 60 * 24)));
-  if (diffDays >= 14) {
-    const weeks = Math.floor(diffDays / 7);
-    return `${weeks}w`;
-  }
-  if (diffDays >= 1) {
-    return `${diffDays}d`;
-  }
-  return "New";
-}
-
 export function CampaignCard({ campaign, showPromotedBadge = true }: CampaignCardProps) {
-  const age = formatAge(campaign.created_at);
 
   return (
     <article className="group relative flex flex-col justify-between rounded-2xl border border-border bg-card p-5 transition-all duration-200 hover:-translate-y-1 hover:border-silver/40 motion-reduce:transition-none motion-reduce:hover:translate-y-0">
@@ -49,7 +36,7 @@ export function CampaignCard({ campaign, showPromotedBadge = true }: CampaignCar
             )}
           </div>
           <span className="text-[11px] text-silver font-mono" title={`Created ${campaign.created_at}`}>
-            {age}
+            <CampaignAge isoDate={campaign.created_at} />
           </span>
         </div>
 

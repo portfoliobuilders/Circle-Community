@@ -1,5 +1,7 @@
 export type PlatformType = "youtube_shorts" | "instagram_reels";
 
+export type CampaignType = "clipping" | "social_pr";
+
 export type CampaignStatus =
   | "draft"
   | "pending_review"
@@ -22,6 +24,7 @@ export interface Campaign {
   owner_id: string;
   owner_name: string;
   owner_avatar_url?: string | null;
+  campaign_type?: CampaignType;
   title: string;
   summary: string;
   brief_md: string;
@@ -42,6 +45,7 @@ export interface Campaign {
   required_caption?: string | null;
   required_hashtags: string[];
   required_mention?: string | null;
+  required_link?: string | null;
   disclosure_required: boolean;
   rights_confirmed_at?: string | null;
   starts_at?: string | null;
@@ -52,6 +56,19 @@ export interface Campaign {
   cover_path?: string | null;
   created_at: string;
 
+  // PR specific fields (optional / nullable on clipping)
+  deliverable_type?: "reel" | "post" | "carousel" | "story" | "short" | null;
+  fee_per_post_inr?: number | null;
+  slots?: number | null;
+  pricing_mode?: "fixed" | "quote" | null;
+  min_followers?: number | null;
+  max_followers?: number | null;
+  niches?: string[];
+  cities?: string[];
+  content_approval_required?: boolean;
+  subject_type?: "brand" | "individual" | null;
+  subject_consent_confirmed_at?: string | null;
+
   // Derived fields
   budgetLeftInr: number;
   budgetUsedPct: number;
@@ -59,6 +76,145 @@ export interface Campaign {
   netRateInrPer1k: number;
   isPromoted: boolean;
   ownerVerified: boolean;
+}
+
+export interface CreatorPlatform {
+  id: string;
+  profile_id: string;
+  platform: PlatformType;
+  handle: string;
+  platform_account_id?: string | null;
+  verification_code: string;
+  code_expires_at: string;
+  verified: boolean;
+  verified_at?: string | null;
+  admin_verified_followers?: number | null;
+  followers_verified_at?: string | null;
+  followers_verified_by?: string | null;
+  created_at: string;
+}
+
+export type SubmissionStatus =
+  | "pending"
+  | "approved"
+  | "rejected"
+  | "removed"
+  | "disqualified";
+
+export interface ClipSubmission {
+  id: string;
+  campaign_id: string;
+  campaign_title?: string;
+  clipper_id: string;
+  clipper_name?: string;
+  clipper_handle?: string;
+  platform: PlatformType;
+  post_url: string;
+  post_id_normalised: string;
+  platform_account_id: string;
+  posted_at: string;
+  status: SubmissionStatus;
+  reject_reason?: string | null;
+  reviewed_by?: string | null;
+  reviewed_at?: string | null;
+  created_at: string;
+
+  // Associated earnings / views if present
+  earnings?: ClipEarning | null;
+  latest_snapshot?: ClipViewSnapshot | null;
+}
+
+export type SnapshotSource = "youtube_api" | "admin_verified" | "clipper_reported";
+
+export interface ClipViewSnapshot {
+  id: string;
+  submission_id: string;
+  views: number;
+  likes?: number | null;
+  comments?: number | null;
+  source: SnapshotSource;
+  is_live: boolean;
+  evidence_path?: string | null;
+  captured_by?: string | null;
+  captured_at: string;
+}
+
+export type EarningStatus = "accruing" | "payable" | "paid" | "void";
+
+export interface ClipEarning {
+  submission_id: string;
+  verified_views: number;
+  payable_views: number;
+  gross_amount_inr: number;
+  fee_amount_inr: number;
+  net_amount_inr: number;
+  status: EarningStatus;
+  locked_at?: string | null;
+  updated_at: string;
+}
+
+export type LedgerEntryType =
+  | "earning"
+  | "fee"
+  | "payout"
+  | "adjustment"
+  | "reversal"
+  | "fee_reversal";
+
+export type LedgerRefType =
+  | "clip_submission"
+  | "pr_deliverable"
+  | "payout_request"
+  | "admin_adjustment";
+
+export interface WalletLedgerEntry {
+  id: string;
+  profile_id: string;
+  type: LedgerEntryType;
+  amount_inr: number;
+  ref_type: LedgerRefType;
+  ref_id: string;
+  note?: string | null;
+  created_by?: string | null;
+  created_at: string;
+}
+
+export type PayoutStatus =
+  | "requested"
+  | "processing"
+  | "paid"
+  | "failed"
+  | "rejected";
+
+export interface PayoutRequest {
+  id: string;
+  profile_id: string;
+  amount_inr: number;
+  upi_id_encrypted: string;
+  upi_id?: string;
+  status: PayoutStatus;
+  paid_ref?: string | null;
+  paid_at?: string | null;
+  processed_by?: string | null;
+  created_at: string;
+}
+
+export interface WalletSummary {
+  netBalanceInr: number;
+  totalGrossEarnedInr: number;
+  totalFeesPaidInr: number;
+  totalNetPaidOutInr: number;
+  pendingPayoutInr: number;
+}
+
+export interface ClipFraudFlag {
+  id: string;
+  submission_id?: string | null;
+  deliverable_id?: string | null;
+  rule: string;
+  detail: Record<string, unknown>;
+  status: "open" | "cleared" | "confirmed";
+  created_at: string;
 }
 
 export interface TopClip {
@@ -74,6 +230,7 @@ export interface TopClip {
 }
 
 export interface CampaignFilters {
+  campaign_type?: "all" | CampaignType;
   category?: string;
   language?: string;
   platform?: "all" | PlatformType;

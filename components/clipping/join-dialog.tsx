@@ -81,11 +81,11 @@ export function JoinDialog({ campaignTitle }: JoinDialogProps) {
           </div>
 
           <div className="mt-6 flex flex-col sm:flex-row items-center gap-3">
-            <PillLink href="/signup" className="w-full sm:w-auto">
-              Create an account
+            <PillLink href="/dashboard/clipping" className="w-full sm:w-auto">
+              Open Clipper Studio
             </PillLink>
             <PillLink href="/dashboard" variant="secondary" className="w-full sm:w-auto">
-              Check dashboard profile
+              Check Profile
             </PillLink>
           </div>
 

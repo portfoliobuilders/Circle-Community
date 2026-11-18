@@ -1,0 +1,536 @@
+"use client";
+
+import { useState, useTransition } from "react";
+import { useRouter } from "next/navigation";
+import { createCampaign } from "@/lib/actions/clipping";
+import { CLIPPING_CONFIG } from "@/lib/config/clipping";
+import { formatInr } from "@/lib/format";
+import type { PlatformType } from "@/lib/clipping/types";
+
+const CATEGORIES = [
+  "Technology & AI",
+  "Finance & Crypto",
+  "Business & Startups",
+  "Fitness & Health",
+  "Entertainment & Comedy",
+  "Gaming",
+  "Education & Careers",
+  "Lifestyle & Travel",
+];
+
+interface SourceLink {
+  title: string;
+  url: string;
+}
+
+export function CampaignCreateForm() {
+  const router = useRouter();
+  const [isPending, startTransition] = useTransition();
+  const [statusMsg, setStatusMsg] = useState<{ type: "success" | "error"; text: string } | null>(null);
+
+  // Form State
+  const [title, setTitle] = useState("");
+  const [summary, setSummary] = useState("");
+  const [briefMd, setBriefMd] = useState("");
+  const [rulesMd, setRulesMd] = useState("");
+  const [category, setCategory] = useState(CATEGORIES[0]);
+  const [language, setLanguage] = useState("en");
+  const [platforms, setPlatforms] = useState<PlatformType[]>(["youtube_shorts", "instagram_reels"]);
+  const [rateInrPer1k, setRateInrPer1k] = useState<number>(25);
+  const [budgetInr, setBudgetInr] = useState<number>(10000);
+  const [perClipCap, setPerClipCap] = useState<number>(100000);
+  const [sourceLinks, setSourceLinks] = useState<SourceLink[]>([
+    { title: "Main Episode Footage", url: "" },
+  ]);
+  const [assetFolderUrl, setAssetFolderUrl] = useState("");
+  const [requiredCaption, setRequiredCaption] = useState("");
+  const [requiredHashtags, setRequiredHashtags] = useState("");
+  const [requiredMention, setRequiredMention] = useState("");
+  const [rightsConfirmed, setRightsConfirmed] = useState(false);
+
+  // Financial calculations
+  const platformFeeInr = Math.floor((budgetInr * CLIPPING_CONFIG.ownerFeePct) / 100);
+  const totalInvoiceInr = budgetInr + platformFeeInr;
+  const estimatedTotalViews = rateInrPer1k > 0 ? Math.floor((budgetInr / rateInrPer1k) * 1000) : 0;
+  const netClipperRate = rateInrPer1k - Math.floor((rateInrPer1k * CLIPPING_CONFIG.clipperFeePct) / 100);
+
+  function togglePlatform(plat: PlatformType) {
+    if (platforms.includes(plat)) {
+      if (platforms.length === 1) return; // Keep at least one
+      setPlatforms(platforms.filter((p) => p !== plat));
+    } else {
+      setPlatforms([...platforms, plat]);
+    }
+  }
+
+  function addSourceLink() {
+    setSourceLinks([...sourceLinks, { title: "", url: "" }]);
+  }
+
+  function removeSourceLink(index: number) {
+    if (sourceLinks.length === 1) return;
+    setSourceLinks(sourceLinks.filter((_, i) => i !== index));
+  }
+
+  function updateSourceLink(index: number, field: "title" | "url", value: string) {
+    const updated = [...sourceLinks];
+    updated[index][field] = value;
+    setSourceLinks(updated);
+  }
+
+  function handleSubmit(e: React.FormEvent) {
+    e.preventDefault();
+    setStatusMsg(null);
+
+    if (!rightsConfirmed) {
+      setStatusMsg({
+        type: "error",
+        text: "You must confirm you have legal rights to commission edits from this footage.",
+      });
+      return;
+    }
+
+    const validSourceLinks = sourceLinks.filter((s) => s.url.trim().length > 0);
+    if (validSourceLinks.length === 0) {
+      setStatusMsg({
+        type: "error",
+        text: "Please provide at least one valid source footage link.",
+      });
+      return;
+    }
+
+    startTransition(async () => {
+      const payload = {
+        title,
+        summary,
+        brief_md: briefMd,
+        rules_md: rulesMd,
+        category,
+        language,
+        platforms,
+        rate_inr_per_1k: rateInrPer1k,
+        budget_inr: budgetInr,
+        per_clip_view_cap: perClipCap,
+        source_links: validSourceLinks,
+        assetFolderUrl: assetFolderUrl.trim() || undefined,
+        required_caption: requiredCaption.trim() || undefined,
+        required_hashtags: requiredHashtags,
+        required_mention: requiredMention.trim() || undefined,
+        rights_confirmed: true as const,
+      };
+
+      const res = await createCampaign(payload);
+      if (res.status === "success") {
+        setStatusMsg({
+          type: "success",
+          text: "Campaign submitted for review! An admin will verify the footage rights and send your funding invoice.",
+        });
+        setTimeout(() => {
+          router.push("/dashboard/clipping/campaigns");
+        }, 2000);
+      } else {
+        setStatusMsg({ type: "error", text: res.message });
+      }
+    });
+  }
+
+  return (
+    <form onSubmit={handleSubmit} className="space-y-8">
+      {statusMsg ? (
+        <div
+          className={`rounded-xl border p-4 text-small ${
+            statusMsg.type === "success"
+              ? "border-lime/30 bg-lime/10 text-lime"
+              : "border-red-500/30 bg-red-500/10 text-red-400"
+          }`}
+        >
+          {statusMsg.text}
+        </div>
+      ) : null}
+
+      {/* Core Campaign Details */}
+      <div className="rounded-2xl border border-border bg-surface p-6 sm:p-8 space-y-6">
+        <h2 className="font-display text-lead font-medium uppercase tracking-tight text-text">
+          1. Campaign Overview
+        </h2>
+
+        <div>
+          <label htmlFor="camp-title" className="block text-small font-medium text-text">
+            Campaign Title *
+          </label>
+          <input
+            id="camp-title"
+            type="text"
+            required
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
+            placeholder="e.g. The AI Founder Show — Episode 42 Viral Clipping"
+            className="mt-2 w-full rounded-xl border border-border bg-bg px-4 py-3 text-text placeholder-silver/50 focus:border-lime focus:outline-none"
+          />
+        </div>
+
+        <div>
+          <label htmlFor="camp-summary" className="block text-small font-medium text-text">
+            Short Summary * (Max 200 chars)
+          </label>
+          <input
+            id="camp-summary"
+            type="text"
+            required
+            maxLength={200}
+            value={summary}
+            onChange={(e) => setSummary(e.target.value)}
+            placeholder="Turn key debate moments and founder stories into punchy 30-60s vertical shorts."
+            className="mt-2 w-full rounded-xl border border-border bg-bg px-4 py-3 text-text placeholder-silver/50 focus:border-lime focus:outline-none"
+          />
+          <p className="mt-1 text-xs text-silver">{summary.length} / 200 characters</p>
+        </div>
+
+        <div className="grid gap-6 sm:grid-cols-2">
+          <div>
+            <label htmlFor="camp-category" className="block text-small font-medium text-text">
+              Category *
+            </label>
+            <select
+              id="camp-category"
+              value={category}
+              onChange={(e) => setCategory(e.target.value)}
+              className="mt-2 w-full rounded-xl border border-border bg-bg px-4 py-3 text-text focus:border-lime focus:outline-none"
+            >
+              {CATEGORIES.map((cat) => (
+                <option key={cat} value={cat}>
+                  {cat}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          <div>
+            <label htmlFor="camp-lang" className="block text-small font-medium text-text">
+              Language *
+            </label>
+            <select
+              id="camp-lang"
+              value={language}
+              onChange={(e) => setLanguage(e.target.value)}
+              className="mt-2 w-full rounded-xl border border-border bg-bg px-4 py-3 text-text focus:border-lime focus:outline-none"
+            >
+              <option value="en">English</option>
+              <option value="hi">Hindi</option>
+              <option value="hinglish">Hinglish</option>
+              <option value="multi">Multilingual</option>
+            </select>
+          </div>
+        </div>
+
+        <div>
+          <label className="block text-small font-medium text-text">Deliverable Platforms *</label>
+          <p className="text-xs text-silver mt-1">Select where creators can publish their clips.</p>
+          <div className="mt-3 flex flex-wrap gap-4">
+            <button
+              type="button"
+              onClick={() => togglePlatform("youtube_shorts")}
+              className={`inline-flex min-h-11 items-center gap-2 rounded-xl border px-4 py-2.5 text-sm font-medium transition ${
+                platforms.includes("youtube_shorts")
+                  ? "border-lime bg-lime/10 text-lime"
+                  : "border-border bg-bg text-silver hover:text-text"
+              }`}
+            >
+              <span>▶</span> YouTube Shorts
+            </button>
+            <button
+              type="button"
+              onClick={() => togglePlatform("instagram_reels")}
+              className={`inline-flex min-h-11 items-center gap-2 rounded-xl border px-4 py-2.5 text-sm font-medium transition ${
+                platforms.includes("instagram_reels")
+                  ? "border-lime bg-lime/10 text-lime"
+                  : "border-border bg-bg text-silver hover:text-text"
+              }`}
+            >
+              <span>📷</span> Instagram Reels
+            </button>
+          </div>
+        </div>
+      </div>
+
+      {/* Financials & Payout Math */}
+      <div className="rounded-2xl border border-border bg-surface p-6 sm:p-8 space-y-6">
+        <h2 className="font-display text-lead font-medium uppercase tracking-tight text-text">
+          2. Budget & Payout Rates
+        </h2>
+
+        <div className="grid gap-6 sm:grid-cols-2">
+          <div>
+            <label htmlFor="camp-rate" className="block text-small font-medium text-text">
+              Gross Rate per 1,000 Views (INR) *
+            </label>
+            <div className="relative mt-2">
+              <span className="absolute left-4 top-3 text-silver">₹</span>
+              <input
+                id="camp-rate"
+                type="number"
+                required
+                min={CLIPPING_CONFIG.clipRateMinInrPer1k}
+                max={CLIPPING_CONFIG.clipRateMaxInrPer1k}
+                value={rateInrPer1k}
+                onChange={(e) => setRateInrPer1k(Number(e.target.value))}
+                className="w-full rounded-xl border border-border bg-bg pl-8 pr-4 py-3 text-text focus:border-lime focus:outline-none"
+              />
+            </div>
+            <p className="mt-1 text-xs text-silver">
+              Allowed: ₹{CLIPPING_CONFIG.clipRateMinInrPer1k} – ₹{CLIPPING_CONFIG.clipRateMaxInrPer1k} / 1K views.
+              Creator receives net <strong className="text-lime">{formatInr(netClipperRate)}</strong> after CIRCLE 10% platform fee.
+            </p>
+          </div>
+
+          <div>
+            <label htmlFor="camp-budget" className="block text-small font-medium text-text">
+              Campaign Budget (INR) *
+            </label>
+            <div className="relative mt-2">
+              <span className="absolute left-4 top-3 text-silver">₹</span>
+              <input
+                id="camp-budget"
+                type="number"
+                required
+                min={1000}
+                step={500}
+                value={budgetInr}
+                onChange={(e) => setBudgetInr(Number(e.target.value))}
+                className="w-full rounded-xl border border-border bg-bg pl-8 pr-4 py-3 text-text focus:border-lime focus:outline-none"
+              />
+            </div>
+            <p className="mt-1 text-xs text-silver">
+              Minimum ₹1,000. Funds pay creators directly as views mature.
+            </p>
+          </div>
+        </div>
+
+        <div>
+          <label htmlFor="camp-cap" className="block text-small font-medium text-text">
+            Per-Clip View Cap
+          </label>
+          <input
+            id="camp-cap"
+            type="number"
+            min={1000}
+            step={1000}
+            value={perClipCap}
+            onChange={(e) => setPerClipCap(Number(e.target.value))}
+            className="mt-2 w-full max-w-sm rounded-xl border border-border bg-bg px-4 py-3 text-text focus:border-lime focus:outline-none"
+          />
+          <p className="mt-1 text-xs text-silver">
+            Protects your budget if one clip blows up. Default is 100,000 views (max ₹
+            {formatInr((perClipCap / 1000) * rateInrPer1k)} per clip).
+          </p>
+        </div>
+
+        {/* Live Invoice Breakdown */}
+        <div className="rounded-xl border border-border bg-bg p-5 space-y-3">
+          <p className="text-xs uppercase tracking-wider text-silver">Transparent Invoice Breakdown</p>
+          <div className="flex justify-between text-sm">
+            <span className="text-silver">Creator Payout Escrow Budget:</span>
+            <span className="font-mono font-medium text-text">{formatInr(budgetInr)}</span>
+          </div>
+          <div className="flex justify-between text-sm">
+            <span className="text-silver">CIRCLE Platform Service Fee (10% on top):</span>
+            <span className="font-mono font-medium text-text">{formatInr(platformFeeInr)}</span>
+          </div>
+          <div className="flex justify-between border-t border-border pt-3 text-base">
+            <span className="font-medium text-text">Total Upfront Invoice:</span>
+            <span className="font-display font-semibold text-lime">{formatInr(totalInvoiceInr)}</span>
+          </div>
+          <div className="rounded-lg bg-surface/50 p-3 text-xs text-silver">
+            📈 At this rate, your budget covers up to{" "}
+            <strong className="text-text">{estimatedTotalViews.toLocaleString("en-IN")} verified views</strong> across all accepted clips.
+          </div>
+        </div>
+      </div>
+
+      {/* Brief, Guidelines & Rules */}
+      <div className="rounded-2xl border border-border bg-surface p-6 sm:p-8 space-y-6">
+        <h2 className="font-display text-lead font-medium uppercase tracking-tight text-text">
+          3. Brief & Source Footage
+        </h2>
+
+        <div>
+          <label htmlFor="camp-brief" className="block text-small font-medium text-text">
+            Editing Brief & Hook Instructions * (Markdown)
+          </label>
+          <textarea
+            id="camp-brief"
+            required
+            rows={5}
+            value={briefMd}
+            onChange={(e) => setBriefMd(e.target.value)}
+            placeholder="Tell clippers what makes a winning hook, which timestamps to focus on, and required styling (captions, pacing, music style)."
+            className="mt-2 w-full rounded-xl border border-border bg-bg px-4 py-3 text-text placeholder-silver/50 focus:border-lime focus:outline-none"
+          />
+        </div>
+
+        <div>
+          <label htmlFor="camp-rules" className="block text-small font-medium text-text">
+            Campaign Rules & Quality Bar (Markdown, Optional)
+          </label>
+          <textarea
+            id="camp-rules"
+            rows={3}
+            value={rulesMd}
+            onChange={(e) => setRulesMd(e.target.value)}
+            placeholder="e.g. No AI voiceover over original speaker; dynamic animated subtitles required; must retain original aspect ratio."
+            className="mt-2 w-full rounded-xl border border-border bg-bg px-4 py-3 text-text placeholder-silver/50 focus:border-lime focus:outline-none"
+          />
+        </div>
+
+        {/* Source Footage Links */}
+        <div>
+          <label className="block text-small font-medium text-text">Source Footage Links *</label>
+          <p className="text-xs text-silver mt-1">
+            Links to your full YouTube episodes, raw footage, or podcast recordings.
+          </p>
+
+          <div className="mt-3 space-y-3">
+            {sourceLinks.map((link, idx) => (
+              <div key={idx} className="flex flex-col gap-3 sm:flex-row sm:items-center">
+                <input
+                  type="text"
+                  required
+                  placeholder="Link label (e.g. Ep 12 on YouTube)"
+                  value={link.title}
+                  onChange={(e) => updateSourceLink(idx, "title", e.target.value)}
+                  className="sm:w-1/3 rounded-xl border border-border bg-bg px-4 py-2.5 text-sm text-text focus:border-lime focus:outline-none"
+                />
+                <input
+                  type="url"
+                  required
+                  placeholder="https://youtube.com/watch?v=..."
+                  value={link.url}
+                  onChange={(e) => updateSourceLink(idx, "url", e.target.value)}
+                  className="flex-1 rounded-xl border border-border bg-bg px-4 py-2.5 text-sm text-text focus:border-lime focus:outline-none"
+                />
+                {sourceLinks.length > 1 ? (
+                  <button
+                    type="button"
+                    onClick={() => removeSourceLink(idx)}
+                    className="inline-flex min-h-11 items-center justify-center rounded-xl border border-red-500/30 px-3 text-xs text-red-400 hover:bg-red-500/10"
+                  >
+                    Remove
+                  </button>
+                ) : null}
+              </div>
+            ))}
+          </div>
+
+          <button
+            type="button"
+            onClick={addSourceLink}
+            className="mt-3 inline-flex min-h-11 items-center rounded-lg border border-border bg-bg px-4 text-xs font-medium text-text hover:border-lime"
+          >
+            + Add Another Source Link
+          </button>
+        </div>
+
+        <div>
+          <label htmlFor="camp-assets" className="block text-small font-medium text-text">
+            Asset Folder URL (Optional)
+          </label>
+          <input
+            id="camp-assets"
+            type="url"
+            value={assetFolderUrl}
+            onChange={(e) => setAssetFolderUrl(e.target.value)}
+            placeholder="Google Drive, Dropbox, or Figma link for logos, overlays, sound effects"
+            className="mt-2 w-full rounded-xl border border-border bg-bg px-4 py-3 text-text placeholder-silver/50 focus:border-lime focus:outline-none"
+          />
+        </div>
+      </div>
+
+      {/* Disclosure & Compliance */}
+      <div className="rounded-2xl border border-border bg-surface p-6 sm:p-8 space-y-6">
+        <h2 className="font-display text-lead font-medium uppercase tracking-tight text-text">
+          4. ASCI Disclosure & Legal Ownership
+        </h2>
+
+        <div>
+          <label htmlFor="camp-caption" className="block text-small font-medium text-text">
+            Required Caption Text (Optional)
+          </label>
+          <input
+            id="camp-caption"
+            type="text"
+            value={requiredCaption}
+            onChange={(e) => setRequiredCaption(e.target.value)}
+            placeholder="e.g. Watch the full episode on YouTube — link in bio!"
+            className="mt-2 w-full rounded-xl border border-border bg-bg px-4 py-3 text-text placeholder-silver/50 focus:border-lime focus:outline-none"
+          />
+        </div>
+
+        <div className="grid gap-6 sm:grid-cols-2">
+          <div>
+            <label htmlFor="camp-hashtags" className="block text-small font-medium text-text">
+              Required Hashtags
+            </label>
+            <input
+              id="camp-hashtags"
+              type="text"
+              value={requiredHashtags}
+              onChange={(e) => setRequiredHashtags(e.target.value)}
+              placeholder="e.g. circle, theaishow, tech"
+              className="mt-2 w-full rounded-xl border border-border bg-bg px-4 py-3 text-text placeholder-silver/50 focus:border-lime focus:outline-none"
+            />
+            <p className="mt-1 text-xs text-silver">
+              #ad / #collab is automatically enforced for ASCI compliance.
+            </p>
+          </div>
+
+          <div>
+            <label htmlFor="camp-mention" className="block text-small font-medium text-text">
+              Required Account Mention
+            </label>
+            <input
+              id="camp-mention"
+              type="text"
+              value={requiredMention}
+              onChange={(e) => setRequiredMention(e.target.value)}
+              placeholder="e.g. theaishow (without @)"
+              className="mt-2 w-full rounded-xl border border-border bg-bg px-4 py-3 text-text placeholder-silver/50 focus:border-lime focus:outline-none"
+            />
+          </div>
+        </div>
+
+        <div className="rounded-xl border border-border bg-bg p-5">
+          <label className="flex items-start gap-3 cursor-pointer">
+            <input
+              type="checkbox"
+              required
+              checked={rightsConfirmed}
+              onChange={(e) => setRightsConfirmed(e.target.checked)}
+              className="mt-1 h-5 w-5 rounded border-border bg-surface text-lime focus:ring-lime"
+            />
+            <span className="text-small text-text">
+              <strong>Copyright & Rights Affirmation:</strong> I confirm that I own or hold explicit written commercial distribution rights to the source footage provided. I authorize CIRCLE and participating clippers to edit, adapt, and publish clips derived from this footage.
+            </span>
+          </label>
+        </div>
+      </div>
+
+      {/* Submit Action */}
+      <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-end">
+        <button
+          type="button"
+          onClick={() => router.back()}
+          className="inline-flex min-h-11 items-center justify-center rounded-full border border-border px-6 text-sm font-medium text-silver transition hover:text-text"
+        >
+          Cancel
+        </button>
+        <button
+          type="submit"
+          disabled={isPending}
+          className="inline-flex min-h-11 items-center justify-center rounded-full bg-lime px-8 text-sm font-medium text-bg transition hover:bg-lime/90 disabled:opacity-50"
+        >
+          {isPending ? "Submitting Campaign..." : "Submit Campaign for Review"}
+        </button>
+      </div>
+    </form>
+  );
+}

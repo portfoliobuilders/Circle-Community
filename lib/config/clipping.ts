@@ -17,6 +17,24 @@ export const CLIPPING_CONFIG = {
     minBidInr: null as number | null, // [PLACEHOLDER: Fill before enabling]
     bidCloseSchedule: "Friday 18:00 IST for the following week",
   },
+  pr: {
+    enabled: false,
+    minFollowers: 10000,
+    followerRecheckDays: 90,
+    liveDays: 7,
+    minFeePerPostInr: null as number | null, // [PLACEHOLDER: Fill before enabling PR]
+    ownerFeePct: 10,
+    creatorFeePct: 10,
+    maxRevisions: 1,
+    bannedCategories: [
+      "political",
+      "betting",
+      "crypto_investment",
+      "health_claims",
+      "adult",
+      "defamation",
+    ] as const,
+  },
 } as const;
 
 export type ClippingConfig = typeof CLIPPING_CONFIG;

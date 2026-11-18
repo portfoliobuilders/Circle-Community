@@ -3,13 +3,13 @@ import Link from "next/link";
 import { Container } from "@/components/site/container";
 import { PillLink } from "@/components/site/pill-link";
 import { pageMetadata } from "@/lib/seo";
-import { listTrending } from "@/lib/clipping/data";
-import { CampaignCard } from "@/components/clipping/campaign-card";
+import { listCampaigns } from "@/lib/clipping/data";
 import { SampleBanner } from "@/components/clipping/sample-banner";
 import { HeroOrbit } from "@/components/clipping/hero-orbit";
 import { HowItWorksSteps } from "@/components/clipping/how-it-works-steps";
 import { ClippingCalculator } from "@/components/clipping/clipping-calculator";
 import { FaqAccordion } from "@/components/clipping/faq-accordion";
+import { HubCampaignsExplorer } from "@/components/clipping/hub-campaigns-explorer";
 
 export const metadata: Metadata = pageMetadata(
   "Video Clipping",
@@ -18,7 +18,7 @@ export const metadata: Metadata = pageMetadata(
 );
 
 export default async function ClippingHubPage() {
-  const trendingCampaigns = await listTrending();
+  const { campaigns } = await listCampaigns();
 
   return (
     <>
@@ -40,7 +40,7 @@ export default async function ClippingHubPage() {
                 Edit vertical short-form video for brands and creators from approved source footage, and earn transparent performance-based payouts per 1,000 verified views.
               </p>
               <div className="mt-8 flex flex-wrap items-center gap-4">
-                <PillLink href="/clipping/campaigns">Browse campaigns</PillLink>
+                <PillLink href="#campaigns">Browse campaigns</PillLink>
                 <PillLink href="/brands" variant="secondary">
                   Launch a campaign
                 </PillLink>
@@ -49,36 +49,33 @@ export default async function ClippingHubPage() {
           </Container>
         </section>
 
-        {/* 2. Live Campaigns Strip (Hidden when empty) */}
-        {trendingCampaigns.length > 0 && (
-          <section className="py-12 border-t border-border bg-surface/30">
-            <Container>
-              <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 mb-8">
-                <div>
-                  <span className="text-xs font-semibold uppercase tracking-wider text-lime font-mono">
-                    Live Campaigns
-                  </span>
-                  <h2 className="font-display text-2xl sm:text-3xl font-bold tracking-tight text-white mt-1">
-                    Trending This Week
-                  </h2>
-                </div>
-                <Link
-                  href="/clipping/campaigns"
-                  className="text-sm font-medium text-lime hover:underline inline-flex items-center gap-1.5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-white"
-                >
-                  <span>View all campaigns</span>
-                  <span aria-hidden="true">→</span>
-                </Link>
+        {/* 2. Live Campaigns Explorer Section */}
+        <section id="campaigns" className="scroll-mt-24 py-16 md:py-20 border-t border-border bg-surface/20">
+          <Container>
+            <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 mb-10">
+              <div>
+                <span className="text-xs font-semibold uppercase tracking-wider text-lime font-mono">
+                  Live Marketplace
+                </span>
+                <h2 className="font-display text-2xl sm:text-4xl font-bold tracking-tight text-white mt-1">
+                  Active Clipping Campaigns
+                </h2>
+                <p className="mt-2 text-silver text-sm max-w-xl">
+                  Choose a campaign, claim source footage, and start editing. Payouts are verified on Day 7 and disbursed weekly via UPI.
+                </p>
               </div>
+              <Link
+                href="/clipping/campaigns"
+                className="text-xs font-medium text-silver hover:text-white inline-flex items-center gap-1.5 underline underline-offset-4 focus-visible:outline focus-visible:outline-2 focus-visible:outline-white"
+              >
+                <span>Advanced directory & filter board</span>
+                <span aria-hidden="true">→</span>
+              </Link>
+            </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {trendingCampaigns.map((campaign) => (
-                  <CampaignCard key={campaign.id} campaign={campaign} />
-                ))}
-              </div>
-            </Container>
-          </section>
-        )}
+            <HubCampaignsExplorer initialCampaigns={campaigns} />
+          </Container>
+        </section>
 
         {/* 3. How It Works (4 Steps) */}
         <section className="py-16 md:py-24 border-t border-border">

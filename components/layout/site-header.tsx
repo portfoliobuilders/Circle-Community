@@ -52,7 +52,16 @@ export function SiteHeader() {
           >
             Join CIRCLE
           </PillLink>
-          <MobileNav />
+          <Suspense
+            fallback={
+              <div
+                className="size-10 rounded-full border border-border bg-surface lg:hidden"
+                aria-hidden="true"
+              />
+            }
+          >
+            <MobileNav />
+          </Suspense>
         </div>
       </Container>
     </header>

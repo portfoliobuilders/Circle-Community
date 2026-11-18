@@ -5,7 +5,6 @@ const staticExport = process.env.STATIC_EXPORT === "1";
 const nextConfig: NextConfig = {
   async redirects() {
     return [
-      { source: "/join", destination: "/membership", permanent: true },
       { source: "/pricing", destination: "/membership", permanent: true },
       {
         source: "/legal/community-guidelines",

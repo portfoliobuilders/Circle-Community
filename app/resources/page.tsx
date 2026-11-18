@@ -12,36 +12,43 @@ export const metadata: Metadata = pageMetadata(
 
 const groups = [
   {
-    title: "Guides",
-    body: "Short notes are published on Guides. Longer notes, product news, and the change log are on the journal.",
+    title: "Brief templates",
+    body: "Standardised brief outlines for fixed, open-bid, and barter brand collabs.",
   },
   {
-    title: "Templates and presets",
-    body: "Briefs, shot lists, and edit presets the team has the rights to share. Nothing is uploaded yet, and we will not host files we do not own.",
+    title: "Rate benchmarks",
+    body: "Reference pricing tiers and deliverable scoping models across Indian creator categories.",
   },
   {
-    title: "Gear",
-    body: "Lists of kit with a reason and a price range written as text. No shop is live on this page.",
+    title: "ASCI disclosure guides",
+    body: "Practical checklists for required #ad and #collab disclosures on paid social media posts.",
   },
   {
-    title: "Suppliers",
-    body: "Studios, labs, and vendors. A partner or affiliate link will be labelled when one exists.",
+    title: "Clipping workflows",
+    body: "Vertical short-form editing frameworks and view milestone optimization strategies.",
   },
   {
-    title: "Recordings",
-    body: "Webinar and bootcamp recordings, linked out to the host. CIRCLE does not stream video itself.",
+    title: "Studio & gear directory",
+    body: "Verified production spaces, camera packages, and partner creator discounts.",
   },
 ];
 
 export default function ResourcesPage() {
   return (
     <Container className="py-16 sm:py-24">
-      <p className="text-small tracking-[0.18em] text-silver uppercase">Resources</p>
-      <h1 className="font-display mt-4 max-w-3xl text-display-sm font-medium tracking-tight uppercase">
-        Toolkit
-      </h1>
+      <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+        <div>
+          <p className="text-small tracking-[0.18em] text-silver uppercase">Resources</p>
+          <h1 className="font-display mt-4 max-w-3xl text-display-sm font-medium tracking-tight uppercase">
+            Creator Toolkit
+          </h1>
+        </div>
+        <Link href="/guides" className="inline-flex min-h-11 items-center rounded-full bg-lime px-5 text-sm font-medium text-bg">
+          Browse guides
+        </Link>
+      </div>
       <p className="mt-6 max-w-2xl text-lead text-silver">
-        A library for creators. The shelves are labelled. The files are not published yet, so there is nothing to download and no download count to show.
+        Actionable templates, rate calculators, and compliance checklists designed for Indian creators and brands.
       </p>
       <ul className="mt-10 grid gap-6 sm:grid-cols-2">
         {groups.map((group) => (
@@ -52,7 +59,7 @@ export default function ResourcesPage() {
         ))}
       </ul>
       <p className="mt-10 text-silver">
-        Read the <Link className="text-text underline" href="/journal">journal</Link> for guides, the blog, news, and updates. Sessions that are scheduled sit on <Link className="text-text underline" href="/learn">Learn</Link>. A studio or a tool brand can write through <Link className="text-text underline" href="/partners">Partners</Link>.
+        Read the <Link className="text-text underline" href="/journal">journal</Link> for editorial insights and platform updates, or register for upcoming sessions on <Link className="text-text underline" href="/learn">Learn</Link>.
       </p>
     </Container>
   );

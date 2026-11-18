@@ -4,7 +4,7 @@ import { ContactForm } from "@/components/contact/contact-form";
 import { Container } from "@/components/site/container";
 import { SocialLink } from "@/components/site/social-link";
 import { pageMetadata } from "@/lib/seo";
-import { site, social } from "@/lib/site";
+import { isPlaceholder, site, social } from "@/lib/site";
 
 export const metadata: Metadata = pageMetadata(
   "Contact",
@@ -18,7 +18,7 @@ const channels = [
   social.whatsappCommunity,
   social.linkedin,
   social.youtube,
-];
+].filter((item) => !isPlaceholder(item.href));
 
 export default function ContactPage() {
   return (

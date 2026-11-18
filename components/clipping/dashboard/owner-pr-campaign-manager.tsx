@@ -5,7 +5,7 @@ import { formatInr, formatKolkata } from "@/lib/format";
 import { acceptPrApplication, rejectPrApplication, reviewPrDraft } from "@/lib/actions/pr";
 import type { Campaign, PrApplication } from "@/lib/clipping/types";
 
-const emptySubscribe = () => () => {};
+const emptySubscribe = () => () => { };
 
 export function OwnerPrCampaignManager({
   campaign,
@@ -38,18 +38,18 @@ export function OwnerPrCampaignManager({
           prev.map((a) =>
             a.id === applicationId
               ? {
-                  ...a,
-                  status: "accepted",
-                  deliverable: {
-                    id: "temp-" + Date.now(),
-                    application_id: a.id,
-                    draft_status: campaign.content_approval_required ? "none" : "approved",
-                    revision_count: 0,
-                    live_checks: [],
-                    status: "pending",
-                    created_at: new Date().toISOString(),
-                  },
-                }
+                ...a,
+                status: "accepted",
+                deliverable: {
+                  id: "temp-" + Date.now(),
+                  application_id: a.id,
+                  draft_status: campaign.content_approval_required ? "none" : "approved",
+                  revision_count: 0,
+                  live_checks: [],
+                  status: "pending",
+                  created_at: new Date().toISOString(),
+                },
+              }
               : a
           )
         );
@@ -137,27 +137,24 @@ export function OwnerPrCampaignManager({
         <button
           type="button"
           onClick={() => setFilter("all")}
-          className={`min-h-11 rounded-full px-4 text-xs font-medium transition ${
-            filter === "all" ? "bg-lime text-bg font-semibold" : "border border-border bg-surface text-silver hover:text-text"
-          }`}
+          className={`min-h-11 rounded-full px-4 text-xs font-medium transition ${filter === "all" ? "bg-lime text-bg font-semibold" : "border border-border bg-surface text-silver hover:text-text"
+            }`}
         >
           All Applications ({applications.length})
         </button>
         <button
           type="button"
           onClick={() => setFilter("applied")}
-          className={`min-h-11 rounded-full px-4 text-xs font-medium transition ${
-            filter === "applied" ? "bg-amber-400 text-bg font-semibold" : "border border-border bg-surface text-silver hover:text-text"
-          }`}
+          className={`min-h-11 rounded-full px-4 text-xs font-medium transition ${filter === "applied" ? "bg-amber-400 text-bg font-semibold" : "border border-border bg-surface text-silver hover:text-text"
+            }`}
         >
           Pending Review ({appliedCount})
         </button>
         <button
           type="button"
           onClick={() => setFilter("accepted")}
-          className={`min-h-11 rounded-full px-4 text-xs font-medium transition ${
-            filter === "accepted" ? "bg-lime/20 text-lime font-semibold border border-lime/40" : "border border-border bg-surface text-silver hover:text-text"
-          }`}
+          className={`min-h-11 rounded-full px-4 text-xs font-medium transition ${filter === "accepted" ? "bg-lime/20 text-lime font-semibold border border-lime/40" : "border border-border bg-surface text-silver hover:text-text"
+            }`}
         >
           Accepted & Deliverables ({acceptedCount})
         </button>
@@ -197,13 +194,12 @@ export function OwnerPrCampaignManager({
                         {(app.platform_account?.admin_verified_followers || 0).toLocaleString("en-IN")} verified followers
                       </span>
                       <span
-                        className={`inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-medium uppercase ${
-                          app.status === "accepted"
+                        className={`inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-medium uppercase ${app.status === "accepted"
                             ? "border-lime/30 bg-lime/10 text-lime"
                             : app.status === "rejected"
-                            ? "border-red-500/30 bg-red-500/10 text-red-400"
-                            : "border-amber-500/30 bg-amber-500/10 text-amber-400"
-                        }`}
+                              ? "border-red-500/30 bg-red-500/10 text-red-400"
+                              : "border-amber-500/30 bg-amber-500/10 text-amber-400"
+                          }`}
                       >
                         {app.status}
                       </span>

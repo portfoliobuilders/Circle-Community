@@ -12,7 +12,7 @@ const socialItems = [
   social.whatsappCommunity,
   social.linkedin,
   social.youtube,
-];
+].filter((item) => !isPlaceholder(item.href));
 
 export function SiteFooter() {
   return (

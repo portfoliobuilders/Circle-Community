@@ -223,11 +223,10 @@ export function CampaignCreateForm() {
     <form onSubmit={handleSubmit} className="space-y-8">
       {statusMsg ? (
         <div
-          className={`rounded-xl border p-4 text-small ${
-            statusMsg.type === "success"
+          className={`rounded-xl border p-4 text-small ${statusMsg.type === "success"
               ? "border-lime/30 bg-lime/10 text-lime"
               : "border-red-500/30 bg-red-500/10 text-red-400"
-          }`}
+            }`}
         >
           {statusMsg.text}
         </div>
@@ -249,11 +248,10 @@ export function CampaignCreateForm() {
           <button
             type="button"
             onClick={() => handleTypeChange("clipping")}
-            className={`rounded-2xl border p-5 text-left transition ${
-              campaignType === "clipping"
+            className={`rounded-2xl border p-5 text-left transition ${campaignType === "clipping"
                 ? "border-lime bg-lime/10"
                 : "border-border bg-bg hover:border-border-strong"
-            }`}
+              }`}
           >
             <div className="flex items-center justify-between">
               <span className="font-display text-base font-semibold text-text uppercase">
@@ -271,11 +269,10 @@ export function CampaignCreateForm() {
           <button
             type="button"
             onClick={() => handleTypeChange("social_pr")}
-            className={`rounded-2xl border p-5 text-left transition ${
-              campaignType === "social_pr"
+            className={`rounded-2xl border p-5 text-left transition ${campaignType === "social_pr"
                 ? "border-lime bg-lime/10"
                 : "border-border bg-bg hover:border-border-strong"
-            }`}
+              }`}
           >
             <div className="flex items-center justify-between">
               <span className="font-display text-base font-semibold text-text uppercase">
@@ -387,22 +384,20 @@ export function CampaignCreateForm() {
             <button
               type="button"
               onClick={() => togglePlatform("youtube_shorts")}
-              className={`inline-flex min-h-11 items-center gap-2 rounded-xl border px-4 py-2.5 text-sm font-medium transition ${
-                platforms.includes("youtube_shorts")
+              className={`inline-flex min-h-11 items-center gap-2 rounded-xl border px-4 py-2.5 text-sm font-medium transition ${platforms.includes("youtube_shorts")
                   ? "border-lime bg-lime/10 text-lime"
                   : "border-border bg-bg text-silver hover:text-text"
-              }`}
+                }`}
             >
               <span>▶</span> YouTube Shorts
             </button>
             <button
               type="button"
               onClick={() => togglePlatform("instagram_reels")}
-              className={`inline-flex min-h-11 items-center gap-2 rounded-xl border px-4 py-2.5 text-sm font-medium transition ${
-                platforms.includes("instagram_reels")
+              className={`inline-flex min-h-11 items-center gap-2 rounded-xl border px-4 py-2.5 text-sm font-medium transition ${platforms.includes("instagram_reels")
                   ? "border-lime bg-lime/10 text-lime"
                   : "border-border bg-bg text-silver hover:text-text"
-              }`}
+                }`}
             >
               <span>📷</span> Instagram
             </button>
@@ -557,22 +552,20 @@ export function CampaignCreateForm() {
               <button
                 type="button"
                 onClick={() => setPricingMode("fixed")}
-                className={`rounded-xl border px-4 py-2.5 text-xs font-medium uppercase tracking-wider transition ${
-                  pricingMode === "fixed"
+                className={`rounded-xl border px-4 py-2.5 text-xs font-medium uppercase tracking-wider transition ${pricingMode === "fixed"
                     ? "border-lime bg-lime/10 text-lime"
                     : "border-border bg-bg text-silver hover:text-text"
-                }`}
+                  }`}
               >
                 Fixed Fee per Post
               </button>
               <button
                 type="button"
                 onClick={() => setPricingMode("quote")}
-                className={`rounded-xl border px-4 py-2.5 text-xs font-medium uppercase tracking-wider transition ${
-                  pricingMode === "quote"
+                className={`rounded-xl border px-4 py-2.5 text-xs font-medium uppercase tracking-wider transition ${pricingMode === "quote"
                     ? "border-lime bg-lime/10 text-lime"
                     : "border-border bg-bg text-silver hover:text-text"
-                }`}
+                  }`}
               >
                 Quote Mode (Creators Pitch Custom Quotes)
               </button>

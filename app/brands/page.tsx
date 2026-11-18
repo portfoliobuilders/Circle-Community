@@ -10,7 +10,7 @@ import { pageMetadata } from "@/lib/seo";
 
 export const metadata: Metadata = pageMetadata(
   "For brands",
-  "Find creators by category, post a collab, and read giveaway and affiliate listings. You pay the creator directly.",
+  "Hire verified Indian creators, launch fixed collabs with a 10% platform fee, or run performance video clipping campaigns.",
   "/brands",
 );
 
@@ -21,10 +21,10 @@ export default function BrandsPage() {
         For brands
       </p>
       <h1 className="font-display mt-4 max-w-3xl text-display-sm font-medium tracking-tight uppercase sm:text-display">
-        Find high-fit creators in minutes, not weeks
+        Hire creators. Scale video distribution.
       </h1>
       <p className="mt-6 max-w-2xl text-lead text-silver">
-        Filter the directory by category and by the work a creator is open to: a collab, an ad, a giveaway, or an affiliate offer. Post the brief. You pay the creator directly. CIRCLE does not hold the money and does not track ad ROI.
+        Filter verified creator portfolios by niche and location, launch fixed collab briefs with a 10% platform fee, or run viral clipping campaigns.
       </p>
       <div className="mt-8 flex flex-col gap-3 sm:flex-row">
         <PillLink href="/directory">Find creators</PillLink>
@@ -33,13 +33,26 @@ export default function BrandsPage() {
         </PillLink>
       </div>
 
+      <section className="mt-16 rounded-2xl border border-border bg-surface p-6 sm:p-10">
+        <span className="text-small tracking-[0.18em] text-silver uppercase font-mono">Performance Engine</span>
+        <h2 className="font-display mt-2 text-title font-medium tracking-tight uppercase">
+          Video clipping campaigns
+        </h2>
+        <p className="mt-3 max-w-2xl text-silver">
+          Turn existing long-form video into high-velocity vertical reels. Set your payout rate per 100K views. Hundreds of clippers edit and post clips across social channels—you pay only for verified view milestones.
+        </p>
+        <div className="mt-6">
+          <PillLink href="/clipping" variant="secondary">
+            Explore clipping engine
+          </PillLink>
+        </div>
+      </section>
+
       <h2 className="font-display mt-16 text-title font-medium tracking-tight uppercase">
-        Agency services
+        Managed agency services
       </h2>
       <p className="mt-4 max-w-2xl text-silver">
-        Portfolix.Media and Portfolix.Tech can run paid work for brands. These
-        pages collect a lead. CIRCLE does not ask for or store social media
-        passwords. Prices are not listed here.
+        Portfolix.Media and Portfolix.Tech offer managed campaign production, contract negotiation, and dedicated ad video creation for enterprise brands.
       </p>
       <ul className="mt-8 grid gap-px overflow-hidden rounded-2xl border border-border bg-border sm:grid-cols-2">
         {servicesFor("brand").map((service) => (

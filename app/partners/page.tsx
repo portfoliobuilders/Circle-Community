@@ -6,34 +6,34 @@ import { pageMetadata } from "@/lib/seo";
 
 export const metadata: Metadata = pageMetadata(
   "Partners",
-  "Partner with CIRCLE on member perks, event venues, awards, or free learning. No audience numbers are published.",
+  "Partner with CIRCLE on creator perks, studio discounts, event sponsorship, and free community education.",
   "/partners",
 );
 
 const audiences = [
   {
-    title: "Brands with member perks",
-    body: "Studios, gear, and tools can offer a discount that CIRCLE lists for members.",
+    title: "Brands with creator perks",
+    body: "Offer member discounts on gear, editing software, and creative tools.",
   },
   {
-    title: "Studios and venues",
-    body: "Host a meetup or a community event.",
+    title: "Studios and production venues",
+    body: "Host in-person creator meetups, video shoots, and community workshops.",
   },
   {
-    title: "Sponsors",
-    body: "Support an award or a community event.",
+    title: "Event & award sponsors",
+    body: "Support annual creator awards and regional meetup activations.",
   },
   {
-    title: "Educators",
-    body: "Run a free webinar or bootcamp session.",
+    title: "Industry educators",
+    body: "Host free webinars, short-form editing bootcamps, and masterclasses.",
   },
 ];
 
 const offers = [
-  "A perk listing, once the discount is agreed.",
-  "The event named with the venue, once a date is set.",
-  "Credit on the awards or event page, once the sponsorship is agreed.",
-  "A session listed under free learning, once the date is set.",
+  "Dedicated perk listing in our member toolkit.",
+  "Co-branded event promotion across our community channels.",
+  "Direct accreditation on award ceremonies and workshop assets.",
+  "Curated session listings on our official learning calendar.",
 ];
 
 export default function PartnersPage() {
@@ -41,10 +41,10 @@ export default function PartnersPage() {
     <Container className="py-16 sm:py-24">
       <p className="text-small tracking-[0.18em] text-silver uppercase">Partners</p>
       <h1 className="font-display mt-4 max-w-3xl text-display-sm font-medium tracking-tight uppercase sm:text-display">
-        Partner with us
+        Partner with CIRCLE
       </h1>
       <p className="mt-6 max-w-2xl text-lead text-silver">
-        CIRCLE does not publish audience or member counts. A partnership is a written agreement, not a promised reach.
+        Collaborate on verified creator perks, venue partnerships, or sponsored community masterclasses.
       </p>
       <h2 className="font-display mt-14 text-title font-medium uppercase">Who it is for</h2>
       <ul className="mt-6 grid gap-6 sm:grid-cols-2">

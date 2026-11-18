@@ -32,7 +32,7 @@ export default function PromotersPage() {
         </p>
       </div>
       <Link href="/directory" className="mt-8 inline-flex min-h-11 items-center rounded-full bg-lime px-5 text-sm font-medium text-bg">
-        Browse creators
+        Browse promoter profiles
       </Link>
     </Container>
   );

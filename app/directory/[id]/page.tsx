@@ -86,7 +86,7 @@ async function ProfileDetail({ params }: { params: Promise<{ id: string }> }) {
         <p className="mt-4 text-small text-silver">Starting price is hidden until this creator turns it on.</p>
       )}
       <p className="mt-8 max-w-2xl text-small text-silver">
-        Offer work by posting a collab. You pay the creator directly. CIRCLE does not hold the money.
+        Offer work by posting a brief. Completed collab deals operate with a transparent 10% platform fee.
       </p>
       <Link href="/collabs/new" className="mt-4 inline-flex min-h-11 items-center rounded-full bg-lime px-5 text-sm font-medium text-bg">
         Post a collab

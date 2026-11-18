@@ -10,7 +10,7 @@ import { pageMetadata } from "@/lib/seo";
 
 export const metadata: Metadata = pageMetadata(
   "For creators",
-  "The brief is already on CIRCLE. Sign up, open your profile, and apply. Brands pay you directly.",
+  "Join CIRCLE free. Apply for paid brand collabs with a 10% platform fee, monetise viral shorts, and access creator workshops.",
   "/creators",
 );
 
@@ -21,30 +21,41 @@ export default function CreatorsPage() {
         For creators
       </p>
       <h1 className="font-display mt-4 max-w-3xl text-display-sm font-medium tracking-tight uppercase sm:text-display">
-        From first match to lasting income
+        Get booked for collabs. Monetise clips.
       </h1>
       <div className="mt-6 max-w-2xl space-y-4 text-silver">
         <p>
-          The brief is already on the platform. Sign up and find it. List your category, the content you make, your starting price, and whether you are open to collabs, ads, giveaways, or affiliate offers.
+          Discover open brand briefs across India. List your niche, sample deliverables, and starting rates for fixed collabs, open bids, and barter opportunities.
         </p>
         <p>
-          Follower counts stay labelled self-reported until they are verified. At 1,000 or more you can be marked a promoter. Membership is free. Brands pay you directly. CIRCLE does not take payment in v1.
+          Membership is free to join. Completed brand collabs and clipping campaigns carry a transparent 10% platform fee.
         </p>
       </div>
       <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-        <PillLink href="/signup?role=creator">Create account</PillLink>
-        <PillLink href="#lead-form" variant="secondary">
-          Talk to our team
+        <PillLink href="/signup?role=creator">Create creator account</PillLink>
+        <PillLink href="/collabs" variant="secondary">
+          Browse open collabs
         </PillLink>
       </div>
+
+      <section className="mt-16 rounded-2xl border border-border bg-surface p-6 sm:p-10">
+        <span className="text-small tracking-[0.18em] text-silver uppercase font-mono">Performance Engine</span>
+        <h2 className="font-display mt-2 text-title font-medium tracking-tight uppercase">
+          Monetise through video clipping
+        </h2>
+        <p className="mt-3 max-w-xl text-silver">
+          Edit compelling vertical clips from brand source footage. Post to your channels and earn guaranteed milestone payouts per 100K verified views.
+        </p>
+        <div className="mt-6">
+          <PillLink href="/clipping" variant="secondary">Browse clipping campaigns</PillLink>
+        </div>
+      </section>
 
       <h2 className="font-display mt-16 text-title font-medium tracking-tight uppercase">
         Creator services
       </h2>
       <p className="mt-4 max-w-2xl text-silver">
-        Portfolix can help with the account itself. These are lead-capture
-        services, not a tool that logs into your profiles. We will never ask
-        for your password.
+        Portfolix offers professional profile audits, media kit positioning, and dedicated account management for full-time creators.
       </p>
       <ul className="mt-8 grid gap-px overflow-hidden rounded-2xl border border-border bg-border">
         {servicesFor("creator").map((service) => (
@@ -66,7 +77,7 @@ export default function CreatorsPage() {
           Hosting a giveaway on Instagram Reels or YouTube Shorts? List it on CIRCLE to get discovered by creators and community members across India.
         </p>
         <div className="mt-6 flex flex-col gap-3 sm:flex-row">
-          <PillLink href="/giveaways">Browse giveaways</PillLink>
+          <PillLink href="/giveaways" variant="secondary">Browse giveaways</PillLink>
           <PillLink href="/giveaways/new" variant="secondary">List a giveaway</PillLink>
         </div>
       </section>

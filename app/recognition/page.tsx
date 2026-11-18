@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { Suspense } from "react";
 
 import { Container } from "@/components/site/container";
@@ -7,17 +8,24 @@ import { pageMetadata } from "@/lib/seo";
 
 export const metadata: Metadata = pageMetadata(
   "Recognition",
-  "Points come only from completed collabs, attended events, and admin-approved tasks.",
+  "Points come only from completed collabs, clipping milestones, attended events, and admin-approved tasks.",
   "/recognition",
 );
 
 export default function RecognitionPage() {
   return (
     <Container className="py-16 sm:py-24">
-      <p className="text-small tracking-[0.18em] text-silver uppercase">Recognition</p>
-      <h1 className="font-display mt-4 text-display-sm font-medium tracking-tight uppercase">Points</h1>
+      <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+        <div>
+          <p className="text-small tracking-[0.18em] text-silver uppercase">Recognition</p>
+          <h1 className="font-display mt-4 text-display-sm font-medium tracking-tight uppercase">Points & Badges</h1>
+        </div>
+        <Link href="/leaderboard" className="inline-flex min-h-11 items-center rounded-full bg-lime px-5 text-sm font-medium text-bg">
+          View leaderboard
+        </Link>
+      </div>
       <p className="mt-4 max-w-2xl text-silver">
-        Points come only from completed collabs, events you attended, and tasks an admin has approved. Logins and likes do not count. Points have no cash value.
+        Points come only from completed collabs, clipping milestones, events you attended, and tasks an admin has approved. Logins and likes do not count. Points have no cash value.
       </p>
       <Suspense fallback={<p className="mt-8 text-silver">Loading points.</p>}>
         <PointList />

@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 
+import Link from "next/link";
+
 import { Container } from "@/components/site/container";
 import { pageMetadata } from "@/lib/seo";
 import { learnSessions } from "@/lib/site";
@@ -27,8 +29,7 @@ export default function LearnPage() {
         Free webinars and bootcamps
       </h1>
       <p className="mt-6 max-w-2xl text-lead text-silver">
-        Learning on CIRCLE is free. Sessions are practical, and the schedule
-        below is a placeholder until dates are published.
+        Learning on CIRCLE is free. Practical tracks cover short-form video editing, creator rate cards, AI tools, and collab pitch workflows.
       </p>
       <h2 className="font-display mt-12 text-title-sm font-medium">
         What we teach
@@ -44,9 +45,9 @@ export default function LearnPage() {
         ))}
       </ul>
       <h2 className="font-display mt-12 text-title-sm font-medium">
-        Sessions
+        Curriculum tracks
       </h2>
-      <p className="mt-2 text-small text-silver">Placeholder list</p>
+      <p className="mt-2 text-small text-silver">Scheduled community sessions</p>
       <ul className="mt-4 divide-y divide-border border-y border-border">
         {learnSessions.map((session) => (
           <li
@@ -61,6 +62,11 @@ export default function LearnPage() {
           </li>
         ))}
       </ul>
+      <div className="mt-10">
+        <Link href="/events" className="inline-flex min-h-11 items-center rounded-full bg-lime px-6 text-sm font-medium text-bg">
+          View upcoming workshops
+        </Link>
+      </div>
     </Container>
   );
 }

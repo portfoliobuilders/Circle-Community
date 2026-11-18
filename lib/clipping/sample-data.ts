@@ -79,9 +79,9 @@ We are looking for skilled clippers to highlight the most insightful and content
     owner_avatar_url: null,
     title: "Sample: Indie Roguelike Gameplay Moments",
     summary:
-      "Showcase intense boss encounters, clutch escapes, and build synergies from our newly released PC tactical roguelike.",
+      "Showcase intense boss encounters, clutch escapes, and custom character builds from our newly released PC tactical roguelike.",
     brief_md: `### Target Audience
-Fast-paced gamers interested in tactical depth and roguelike mechanics.
+Action and strategy gamers interested in tactical depth and roguelike mechanics.
 
 ### Editing Expectations
 - Jump straight into the action or fail state
@@ -202,7 +202,7 @@ Minimalist, warm tones, slow-pacing with smooth transition cuts. Focus on organi
 ### Requirements
 - High-contrast visual numbers and chart highlights
 - Clear disclaimer: 'Educational content only, not financial advice'
-- Fast-paced 40-60 second duration`,
+- High-energy 40-60 second duration`,
     rules_md: `1. Must display statutory disclaimer overlay on screen.
 2. No get-rich-quick claims or promises of guaranteed stock returns.
 3. Accurate subtitles without distorting tax provisions.
@@ -359,7 +359,7 @@ Identify common lifting errors (e.g., knee cave, lower back rounding) and show c
     owner_avatar_url: null,
     title: "Sample: Regional Spice Blends & Sizzle Reels",
     summary:
-      "Edit fast-paced ASMR cooking sequences focusing on traditional Kerala spices, roasting sounds, and plating aesthetics.",
+      "Edit dynamic ASMR cooking sequences focusing on traditional Kerala spices, roasting sounds, and plating aesthetics.",
     brief_md: `### Sensory Focus
 High-fidelity sound design: sizzling oil, crackling mustard seeds, mortar-pestle grinding. Vibrant color saturation on fresh herbs and spices.`,
     rules_md: `1. Natural audio must remain audible in the mix.

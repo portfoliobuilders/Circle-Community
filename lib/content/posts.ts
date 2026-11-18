@@ -35,7 +35,7 @@ export const posts: Post[] = [
       },
       {
         heading: "Payment and the label",
-        body: "You pay the creator directly. CIRCLE shows the budget and does not hold the money. Ad disclosure stays on. The live post should carry #ad or #collab.",
+        body: "Collabs operate under clear deliverables and escrow protection with a transparent 10% platform fee on completed work. Ad disclosure stays on: live posts should carry #ad or #collab.",
       },
     ],
   },
@@ -43,7 +43,7 @@ export const posts: Post[] = [
     slug: "before-you-apply",
     kind: "blog",
     title: "What to check before you apply",
-    summary: "Read the kind of collab, the budget or the barter, and whether your profile says you do that work.",
+    summary: "Read the collab format, the compensation, and verify that your profile lists matching categories.",
     published: "16 November 2026",
     publishedIso: "2026-11-16",
     sections: [
@@ -57,7 +57,7 @@ export const posts: Post[] = [
       },
       {
         heading: "Who can apply",
-        body: "Collabs are for people who are 18 or older. The brand pays you directly. CIRCLE does not take a fee on the collab in v1.",
+        body: "Collabs are for creators who are 18 or older. CIRCLE charges a transparent 10% platform fee on completed collab payouts.",
       },
     ],
   },
@@ -165,7 +165,7 @@ export const posts: Post[] = [
       },
       {
         heading: "What did not change",
-        body: "Membership stays free. CIRCLE still does not take collab payment. Follower counts stay labelled. These pages show real rows only. There is no sample creator list.",
+        body: "Membership stays free to join. Completed collabs and clipping campaigns carry a transparent 10% platform fee. Follower counts stay labelled. These pages show real rows only.",
       },
     ],
   },

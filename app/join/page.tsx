@@ -24,16 +24,13 @@ export default function JoinPage() {
       </h1>
       <div className="mt-6 max-w-2xl space-y-4 text-silver">
         <p>
-          Create a profile, list what you do, and take part in collabs, events,
-          and free learning. There is no paywall.
+          Create a profile, list what you do, and take part in collabs, clipping campaigns, and community workshops.
         </p>
         <p>
-          People who apply to collabs confirm they are 18 or older. Brand
-          accounts are separate from creator and service-provider accounts. One
-          person can be both a creator and a service provider.
+          Joining is free. A transparent 10% platform fee applies to completed marketplace payouts. Collab applicants confirm they are 18 or older in compliance with DPDP regulations.
         </p>
       </div>
-      <div className="mt-8 flex flex-col items-start gap-3">
+      <div className="mt-8 flex flex-col items-start gap-3 sm:flex-row">
         <PillLink href="/signup">Create account</PillLink>
         <SocialLink
           href={social.whatsappChannel.href}
@@ -51,7 +48,7 @@ export default function JoinPage() {
       <section className="mt-16 max-w-md">
         <h2 className="font-display text-title-sm font-medium">Newsletter</h2>
         <p className="mt-3 text-silver">
-          The post-signup screen is not built yet. Confirm here if you want news.
+          Subscribe to receive weekly brief updates, community workshops, and clipping announcements.
         </p>
         <div className="mt-6">
           <NewsletterForm source="join" />

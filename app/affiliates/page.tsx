@@ -16,15 +16,22 @@ export const metadata: Metadata = pageMetadata(
 export default function AffiliatesPage() {
   return (
     <Container className="py-16 sm:py-24">
-      <p className="text-small tracking-[0.18em] text-silver uppercase">Affiliates</p>
-      <h1 className="font-display mt-4 text-display-sm font-medium tracking-tight uppercase">Offers brands have written</h1>
+      <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+        <div>
+          <p className="text-small tracking-[0.18em] text-silver uppercase">Affiliates</p>
+          <h1 className="font-display mt-4 text-display-sm font-medium tracking-tight uppercase">Verified affiliate offers</h1>
+        </div>
+        <Link href="#submit-offer" className="inline-flex min-h-11 items-center rounded-full bg-lime px-5 text-sm font-medium text-bg">
+          Submit affiliate offer
+        </Link>
+      </div>
       <p className="mt-4 max-w-2xl text-silver">
-        A brand describes the product, the terms, and the tracking link. Read the terms before you share the link. CIRCLE does not take a commission in v1. A promotion for CIRCLE or a Portfolix service is quoted separately through the contact form. There is no published rate.
+        Brands publish affiliate products, commission percentages, and custom tracking URLs. Review terms before sharing tracking links. Disclose partner links with #ad or #affiliate.
       </p>
       <Suspense fallback={<p className="mt-8 text-silver">Loading offers.</p>}>
         <OfferList />
       </Suspense>
-      <h2 className="font-display mt-16 text-title font-medium uppercase">List an offer</h2>
+      <h2 id="submit-offer" className="font-display mt-16 text-title font-medium uppercase scroll-mt-24">List an offer</h2>
       <p className="mt-4 max-w-2xl text-silver">Brand accounts only. Mark paid posts with #ad or #collab.</p>
       <div className="mt-6">
         <AffiliateForm />

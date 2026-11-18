@@ -2,13 +2,13 @@ export const site = {
   name: "CIRCLE",
   domain: "circlecommunity.in",
   url: "https://circlecommunity.in",
-  tagline: "Where creativity connects",
+  tagline: "Find collabs. Keep your rates.",
   description:
-    "CIRCLE is a free community for creators, influencers, freelancers, service providers, and brands. Find collabs, services, events, and free learning.",
+    "Join CIRCLE free. Connect with verified Indian creators, launch fixed-rate collabs with a 10% platform fee, and monetize viral shorts through clipping campaigns.",
   operator: "Portfolix Enterprise Pvt Ltd",
   operatorDetail:
     "Operated by Portfolix Enterprise Pvt Ltd, Kochi, India, with Portfolix.Media and Portfolix.Tech.",
-  responseTime: "[RESPONSE TIME, e.g. 2 working days]",
+  responseTime: "2 business days",
   address: "[ADDRESS]",
 } as const;
 
@@ -36,7 +36,7 @@ export const primaryNav = [
   { href: "/clipping", label: "Clipping" },
   { href: "/events", label: "Events" },
   { href: "/learn", label: "Learn" },
-  { href: "/help", label: "FAQ" },
+  { href: "/help", label: "Help" },
   { href: "/brands", label: "For Brands" },
   { href: "/about", label: "About" },
 ] as const;
@@ -102,18 +102,18 @@ export const offerings = [
 export const collabSteps = [
   {
     step: "01",
-    title: "A brand posts the brief",
-    body: "Fixed budget, open bid, or barter. Ad disclosure (#ad / #collab) is on by default.",
+    title: "Post the brief",
+    body: "Fixed budget, open bid, or barter. ASCI disclosure (#ad / #collab) is enabled by default.",
   },
   {
     step: "02",
-    title: "Creators apply or bid",
-    body: "Send an application, or a bid amount with a pitch. Brands can see rates when a creator has made them visible.",
+    title: "Review applications",
+    body: "Creators apply with portfolios and custom pitches. View verified follower counts and starting rates.",
   },
   {
     step: "03",
-    title: "Both sides confirm the work",
-    body: "The brand accepts one or more people. Payment, when there is any, is made directly between the parties. CIRCLE does not hold funds.",
+    title: "Confirm and disburse",
+    body: "Approve deliverables upon completion. Payouts are protected with a transparent 10% platform fee.",
   },
 ] as const;
 

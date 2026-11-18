@@ -12,26 +12,26 @@ import { social } from "@/lib/site";
 
 export const metadata: Metadata = pageMetadata(
   "Membership",
-  "CIRCLE membership is free. Optional Portfolix services are quoted separately.",
+  "CIRCLE membership is free. No subscription paywalls. Transparent 10% platform fee applies only to completed marketplace deals.",
   "/membership",
 );
 
 const freeItems = [
-  "A profile and a directory listing",
-  "The collab board: apply or bid",
-  "Barter collabs",
-  "Events and meetups",
-  "Webinars and bootcamps",
-  "Partner perks",
-  "Points, badges, and leaderboards",
-  "Awards eligibility",
+  "Profile and verified directory listing",
+  "Access to open collab briefs (10% platform fee on completed deals)",
+  "Access to video clipping campaigns (10% performance fee upon payout)",
+  "Free community webinars and bootcamps",
+  "Partner discounts on studios, gear, and software",
+  "Points, badges, and monthly leaderboards",
+  "Annual community awards eligibility",
 ];
 
 const neverCharge = [
-  "Joining",
-  "Applying to a collab",
-  "Attending a free event",
-  "Getting verified",
+  "Joining CIRCLE or browsing directory listings",
+  "Creating or maintaining a creator profile",
+  "Applying or pitching for collabs",
+  "Attending community learning webinars",
+  "Profile identity verification",
 ];
 
 const excerptIds = [
@@ -49,10 +49,10 @@ export default function MembershipPage() {
     <Container className="py-16 sm:py-24">
       <p className="text-small tracking-[0.18em] text-silver uppercase">Membership</p>
       <h1 className="font-display mt-4 max-w-3xl text-display-sm font-medium tracking-tight uppercase sm:text-display">
-        CIRCLE membership is free
+        Membership is free
       </h1>
       <p className="mt-6 max-w-2xl text-lead text-silver">
-        There is no Pro plan and no paywall. Optional work by Portfolix is quoted on its own.
+        No monthly subscriptions and no paywalled listings. Transparent 10% platform fee applies only to completed marketplace deals.
       </p>
       <div className="mt-12 grid gap-10 lg:grid-cols-2">
         <section className="rounded-2xl border border-border bg-surface p-6 sm:p-8">
@@ -82,6 +82,17 @@ export default function MembershipPage() {
           </ul>
         </section>
       </div>
+      <section className="mt-12 rounded-2xl border border-border bg-surface p-6 sm:p-8">
+        <h2 className="font-display text-title-sm font-medium">Transparent marketplace fees</h2>
+        <p className="mt-2 text-silver">
+          Joining CIRCLE and maintaining a directory profile is free. When deals complete, CIRCLE charges a clear 10% platform fee to protect transactions:
+        </p>
+        <ul className="mt-4 list-disc space-y-2 pl-5 text-silver">
+          <li><strong>Brand collabs:</strong> 10% platform fee deducted on completed creator payouts.</li>
+          <li><strong>Video clipping:</strong> 10% platform fee deducted from verified locked clip earnings.</li>
+          <li><strong>Campaign owners:</strong> 10% service fee on campaign budgets covering automated view auditing.</li>
+        </ul>
+      </section>
       <section className="mt-12">
         <h2 className="font-display text-title-sm font-medium">What CIRCLE will never charge you for</h2>
         <ul className="mt-4 list-disc space-y-2 pl-5 text-silver">

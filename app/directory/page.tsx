@@ -140,7 +140,7 @@ export default function DirectoryPage({
         Find high-fit creators in minutes, not weeks
       </h1>
       <p className="mt-4 max-w-2xl text-silver">
-        A suggestion is a creator who listed that category and said they are open to that work. It is not a ranking and it is not a sales forecast. CIRCLE does not track ad ROI. You pay the creator directly.
+        Filter creators by category, location, and collab format. Profiles display verified follower tiers and starting rates. Completed collab deals operate with a transparent 10% platform fee.
       </p>
       <Suspense fallback={<p className="mt-8 text-silver">Loading filters.</p>}>
         <DirectoryFilters searchParams={searchParams} />

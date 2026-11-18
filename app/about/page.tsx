@@ -48,27 +48,29 @@ export default function AboutPage() {
 
       <section className="mt-16 rounded-2xl border border-border bg-surface p-6 sm:p-10">
         <h2 className="font-display text-title font-medium tracking-tight uppercase">
-          Free forever for members
+          Free membership · Transparent fees
         </h2>
         <p className="mt-4 max-w-2xl text-silver">
-          Joining CIRCLE is free. There is no member paywall in v1. Collab
-          budgets are shown on the brief. Money, when any is involved, moves
-          directly between the brand and the creator. CIRCLE does not process
-          payments.
+          Joining CIRCLE and listing your creative profile is free. For marketplace transactions (Collabs and Video Clipping), CIRCLE charges a transparent 10% platform fee on completed payouts to protect deliverables, verify metrics, and maintain community infrastructure.
         </p>
       </section>
 
       <section className="mt-16 max-w-2xl">
         <h2 className="font-display text-title font-medium tracking-tight uppercase">
-          Who runs it
+          Who runs CIRCLE
         </h2>
         <p className="mt-4 text-silver">
-          {site.operatorDetail} The site is {site.domain}. Email{" "}
+          {site.operatorDetail} The official platform is {site.domain}. Contact{" "}
           <a className="text-text underline" href="mailto:info@circlecommunity.in">info@circlecommunity.in</a>.
-          Read <Link className="text-text underline" href="/membership">membership</Link>,{" "}
-          <Link className="text-text underline" href="/help">help</Link>, and{" "}
-          <Link className="text-text underline" href="/contact">contact</Link>.
+          Read <Link className="text-text underline" href="/membership">membership terms</Link>,{" "}
+          <Link className="text-text underline" href="/help">help center</Link>, and{" "}
+          <Link className="text-text underline" href="/contact">contact options</Link>.
         </p>
+        <div className="mt-8">
+          <Link href="/directory" className="inline-flex min-h-11 items-center rounded-full bg-lime px-6 text-sm font-medium text-bg">
+            Explore the community
+          </Link>
+        </div>
       </section>
     </Container>
   );

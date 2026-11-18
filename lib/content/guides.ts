@@ -23,7 +23,7 @@ export const guides: Guide[] = [
       },
       {
         heading: "How you hire",
-        body: "Post a collab with a fixed budget, an open bid, or a barter. Creators apply. You accept. You pay the creator directly. CIRCLE does not hold the money and does not calculate ad ROI.",
+        body: "Post a collab with a fixed budget, an open bid, or a barter. Creators apply, terms are agreed, and payouts carry a transparent 10% platform fee.",
       },
     ],
   },

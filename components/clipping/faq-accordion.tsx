@@ -23,7 +23,7 @@ const clippingFaqs: FaqItem[] = [
   {
     question: "What fees does CIRCLE charge for clipping?",
     answer:
-      "Joining campaigns and submitting clips is 100% free with zero registration or withdrawal fees. CIRCLE charges a transparent dual-sided 10% fee: campaign owners pay a 10% service fee on top of their campaign budget, and CIRCLE deducts a 10% platform fee from each clip's locked gross earnings to cover automated view verification, fraud prevention, and UPI payout processing.",
+      "Joining campaigns and submitting clips is free with zero registration or withdrawal fees. CIRCLE charges a transparent dual-sided 10% fee: campaign owners pay a 10% service fee on top of their campaign budget, and CIRCLE deducts a 10% platform fee from each clip's locked gross earnings to cover automated view verification, fraud prevention, and UPI payout processing.",
   },
   {
     question: "How and when do clippers get paid?",

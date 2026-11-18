@@ -56,7 +56,7 @@ export function CategoryMarquee({
     )
   }
 
-  // Duplicate items for continuous seamless loop
+  // Duplicate items for smooth continuous loop
   const duplicatedItems = [...items, ...items, ...items]
 
   return (

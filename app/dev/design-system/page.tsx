@@ -125,7 +125,7 @@ export default function DesignSystemShowcasePage() {
       id: "faq-1",
       title: "Is CIRCLE really free for creators and brands?",
       content:
-        "Yes. Joining CIRCLE is completely free. We charge zero commission on brand collabs in v1—brands pay creators directly. For video clipping campaigns, a transparent 10% performance fee applies to locked clip payouts.",
+        "Joining CIRCLE is free. For marketplace transactions (Collabs and Video Clipping), CIRCLE charges a transparent 10% platform fee on completed payouts to maintain escrow protection and platform verification.",
     },
     {
       id: "faq-2",

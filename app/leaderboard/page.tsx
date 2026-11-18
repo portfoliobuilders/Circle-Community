@@ -8,7 +8,7 @@ import { pageMetadata } from "@/lib/seo";
 
 export const metadata: Metadata = pageMetadata(
   "Leaderboard",
-  "Creator points come from completed collabs, attended events, and approved tasks. Brands are ranked by collabs they have posted.",
+  "Monthly creator and brand rankings based on verified collab completions and active campaign briefs.",
   "/leaderboard",
 );
 
@@ -16,9 +16,9 @@ export default function LeaderboardPage() {
   return (
     <Container className="py-16 sm:py-24">
       <p className="text-small tracking-[0.18em] text-silver uppercase">Leaderboard</p>
-      <h1 className="font-display mt-4 text-display-sm font-medium tracking-tight uppercase">Creators and brands</h1>
+      <h1 className="font-display mt-4 text-display-sm font-medium tracking-tight uppercase">Monthly community leaderboard</h1>
       <p className="mt-4 max-w-2xl text-silver">
-        Creator points come only from a completed collab, an event they attended, or a task an admin has confirmed. Likes and logins do not count. Points have no cash value. Brands are ranked by how many collabs they have posted, not by money spent.
+        Creator rankings reflect points from completed collabs, clipping milestones, and approved challenges. Brands are ranked by verified briefs posted.
       </p>
       <p className="mt-4 text-small text-silver">
         Awards and written features are published as guides when there is a real recipient. <Link className="underline underline-offset-4" href="/guides">Read the guides</Link>.

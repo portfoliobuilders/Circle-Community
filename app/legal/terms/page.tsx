@@ -32,7 +32,7 @@ export default function TermsPage() {
       </LegalSection>
       <LegalSection title="Accounts and verification">
         <p>
-          Account creation is not open on the site yet. When it is, you must give accurate information. Follower counts stay labelled self-reported until CIRCLE verifies them. Verification uses a code in your bio. CIRCLE will never ask for a social media password. Brand accounts must represent a real business. One person, one account. A member account can be both a creator and a service provider. Brand accounts are separate.
+          You must provide accurate information when registering. Follower counts remain labelled self-reported until CIRCLE verifies them. Verification uses a code in your bio; CIRCLE will never ask for your social media password. Brand accounts must represent a verified business entity. One person, one account. A member account can be both a creator and a service provider. Brand accounts are separate.
         </p>
       </LegalSection>
       <LegalSection title="Your content">
@@ -40,9 +40,9 @@ export default function TermsPage() {
           You keep ownership of what you upload. You give CIRCLE a licence to display that content on the platform, and on CIRCLE&apos;s own social channels with credit, for as long as the content stays on the service. You can ask for removal through <Link className="text-text underline" href="/contact">contact</Link>. You confirm you have the rights to what you post.
         </p>
       </LegalSection>
-      <LegalSection title="Collabs">
+      <LegalSection title="Collabs & Video Clipping">
         <p>
-          A collab is an agreement between the brand and the creator. CIRCLE is not a party to that agreement. In v1 CIRCLE does not hold money, does not process payment, and does not guarantee that either side will pay or deliver. Budgets shown on a brief are information, not a payment by CIRCLE. Ad disclosure (#ad / #collab) is on by default.
+          Collabs and video clipping campaigns operate on agreed deliverable scopes. CIRCLE tracks deliverable submissions and applies a transparent 10% platform fee on completed disbursements to support verification, escrow security, and infrastructure. Ad disclosure (#ad / #collab) is required on all published deliverables in compliance with ASCI guidelines.
         </p>
       </LegalSection>
       <LegalSection title="Listings and services">

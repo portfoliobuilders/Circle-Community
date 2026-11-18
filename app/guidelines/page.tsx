@@ -71,7 +71,7 @@ export default function GuidelinesPage() {
         </LegalSection>
         <LegalSection title="How to report">
           <p>
-            When profiles and collabs are live, use the Report button on that page. Until then, use <Link className="text-text underline" href="/contact">contact</Link> and choose &quot;Report a problem&quot;. Include links, not rumours.
+            Use the Report button on any live profile, collab brief, or clipping campaign. You can also reach our moderation team via <Link className="text-text underline" href="/contact">contact</Link> by selecting &quot;Report a problem&quot;.
           </p>
         </LegalSection>
       </div>

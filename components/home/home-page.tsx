@@ -44,19 +44,16 @@ export function HomePage() {
             Free community · circlecommunity.in
           </p>
           <h1 className="font-display mt-5 max-w-3xl text-display-sm font-medium tracking-tight uppercase sm:text-display lg:text-display-lg">
-            <span className="block">Your people.</span>
-            <span className="block">Your ideas.</span>
-            <span className="block">Your circle.</span>
+            <span className="block text-white">Find collabs.</span>
+            <span className="block text-lime">Keep your rates.</span>
           </h1>
           <p className="mt-6 max-w-xl text-lead text-silver">
-            CIRCLE connects creators, influencers, freelancers, service
-            providers, and brands. Build a profile, find collabs, learn for
-            free, and show up for the people doing the work.
+            Connect with verified Indian creators and brands. Free to join with a transparent 10% platform fee on completed deals.
           </p>
           <div className="mt-8 flex flex-col gap-3 sm:flex-row">
             <PillLink href="/join">Join the circle</PillLink>
             <PillLink href="/directory" variant="secondary">
-              Find creators
+              Browse directory
             </PillLink>
           </div>
         </Container>
@@ -65,30 +62,30 @@ export function HomePage() {
       <section className="border-t border-border">
         <Container className="py-12 sm:py-16">
           <h2 className="font-display max-w-3xl text-title font-medium tracking-tight uppercase sm:text-display-sm">
-            Start with the work
+            Explore the marketplace
           </h2>
           <p className="mt-4 max-w-2xl text-silver">
-            Find a creator, post a brief, or read how the community works. Membership stays free.
+            Discover verified creators, apply for open briefs, or launch clipping campaigns.
           </p>
           <ul className="mt-8 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
             <li>
               <Link href="/directory" className="flex min-h-11 items-center rounded-2xl border border-border px-5 hover:bg-surface">
-                Find creators
+                Browse creators
               </Link>
             </li>
             <li>
               <Link href="/collabs" className="flex min-h-11 items-center rounded-2xl border border-border px-5 hover:bg-surface">
-                Open collabs
+                View open collabs
               </Link>
             </li>
             <li>
-              <Link href="/giveaways" className="flex min-h-11 items-center rounded-2xl border border-border px-5 hover:bg-surface">
-                Community giveaways
+              <Link href="/clipping" className="flex min-h-11 items-center rounded-2xl border border-border px-5 hover:bg-surface">
+                Clipping campaigns
               </Link>
             </li>
             <li>
               <Link href="/journal" className="flex min-h-11 items-center rounded-2xl border border-border px-5 hover:bg-surface">
-                Read the journal
+                Read journal
               </Link>
             </li>
           </ul>
@@ -98,67 +95,59 @@ export function HomePage() {
       <section id="community" className="scroll-mt-32 border-t border-border">
         <Container className="py-16 sm:py-24">
           <h2 className="font-display text-title font-medium tracking-tight uppercase sm:text-display-sm">
-            Who we bring together
+            The community
           </h2>
           <div className="mt-10 grid gap-10 md:grid-cols-3">
             <article>
               <h3 className="font-display text-title-sm font-medium">
-                Creators
+                Creators & clippers
               </h3>
               <p className="mt-3 text-silver">
-                Influencers and creators list platforms, follower counts, and
-                rates, then apply or bid for brand collabs.
+                Showcase verified profiles, apply for paid brand collabs, and earn from viral clipping campaigns with a 10% fee.
               </p>
               <Link
                 href="/creators"
                 className="mt-4 inline-flex min-h-11 items-center text-small text-text underline-offset-4 hover:underline"
               >
-                See what creators get
+                Browse creator paths
               </Link>
             </article>
             <article>
               <h3 className="font-display text-title-sm font-medium">
-                Freelancers and service providers
+                Creative services
               </h3>
               <p className="mt-3 text-silver">
-                Photographers, videographers, script writers, editors, models,
-                studio floors, and podcast setups. List a service with a price
-                from and a city.
+                List photography, video editing, or studio spaces with starting rates and city filters.
               </p>
               <Link
                 href="/directory"
                 className="mt-4 inline-flex min-h-11 items-center text-small text-text underline-offset-4 hover:underline"
               >
-                Browse the directory
+                Explore services
               </Link>
             </article>
             <article>
               <h3 className="font-display text-title-sm font-medium">Brands</h3>
               <p className="mt-3 text-silver">
-                Post a fixed budget, an open bid, or a barter. Browse creators
-                and the rates they choose to show.
+                Post fixed briefs, open bids, or performance clipping campaigns to reach engaged audiences.
               </p>
               <Link
                 href="/brands"
                 className="mt-4 inline-flex min-h-11 items-center text-small text-text underline-offset-4 hover:underline"
               >
-                See what brands get
+                Review brand solutions
               </Link>
             </article>
           </div>
-          <p className="mt-10 max-w-2xl text-small text-silver">
-            One account can be a creator and a service provider. Brand accounts
-            are separate.
-          </p>
         </Container>
       </section>
 
       <section id="services" className="scroll-mt-32 border-t border-border">
         <Container className="py-16 sm:py-24">
           <h2 className="font-display text-title font-medium tracking-tight uppercase sm:text-display-sm">
-            What you get
+            Platform features
           </h2>
-            <ul className="mt-10 grid gap-px overflow-hidden rounded-2xl border border-border bg-border sm:grid-cols-2 lg:grid-cols-4">
+          <ul className="mt-10 grid gap-px overflow-hidden rounded-2xl border border-border bg-border sm:grid-cols-2 lg:grid-cols-4">
             {offerings.map((item) => (
               <li key={item.title} className="bg-surface">
                 <Link href={offeringHrefs[item.title] ?? "/"} className="block p-5 hover:bg-bg">
@@ -193,7 +182,7 @@ export function HomePage() {
           </ol>
           <p className="mt-10">
             <PillLink href="/collabs" variant="secondary">
-              Open the collab board
+              Browse collab briefs
             </PillLink>
           </p>
         </Container>
@@ -202,14 +191,14 @@ export function HomePage() {
       <section id="events" className="scroll-mt-32 border-t border-border">
         <Container className="py-16 sm:py-24">
           <h2 className="font-display text-title font-medium tracking-tight uppercase sm:text-display-sm">
-            Events
+            Community events
           </h2>
           <p className="mt-4 max-w-2xl text-silver">
-            Meetups, webinars, and bootcamps are listed when the team publishes them. Nothing is scheduled until it appears there.
+            Join monthly creator meetups, live editing workshops, and industry masterclasses.
           </p>
           <p className="mt-8">
             <PillLink href="/events" variant="secondary">
-              See events
+              View upcoming events
             </PillLink>
           </p>
         </Container>
@@ -221,15 +210,11 @@ export function HomePage() {
             <h2 className="font-display text-title font-medium tracking-tight uppercase sm:text-display-sm">
               For creators
             </h2>
-            <ul className="mt-4 max-w-xl list-disc space-y-2 pl-5 text-silver">
-              <li>Collabs: apply, bid, or barter.</li>
-              <li>Giveaways: list community prizes or discover opportunities.</li>
-              <li>Free webinars and bootcamps.</li>
-              <li>Partner perks on studios, gear, and tools.</li>
-              <li>Points, badges, and leaderboards for real work.</li>
-            </ul>
+            <p className="mt-4 max-w-xl text-silver">
+              Apply for brand collabs, monetise viral clips, and join free community masterclasses.
+            </p>
           </div>
-          <PillLink href="/join">Join free</PillLink>
+          <PillLink href="/join" variant="secondary">Create account</PillLink>
         </Container>
       </section>
 
@@ -240,13 +225,11 @@ export function HomePage() {
               For brands
             </h2>
             <p className="mt-4 max-w-xl text-silver">
-              Post a collab, browse creators, or ask Portfolix.Media and
-              Portfolix.Tech to run the work with you. The community stays
-              free. Agency services are quoted separately.
+              Launch self-serve briefs, run guaranteed view clipping campaigns, or request managed agency production.
             </p>
           </div>
           <PillLink href="/brands" variant="secondary">
-            Read the brand page
+            Explore brand options
           </PillLink>
         </Container>
       </section>
@@ -254,10 +237,10 @@ export function HomePage() {
       <section className="border-t border-border">
         <Container className="py-16 sm:py-20">
           <h2 className="font-display text-title font-medium tracking-tight uppercase sm:text-display-sm">
-            Join the circle
+            Join the community
           </h2>
           <p className="mt-4 max-w-xl text-silver">
-            Membership is free. There is no paywall. Create an account and open the board.
+            Free membership with zero subscription fees. Connect on official community channels:
           </p>
           <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
             <SocialLink
@@ -279,7 +262,7 @@ export function HomePage() {
       <section id="faq" className="scroll-mt-32 border-t border-border">
         <Container className="py-16 sm:py-20">
           <h2 className="font-display text-title font-medium tracking-tight uppercase sm:text-display-sm">
-            FAQ
+            Frequently asked questions
           </h2>
           <JsonLd
             data={{
@@ -314,7 +297,7 @@ export function HomePage() {
             Newsletter
           </h2>
           <p className="mt-4 max-w-xl text-silver">
-            Notes from CIRCLE. We only write after you confirm the email.
+            Weekly digest of verified briefs, clipping campaigns, and event announcements.
           </p>
           <div className="mt-6">
             <NewsletterForm source="home" tone="lime" />

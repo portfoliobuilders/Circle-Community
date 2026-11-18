@@ -139,7 +139,7 @@ export default async function ClippingHubPage() {
                 How Video Clipping Works
               </h2>
               <p className="mt-4 text-silver text-sm sm:text-base">
-                Whether you edit high-velocity reels or need scalable distribution for your podcast and brand, our single-snapshot verification guarantees fairness.
+                Scale video distribution across social channels with automated view snapshot auditing and verified milestone payouts.
               </p>
             </div>
 

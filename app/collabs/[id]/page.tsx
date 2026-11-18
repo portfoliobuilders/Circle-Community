@@ -56,9 +56,9 @@ async function CollabDetail({ params }: { params: Promise<{ id: string }> }) {
       <h1 className="font-display mt-4 max-w-3xl text-display-sm font-medium tracking-tight uppercase">{row.title}</h1>
       <p className="mt-4 max-w-2xl whitespace-pre-wrap text-silver">{row.summary}</p>
       <dl className="mt-8 space-y-2 text-silver">
-        {row.budget_inr != null ? <div>Budget {formatInr(row.budget_inr)}. The brand pays the creator directly.</div> : null}
-        {row.barter_offer ? <div>Barter: {row.barter_offer}. No cash through CIRCLE.</div> : null}
-        <div>Ad disclosure (#ad / #collab) is required.</div>
+        {row.budget_inr != null ? <div>Budget: {formatInr(row.budget_inr)} · 10% platform fee on completed payout</div> : null}
+        {row.barter_offer ? <div>Barter offer: {row.barter_offer}</div> : null}
+        <div>ASCI disclosure (#ad / #collab) required on all published deliverables</div>
         <div>Posted {formatKolkata(row.created_at)} · {row.status}</div>
       </dl>
       {profile?.role === "creator" && row.status === "open" ? (

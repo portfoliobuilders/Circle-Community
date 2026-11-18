@@ -9,7 +9,7 @@ import { pageMetadata } from "@/lib/seo";
 
 export const metadata: Metadata = pageMetadata(
   "Collabs",
-  "Open collabs on CIRCLE. Brands pay creators directly. CIRCLE does not process payment.",
+  "Browse open brand collabs on CIRCLE. Transparent 10% platform fee on completed deals with verified ASCI disclosure.",
   "/collabs",
 );
 
@@ -28,7 +28,7 @@ export default function CollabsPage() {
         </Link>
       </div>
       <p className="mt-4 max-w-2xl text-silver">
-        The budget is information. The brand pays the creator directly. CIRCLE does not hold the money. Ad disclosure is required.
+        Browse open brand briefs. Completed collab payouts carry a transparent 10% platform fee with verified deliverables. ASCI disclosure (#ad / #collab) is required.
       </p>
       <Suspense fallback={<p className="mt-8 text-silver">Loading collabs.</p>}>
         <CollabList />

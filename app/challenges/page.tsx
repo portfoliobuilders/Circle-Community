@@ -8,7 +8,7 @@ import { pageMetadata } from "@/lib/seo";
 
 export const metadata: Metadata = pageMetadata(
   "Challenges",
-  "Tasks for creators, brands, and members. Points are added only after CIRCLE confirms the work.",
+  "Complete creative tasks and collab milestones to earn verified CIRCLE points and leaderboard badges.",
   "/challenges",
 );
 
@@ -17,10 +17,17 @@ const audienceLabel = { creator: "Creators", brand: "Brands", anyone: "Anyone" }
 export default function ChallengesPage() {
   return (
     <Container className="py-16 sm:py-24">
-      <p className="text-small tracking-[0.18em] text-silver uppercase">Challenges</p>
-      <h1 className="font-display mt-4 text-display-sm font-medium tracking-tight uppercase">Tasks that can earn points</h1>
+      <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+        <div>
+          <p className="text-small tracking-[0.18em] text-silver uppercase">Challenges</p>
+          <h1 className="font-display mt-4 text-display-sm font-medium tracking-tight uppercase">Community challenges</h1>
+        </div>
+        <Link href="/leaderboard" className="inline-flex min-h-11 items-center rounded-full bg-lime px-5 text-sm font-medium text-bg">
+          View leaderboard
+        </Link>
+      </div>
       <p className="mt-4 max-w-2xl text-silver">
-        Do the task, then the CIRCLE team confirms it before any points are added. A post or a click on its own does not move the <Link className="underline underline-offset-4" href="/leaderboard">leaderboard</Link>.
+        Complete verified creative tasks and milestone briefs. Points are credited upon moderation review and determine monthly rankings.
       </p>
       <Suspense fallback={<p className="mt-8 text-silver">Loading challenges.</p>}>
         <ChallengeList />

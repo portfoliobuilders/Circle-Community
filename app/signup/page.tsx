@@ -23,8 +23,8 @@ export default function SignupPage() {
       </h1>
       <p className="mt-4 max-w-xl text-silver">
         {ready
-          ? "Membership is free. This creates a login. It does not ask for a social media password."
-          : "Supabase is not configured, so this form only asks the team to hold your place."}
+          ? "Membership is free. This creates your account. CIRCLE never asks for your social media password."
+          : "Direct registration is temporarily queuing. Submit your details to reserve your place."}
       </p>
       <div className="mt-10">
         <Suspense fallback={<p className="text-silver">Loading the form.</p>}>

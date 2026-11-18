@@ -50,7 +50,7 @@ export function JoinDialog({ campaignTitle }: JoinDialogProps) {
           </div>
 
           <Dialog.Description className="mt-3 text-sm text-silver leading-relaxed">
-            Direct campaign joining and submission queues will unlock in the upcoming release. Prepare your CIRCLE creator account by ensuring all prerequisites are met:
+            Direct campaign joining and submission queues will open in the upcoming release. Prepare your CIRCLE creator account by ensuring all prerequisites are met:
           </Dialog.Description>
 
           {/* Eligibility Checklist */}

@@ -53,7 +53,7 @@ export function OwnerPrCampaignManager({
               : a
           )
         );
-        setActionNotice({ id: applicationId, text: "Application accepted! Deliverable slot reserved." });
+        setActionNotice({ id: applicationId, text: "Application accepted. Deliverable slot reserved." });
       } else {
         setActionNotice({ id: applicationId, text: res.message, isError: true });
       }
@@ -93,7 +93,7 @@ export function OwnerPrCampaignManager({
       if (res.status === "success") {
         setActionNotice({
           id: deliverableId,
-          text: decision === "approved" ? "Draft approved! Creator cleared to post." : "Changes requested (Revision 1).",
+          text: decision === "approved" ? "Draft approved. Creator cleared to post." : "Changes requested (Revision 1).",
         });
         setTimeout(() => window.location.reload(), 1500);
       } else {

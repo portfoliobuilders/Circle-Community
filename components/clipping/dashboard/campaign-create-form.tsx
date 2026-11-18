@@ -167,7 +167,7 @@ export function CampaignCreateForm() {
         if (res.status === "success") {
           setStatusMsg({
             type: "success",
-            text: "Campaign submitted for review! An admin will verify the footage rights and send your invoice.",
+            text: "Campaign submitted for review. An admin will verify the footage rights and send your invoice.",
           });
           setTimeout(() => {
             router.push("/dashboard/clipping/campaigns");
@@ -207,7 +207,7 @@ export function CampaignCreateForm() {
         if (res.status === "success") {
           setStatusMsg({
             type: "success",
-            text: "PR Campaign submitted for review! An admin will verify category guidelines and send your invoice.",
+            text: "PR Campaign submitted for review. An admin will verify category guidelines and send your invoice.",
           });
           setTimeout(() => {
             router.push("/dashboard/clipping/campaigns");
@@ -801,7 +801,7 @@ export function CampaignCreateForm() {
             type="text"
             value={requiredCaption}
             onChange={(e) => setRequiredCaption(e.target.value)}
-            placeholder="e.g. Check out the latest announcement via link in bio!"
+            placeholder="e.g. Check out the latest announcement via link in bio."
             className="mt-2 w-full rounded-xl border border-border bg-bg px-4 py-3 text-text placeholder-silver/50 focus:border-lime focus:outline-none"
           />
         </div>

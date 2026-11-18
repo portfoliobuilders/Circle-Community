@@ -49,7 +49,7 @@ export function CreatorPrDeliverablesList({ applications }: { applications: PrAp
       });
 
       if (res.status === "success") {
-        setNotice({ id: deliverableId, text: "Draft submitted for owner review!" });
+        setNotice({ id: deliverableId, text: "Draft submitted for owner review." });
         setTimeout(() => window.location.reload(), 1500);
       } else {
         setNotice({ id: deliverableId, text: res.message, isError: true });
@@ -72,7 +72,7 @@ export function CreatorPrDeliverablesList({ applications }: { applications: PrAp
       });
 
       if (res.status === "success") {
-        setNotice({ id: deliverableId, text: "Post URL submitted! Admin will audit live status." });
+        setNotice({ id: deliverableId, text: "Post URL submitted. Admin will audit live status." });
         setTimeout(() => window.location.reload(), 1500);
       } else {
         setNotice({ id: deliverableId, text: res.message, isError: true });

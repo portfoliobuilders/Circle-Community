@@ -4,7 +4,7 @@ export const site = {
   url: "https://circlecommunity.in",
   tagline: "Find collabs. Keep your rates.",
   description:
-    "Join CIRCLE free. Connect with verified Indian creators, launch fixed-rate collabs with a 10% platform fee, and monetize viral shorts through clipping campaigns.",
+    "Join CIRCLE free. Connect with verified creators, launch collabs with a 10% platform fee, and monetize viral shorts through clipping campaigns.",
   operator: "Portfolix Enterprise Pvt Ltd",
   operatorDetail:
     "Operated by Portfolix Enterprise Pvt Ltd, Kochi, India, with Portfolix.Media and Portfolix.Tech.",

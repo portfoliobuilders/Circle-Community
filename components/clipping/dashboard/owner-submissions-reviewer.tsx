@@ -43,7 +43,7 @@ export function OwnerSubmissionsReviewer({
         setSubmissions((prev) =>
           prev.map((s) => (s.id === id ? { ...s, status: "approved", reject_reason: null } : s))
         );
-        setActionMsg({ id, text: "Clip approved! Day-7 view tracking started." });
+        setActionMsg({ id, text: "Clip approved. Day-7 view tracking started." });
       } else {
         setActionMsg({ id, text: res.message, isError: true });
       }

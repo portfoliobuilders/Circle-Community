@@ -55,7 +55,7 @@ export function ClippingAdminPanel({ initialData }: { initialData: AdminClipping
     startTransition(async () => {
       const res = await adminApproveCampaign(campaignId);
       if (res.status === "success") {
-        setNotice({ text: "Campaign approved! Now awaiting invoice payment." });
+        setNotice({ text: "Campaign approved. Now awaiting invoice payment." });
         setData((prev) => ({
           ...prev,
           pendingCampaigns: prev.pendingCampaigns.map((c) =>
@@ -80,7 +80,7 @@ export function ClippingAdminPanel({ initialData }: { initialData: AdminClipping
     startTransition(async () => {
       const res = await adminFundCampaign({ campaign_id: campaignId, funded_ref: ref });
       if (res.status === "success") {
-        setNotice({ text: "Campaign funded and launched live!" });
+        setNotice({ text: "Campaign funded and launched live." });
         setData((prev) => ({
           ...prev,
           pendingCampaigns: prev.pendingCampaigns.filter((c) => c.id !== campaignId),
@@ -152,7 +152,7 @@ export function ClippingAdminPanel({ initialData }: { initialData: AdminClipping
       if (res.status === "success") {
         setNotice({
           text: isCompliant
-            ? "Post verified live! 7-day maturation countdown started."
+            ? "Post verified live. 7-day maturation countdown started."
             : "Post marked failed and campaign budget reservation restored.",
         });
         setData((prev) => ({

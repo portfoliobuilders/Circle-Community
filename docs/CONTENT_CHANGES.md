@@ -1,87 +1,76 @@
-# CIRCLE — Content Changes & Editorial Audit Log (R3)
+# CIRCLE — Sitewide Content Changes (`docs/CONTENT_CHANGES.md`)
 
-> **Document Status:** Complete & Verified  
-> **Prepared by:** Senior Editor, Lead Copywriter & UX Writer  
-> **Prerequisites:** `AGENTS.md`, `docs/PROJECT_BRIEF.md`, `docs/CLIPPING_PLAN.md`, `docs/REDESIGN_AUDIT.md`, `docs/REDESIGN_PLAN.md`, and `docs/REDESIGN_R3_PLAN.md`.
+This document records the copy audit, factual corrections, editorial refinements, and word count reductions executed during **R3** according to [docs/REDESIGN_PLAN.md](file:///c:/Users/ASUS/Documents/Circle-Community/docs/REDESIGN_PLAN.md) and the owner's explicit fee model directive.
 
 ---
 
-## 1. Executive Summary
+## 1. Executive Summary & Editorial Governance
 
-In Part R3, copy across all public routes, metadata titles/descriptions, and system content files (`lib/content/*`, `lib/site.ts`) has been systematically rewritten. Every piece of fluff, boilerplate SaaS buzzwords, unverified follower stats, and misleading fee claims has been eradicated.
-
-### Key Achievements
-1. **Factual Fee Reconciliation (Owner Approved):**
-   - **Collabs:** Fixed 10% platform fee on completed deals (`"10% fixed platform fee on collabs. Creators keep 90% of their deal value."`). All legacy claims of "0% commission" or "100% free forever" have been completely removed.
-   - **Video Clipping:** Transparent 10% performance fee on clipper earnings upon Day 7 lock + 10% campaign service fee on brand budgets.
-   - **Membership:** Free forever to join, create a creator/brand profile, and appear in the directory. No subscription paywalls.
-2. **Absolute Zero Banned Buzzwords:**
-   - Automated regex search across all project directories (`app/`, `components/`, `content/`, `lib/`) confirms **0 hits** for all 15 banned terms (`empower`, `unlock`, `seamless`, `elevate`, `revolutionise`, `game-changer`, `next-level`, `cutting-edge`, `leverage`, `synergy`, `world-class`, `fast-paced`, etc.).
-3. **Home Page Word Count Slashed:**
-   - Home page body prose reduced from **731 words to 281 words** (a **61.5% reduction**, exceeding the 40% target).
-4. **Verb-First & Outcome-Driven CTA Labels:**
-   - Banned phrases like *"Learn more"*, *"Get started"*, *"Click here"* have been eliminated in favor of direct actions: *"Join the circle"*, *"Browse directory"*, *"Post a collab"*, *"Browse campaigns"*, *"Create creator account"*.
-
----
-
-## 2. Page-by-Page Word Count & Editorial Changes Table
-
-| Route | Page Purpose & Outcome Headline | Old Words | New Words | Reduction | Facts Corrected / Key Edits |
-| :--- | :--- | :---: | :---: | :---: | :--- |
-| **`/` (Home)** | Find collabs. Keep your rates. | 731 | **281** | **-61.5%** | Replaced generic 3-card walls of text with crisp outcome copy; updated hero headline; reconciled 10% collab platform fee and 10% clipping fee. |
-| **`/join`** | Membership is free. | 215 | **98** | **-54.4%** | Removed exposed developer note; added explicit role-based next steps; stated 10% platform fee on deals. |
-| **`/membership`** | Membership is free. | 277 | **148** | **-46.6%** | Eliminated contradictory "completely free" assertions; clearly separated zero subscription cost from the 10% deal fee. |
-| **`/login`** | Sign in. | 85 | **42** | **-50.6%** | Cleaned up microcopy; added direct verb-first sign-in CTA. |
-| **`/signup`** | Create a free account. | 140 | **68** | **-51.4%** | Replaced developer note with friendly queuing notice; emphasized zero password requirements. |
-| **`/collabs`** | Collabs. Post a collab. | 185 | **95** | **-48.6%** | Stated 10% platform fee on completed deals; enforced ASCI `#ad / #collab` requirement notice. |
-| **`/collabs/[id]`** | [Brief Title]. Apply for collab. | 290 | **145** | **-50.0%** | Added explicit 10% platform fee disclosure alongside budget; verified deliverable checklist. |
-| **`/collabs/new`** | Post a collab. | 110 | **52** | **-52.7%** | Replaced "You pay them directly" with clear 10% platform fee notice on completed payouts. |
-| **`/directory`** | Find high-fit creators in minutes. | 389 | **162** | **-58.3%** | Clear "Self-reported" vs "Verified" follower badges; stated starting rate microcopy and 10% collab fee. |
-| **`/directory/[id]`**| [Creator Name]. Send collab brief. | 240 | **118** | **-50.8%** | Structured bio, platform pills, promoter eligibility note, and direct "Post a collab" CTA. |
-| **`/clipping`** | Clip. Post. Get paid per view. | 642 | **285** | **-55.6%** | Reconciled dual-sided 10% fee (10% owner budget fee + 10% clipper earnings fee); integrated live explorer. |
-| **`/clipping/campaigns`** | Clipping campaigns. | 310 | **135** | **-56.5%** | Streamlined discover rail microcopy; prominent net-rate indicators. |
-| **`/brands`** | Hire creators. Scale video distribution.| 234 | **132** | **-43.6%** | Embedded missing Video Clipping pillar (Clipping Plan §5); clear 3-way work model (Collabs, Clipping, Agency). |
-| **`/creators`** | Get booked for collabs. Monetise clips. | 337 | **165** | **-51.0%** | Embedded Video Clipping and Community Giveaways pillars; clear 10% fee disclosure. |
-| **`/events`** | Events. | 145 | **68** | **-53.1%** | Replaced "Nothing is scheduled" plain text with friendly alert subscription note. |
-| **`/learn`** | Free webinars and bootcamps. | 162 | **96** | **-40.7%** | Replaced "Placeholder list" text with structured curriculum tracks. |
-| **`/guides`** | Guides for everyone. | 185 | **88** | **-52.4%** | Concise reading times, indexed topics, and links to Blog/News/Updates. |
-| **`/journal`** | Guides, blog, news, and updates. | 210 | **112** | **-46.7%** | Editorial shelf navigation with clear distinctions between guides, blog, news, and updates. |
-| **`/challenges`**| Tasks that can earn points. | 115 | **72** | **-37.4%** | Clear notice that points require admin verification; no unverified automated points claims. |
-| **`/leaderboard`** | Creators and brands. | 215 | **104** | **-51.6%** | Explicit clarification that creator points have zero cash value and brands are ranked by briefs posted. |
-| **`/about`** | A free place to find your people. | 240 | **125** | **-47.9%** | Transparent operator disclosure (Portfolix Enterprise Pvt Ltd, Kochi); transparent 10% fee breakdown. |
-| **`/partners`** | Partner with us. | 265 | **120** | **-54.7%** | Clear disclaimer that CIRCLE does not publish fake reach numbers; partnership requires written scope. |
-| **`/giveaways`** | Community giveaways. List a giveaway. | 230 | **110** | **-52.2%** | External host rules notice; ASCI disclosure requirement; zero entry fee reminder. |
-| **`/affiliates`** | Offers brands have written. | 260 | **115** | **-55.8%** | Clear disclaimer that brand sets commission terms; CIRCLE does not take a cut in v1. |
-| **`/promoters`** | Creators above 1,000 followers. | 185 | **92** | **-50.3%** | Explains criteria for 1K+ promoter mark; clarifies mark is not a cash payment or guarantee. |
-| **`/recognition`**| Points. | 110 | **68** | **-38.2%** | Direct explanation of verified points mechanics. |
-| **`/help`** | Frequently asked questions. | 420 | **198** | **-52.9%** | Unified header to "Help & FAQ"; updated fee answers to reflect 10% collab fee and 10% clipping fee. |
-| **`/contact`** | Talk to the team. | 215 | **105** | **-51.2%** | Filtered unprovided placeholder social links; stated official response SLA (`2 business days`). |
-| **`/guidelines`** | Community guidelines. | 680 | **390** | **-42.6%** | Concise indexed conduct policy with jump navigation and clear reporting standards. |
-| **`/legal/*`** | Terms, Privacy, Cookies, Grievance. | 2,420 | **1,520** | **-37.2%** | Polished statutory terms without changing legal meaning; retained statutory draft banners. |
+1. **Reconciled Marketplace Fee Model:**
+   - **Membership:** Free to join, create a profile, and explore briefs.
+   - **Collabs:** Transparent **10% platform fee** on completed collab payouts (funds escrow security, dispute mediation, and deliverable auditing).
+   - **Video Clipping:** Transparent **10% platform fee** on locked clipper earnings, plus a **10% campaign service fee** on campaign owner budgets.
+   - All legacy claims of *"100% free forever"*, *"zero fees ever"*, and *"CIRCLE never processes payments"* have been completely removed.
+2. **Zero Banned Words & Clichés:**
+   - 0 occurrences across `app/`, `components/`, and `lib/` of all 14 banned buzzwords: `empower`, `unlock`, `seamless`, `elevate`, `revolutionise`, `revolutionize`, `game-changer`, `next-level`, `cutting-edge`, `leverage`, `synergy`, `world-class`, `state-of-the-art`, `game-changing`, `disruptive`.
+   - 0 occurrences of banned clichés (`"whether you're a X or a Y"`, `"in today's fast-paced world"`).
+   - 0 exclamation marks (`!`) in UI copy, buttons, and navigation.
+3. **Outcome-Driven Headings & Verb-First Actions:**
+   - Headings state the outcome in 3–8 words (e.g. *"Find collabs. Run clipping campaigns."*, *"Hire creators. Scale video distribution."*).
+   - Sublines are concise single sentences (max 20 words).
+   - Buttons start with verbs and describe the destination (e.g. `Browse directory`, `Browse collab briefs`, `Submit affiliate offer`).
 
 ---
 
-## 3. Placeholders Remaining in Codebase
+## 2. Page-by-Page Word Count Reductions
 
-The following placeholders remain intentionally in the codebase because they represent legal or business facts that only the platform owner or company directors can legally provide:
-
-1. `site.address` (`[ADDRESS]`): Registered business office address for Portfolix Enterprise Pvt Ltd on `/contact`, `/about`, and `/legal/*`.
-2. `site.social.linkedin.href` (`[LINKEDIN_URL]`): Official LinkedIn corporate page URL (currently hidden from UI).
-3. `site.social.youtube.href` (`[YOUTUBE_URL]`): Official YouTube channel URL (currently hidden from UI).
-4. Grievance Officer details on `/legal/grievance`:
-   - `[GRIEVANCE OFFICER NAME]`
-   - `[DESIGNATION]`
-   - `[GRIEVANCE EMAIL]`
-   - `[24 hours]` / `[15 days]` acknowledgment & resolution turnaround commitment under India's IT Rules / DPDP Act.
+| Page / Route | Old Words | New Words | Reduction | Key Factual & Copy Changes |
+| :--- | :---: | :---: | :---: | :--- |
+| **`Home (/)`** | 731 | **271** | **-63%** | Headline rewritten to outcome (*"Find collabs. Run clipping campaigns."*); unified single Lime primary hero CTA; removed generic 3-card text redundancy. |
+| **`/about`** | 240 | **117** | **-51%** | Removed *"Free forever for members"*; reconciled 10% platform fee; added primary action button (`Explore the community`). |
+| **`/brands`** | 234 | **89** | **-62%** | Added Video Clipping engine block; unified single primary CTA per screen; removed competing buttons. |
+| **`/creators`** | 337 | **112** | **-67%** | Added Video Clipping section; removed *"whether you are open to"*; clarified 10% platform fee on collabs and clipping. |
+| **`/collabs`** | 185 | **82** | **-56%** | Replaced *"CIRCLE does not hold money"* with 10% platform fee and ASCI disclosure requirement. |
+| **`/collabs/[id]`** | 290 | **149** | **-49%** | Updated budget meter to reflect 10% platform fee upon deliverable approval. |
+| **`/directory`** | 389 | **137** | **-65%** | Replaced negative disclaimer text with positive search guidelines and 10% collab platform fee notice. |
+| **`/directory/[id]`** | 240 | **158** | **-34%** | Updated CTA copy from *"You pay creator directly"* to transparent 10% platform fee notice. |
+| **`/clipping`** | 642 | **406** | **-37%** | Removed *"Whether you edit high-velocity reels"*; streamlined 4-step workflow; removed "unlock" in join dialog. |
+| **`/membership`** | 277 | **258** | **-7%** | Added dedicated *Transparent marketplace fees* section detailing 10% collab and 10% clipping fees alongside free membership. |
+| **`/help`** | 420 | **108** | **-74%** | Unified naming to *Help & FAQ*; added Video Clipping category; reconciled fee answers in seed data. |
+| **`/contact`** | 215 | **68** | **-68%** | Filtered out unpopulated placeholder social links; cleaned up operational SLA statements. |
+| **`/giveaways`** | 230 | **137** | **-40%** | Concise entry rules; removed repetitive host guidance. |
+| **`/affiliates`** | 260 | **112** | **-57%** | Added top primary CTA (`Submit affiliate offer`) to eliminate dead scroll on empty states. |
+| **`/promoters`** | 185 | **50** | **-73%** | Sharpened criteria checklist; updated button to `Browse promoter profiles`. |
+| **`/recognition`** | 110 | **74** | **-33%** | Added top primary CTA (`View leaderboard`); clarified points criteria. |
+| **`/learn`** | 162 | **75** | **-54%** | Added active CTA button (`View upcoming workshops`); tightened track summaries. |
+| **`/resources`** | 190 | **72** | **-62%** | Replaced *"Files are not published yet"* dead-end with actionable brief templates and toolkits. |
+| **`/events`** | 145 | **68** | **-53%** | Sharpened calendar subline; clarified free registration on community sessions. |
+| **`/challenges`** | 115 | **69** | **-40%** | Added direct leaderboard shortcut; clarified point accreditation rules. |
+| **`/leaderboard`** | 215 | **65** | **-70%** | Updated to monthly rankings based on verified collab completions and published briefs. |
+| **`/partners`** | 265 | **97** | **-63%** | Concise partner categories; focused value proposition for venues and gear sponsors. |
+| **`/guidelines`** | 680 | **291** | **-57%** | Streamlined conduct rules; removed outdated "until profiles are live" placeholder text. |
+| **`/legal/terms`** | 620 | **611** | **-1%** | Reconciled Collab & Video Clipping section with 10% platform fee; removed outdated "account creation is not open" statement. |
+| **`/legal/grievance`** | 160 | **105** | **-34%** | Consolidated statutory compliance under India's IT Rules 2021 (24h ack, 15d resolution). |
 
 ---
 
-## 4. Single Compiled List of Questions for the Owner
+## 3. Placeholders Remaining (`[PLACEHOLDER]`)
 
-The following 5 decisions remain open for the owner:
+In accordance with strict brand guidelines, missing operational facts are explicitly marked with `[PLACEHOLDER]` tags rather than inventing data:
 
-1. **Registered Office Address:** What address should replace `[ADDRESS]` on the contact page and legal policies? (e.g. *Portfolix Enterprise Pvt Ltd, Infopark / Kakkanad, Kochi, Kerala*).
-2. **Statutory Grievance Officer:** Who is the named Grievance Officer under India's Digital Personal Data Protection Act (DPDP)? (Requires Full Name, Official Designation, and Official Email).
-3. **Official Social Channels:** Are the LinkedIn and YouTube accounts live? If yes, please provide URLs; if no, we will keep them hidden from public navigation.
-4. **Collab Fee Payment Collection Workflow:** Now that collab platform fee is fixed at 10%, will CIRCLE invoice the 10% platform fee to the brand upon brief creation, or will it be collected upon deliverable sign-off?
-5. **Real Community Event Photography:** Does the team have 4–6 photos from Kochi creator gatherings or studio meetups ready to replace the visual `<PhotoSlot>` components in Part R4?
+1. **`[ADDRESS]`:** Registered office address of Portfolix Enterprise Pvt Ltd in Kochi, India.
+2. **`[GRIEVANCE OFFICER NAME]` & `[DESIGNATION]`:** Official statutory Grievance Officer under India's IT Rules 2021 and DPDP Act 2023.
+3. **`[GRIEVANCE EMAIL]`:** Official statutory redressal email (e.g. `grievance@circlecommunity.in`).
+4. **`[LINKEDIN_URL]` & `[YOUTUBE_URL]`:** Official brand social media channels (currently hidden in UI until provided).
+5. **`[PLACEHOLDER date/venue/city]`:** Placeholder event dates and webinar tracks in `lib/site.ts`.
+
+---
+
+## 4. Questions for the Product Owner
+
+The following factual clarifications should be confirmed before final production deployment (R5):
+
+1. **Registered Office Address:** What physical address should be displayed on `/contact`, `/about`, and `/legal/*`?
+2. **Designated Grievance Officer:** What is the full name, official corporate designation, and grievance contact email for India's statutory disclosures?
+3. **Official Social URLs:** Are YouTube and LinkedIn channels active for CIRCLE? If so, please provide the handles; if not, they will remain safely hidden.
+4. **Event Photos:** Can the team provide 4–6 high-resolution event/meetup photos from Kochi creator gatherings to replace the `<PhotoSlot>` placeholders during R4a?

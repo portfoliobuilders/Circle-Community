@@ -26,6 +26,15 @@
 | `PROMO_SLOT_COUNT` | `3` | `integer` | Number of top sponsored positions available on `/clipping/campaigns` and the hub live strip. | `[CONFIRM or ADJUST]` |
 | `PROMO_MIN_BID_INR` | `[PLACEHOLDER]` | `integer \| null` | Minimum bid in INR for a 1-week promoted slot. | `[PLACEHOLDER: DECIDE e.g. 1000]` |
 | `PROMO_BID_CLOSE` | `"Friday 18:00 IST"` | `string` | Weekly auction close cutoff. Slots run Monday 00:00 to Sunday 23:59 Asia/Kolkata for the following week. | **LOCKED** |
+| `PR_ENABLED` | `false` | `boolean` | Master toggle controlling Social media PR. While `false`, all PR routes return 404, PR cards/tabs are hidden, and `/clipping` displays clipping only. | `[TOGGLE when PR2 is deployed]` |
+| `PR_MIN_FOLLOWERS` | `10000` | `integer` | Minimum verified follower count required on an approved `creator_platforms` account to apply or quote for PR campaigns. Default and absolute floor. | **LOCKED (10,000)** |
+| `PR_FOLLOWER_RECHECK_DAYS` | `90` | `integer` (days) | Maximum validity window of an admin follower count verification. Must be re-verified within 90 days and re-checked prior to each payout. | **LOCKED (90 days)** |
+| `PR_LIVE_DAYS` | `7` | `integer` (days) | Maturation window: days after post URL submission that the post must remain live, public, and unedited with required disclosures before creator fee locks into wallet. | **LOCKED (7 days)** |
+| `PR_MIN_FEE_PER_POST_INR` | `[PLACEHOLDER]` | `integer \| null` | Minimum fee in INR an owner can offer per post in fixed pricing mode or accept in quote mode. | `[PLACEHOLDER: DECIDE e.g. 500]` |
+| `PR_OWNER_FEE_PCT` | `10` | `integer` (percentage) | Service fee charged to the campaign owner on top of the PR campaign budget. Invoice = `budget + 10%`. Full budget goes to creator fees. | **LOCKED (10%)** |
+| `PR_CREATOR_FEE_PCT` | `10` | `integer` (percentage) | Platform fee deducted from each creator's deliverable fee when locked. Net = `gross - 10%`. Creators always see net fee first. | **LOCKED (10%)** |
+| `PR_MAX_REVISIONS` | `1` | `integer` | Maximum number of draft revision requests allowed by the campaign owner when content approval is enabled. | **LOCKED (1 revision)** |
+| `PR_BANNED_CATEGORIES` | `["political", "betting", "crypto_investment", "health_claims", "adult", "defamation"]` | `string[]` | Strictly prohibited campaign categories rejected at admin approval and reportable. | **LOCKED** |
 
 ---
 
@@ -52,6 +61,24 @@ export const CLIPPING_CONFIG = {
     slotCount: 3,
     minBidInr: null as number | null, // [PLACEHOLDER: Fill before enabling]
     bidCloseSchedule: "Friday 18:00 IST for the following week",
+  },
+  pr: {
+    enabled: false,
+    minFollowers: 10000,
+    followerRecheckDays: 90,
+    liveDays: 7,
+    minFeePerPostInr: null as number | null, // [PLACEHOLDER: Fill before enabling PR]
+    ownerFeePct: 10,
+    creatorFeePct: 10,
+    maxRevisions: 1,
+    bannedCategories: [
+      "political",
+      "betting",
+      "crypto_investment",
+      "health_claims",
+      "adult",
+      "defamation",
+    ] as const,
   },
 } as const;
 

@@ -4,6 +4,7 @@ import { Container } from "@/components/site/container";
 import { PillLink } from "@/components/site/pill-link";
 import { pageMetadata } from "@/lib/seo";
 import { ArrowRight } from "lucide-react";
+import { SteppedWorkflow } from "@/components/clipping/stepped-workflow";
 
 export const metadata: Metadata = pageMetadata(
   "How Clipping & PR Works",
@@ -139,15 +140,7 @@ export default function HowItWorksPage() {
               </Link>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-              {clippingSteps.map((st) => (
-                <div key={st.step} className="rounded-2xl border border-border bg-card p-6 space-y-3">
-                  <span className="font-mono text-xs font-semibold text-lime">STEP {st.step}</span>
-                  <h3 className="font-display text-lg font-bold text-white uppercase">{st.title}</h3>
-                  <p className="text-xs text-silver leading-relaxed">{st.desc}</p>
-                </div>
-              ))}
-            </div>
+            <SteppedWorkflow steps={clippingSteps} badge="Pay-Per-View" />
 
             <div className="mt-8 rounded-xl border border-border bg-surface/40 p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-4 text-xs">
               <span className="text-silver">
@@ -182,15 +175,7 @@ export default function HowItWorksPage() {
               </Link>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-4">
-              {prSteps.map((st) => (
-                <div key={st.step} className="rounded-2xl border border-border bg-card p-5 space-y-2">
-                  <span className="font-mono text-xs font-semibold text-lime">STEP {st.step}</span>
-                  <h3 className="font-display text-base font-bold text-white uppercase">{st.title}</h3>
-                  <p className="text-xs text-silver leading-relaxed">{st.desc}</p>
-                </div>
-              ))}
-            </div>
+            <SteppedWorkflow steps={prSteps} badge="10K+ Followers" />
 
             <div className="mt-8 rounded-xl border border-lime/30 bg-lime/5 p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-4 text-xs">
               <span className="text-silver">

@@ -7,6 +7,8 @@ import { PillLink } from "@/components/site/pill-link";
 import { formatInr } from "@/lib/format";
 import { CLIPPING_CONFIG } from "@/lib/config/clipping";
 import { Calculator } from "lucide-react";
+import { NumberTicker } from "@/components/ui-motion/number-ticker";
+import { BudgetRing } from "@/components/clipping/budget-ring";
 
 export default function StandaloneCalculatorPage() {
   const [model, setModel] = useState<"clipping" | "social_pr">("clipping");
@@ -160,19 +162,28 @@ export default function StandaloneCalculatorPage() {
               {/* Earnings Breakdown Output */}
               <div className="rounded-2xl border border-border bg-surface p-6 sm:p-7 space-y-6 flex flex-col justify-between">
                 <div>
-                  <p className="font-mono text-xs uppercase tracking-wider text-silver">Estimated Payout Output</p>
-                  <div aria-live="polite" className="mt-4 space-y-3">
+                  <div className="flex items-center justify-between">
+                    <p className="font-mono text-xs uppercase tracking-wider text-silver">Estimated Payout Output</p>
+                    <BudgetRing usedPct={90} size={36} strokeWidth={3} />
+                  </div>
+                  <div aria-live="polite" role="status" className="mt-4 space-y-3">
                     <div className="flex justify-between text-sm">
                       <span className="text-silver">Gross Earnings:</span>
-                      <span className="font-mono text-white font-medium">{formatInr(clippingGross)}</span>
+                      <span className="font-mono text-white font-medium">
+                        <NumberTicker value={clippingGross} prefix="₹" />
+                      </span>
                     </div>
                     <div className="flex justify-between text-sm">
                       <span className="text-silver">CIRCLE Platform Fee (10%):</span>
-                      <span className="font-mono text-white font-medium">- {formatInr(clippingFee)}</span>
+                      <span className="font-mono text-white font-medium">
+                        <NumberTicker value={clippingFee} prefix="- ₹" />
+                      </span>
                     </div>
                     <div className="border-t border-border pt-4 flex justify-between items-baseline">
                       <span className="text-sm font-medium text-white">Net Payout to Clipper:</span>
-                      <span className="font-display text-3xl font-bold text-lime">{formatInr(clippingNet)}</span>
+                      <span className="font-display text-3xl font-bold text-lime">
+                        <NumberTicker value={clippingNet} prefix="₹" />
+                      </span>
                     </div>
                   </div>
                   <p className="mt-2 text-xs font-mono text-silver">
@@ -241,40 +252,55 @@ export default function StandaloneCalculatorPage() {
               {/* Dual Breakdown: Creator Net vs Brand Total */}
               <div className="space-y-6">
                 {/* For Creator */}
-                <div className="rounded-2xl border border-border bg-surface p-6 space-y-3">
-                  <p className="font-mono text-xs uppercase tracking-wider text-lime font-semibold">
-                    Creator Perspective (Per Post)
-                  </p>
+                <div className="rounded-2xl border border-border bg-surface p-6 space-y-3" aria-live="polite" role="status">
+                  <div className="flex items-center justify-between">
+                    <p className="font-mono text-xs uppercase tracking-wider text-lime font-semibold">
+                      Creator Perspective (Per Post)
+                    </p>
+                    <BudgetRing usedPct={90} size={32} strokeWidth={3} />
+                  </div>
                   <div className="flex justify-between text-xs text-silver">
                     <span>Gross Fee:</span>
-                    <span className="font-mono text-white">{formatInr(prGrossPerPost)}</span>
+                    <span className="font-mono text-white">
+                      <NumberTicker value={prGrossPerPost} prefix="₹" />
+                    </span>
                   </div>
                   <div className="flex justify-between text-xs text-silver">
                     <span>CIRCLE Platform Fee (10%):</span>
-                    <span className="font-mono text-white">- {formatInr(prFeePerPost)}</span>
+                    <span className="font-mono text-white">
+                      <NumberTicker value={prFeePerPost} prefix="- ₹" />
+                    </span>
                   </div>
                   <div className="border-t border-border pt-2 flex justify-between items-baseline">
                     <span className="text-xs font-medium text-white">Creator Net Payout:</span>
-                    <span className="font-display text-2xl font-bold text-lime">{formatInr(prNetPerPost)}</span>
+                    <span className="font-display text-2xl font-bold text-lime">
+                      <NumberTicker value={prNetPerPost} prefix="₹" />
+                    </span>
                   </div>
                 </div>
 
                 {/* For Brand */}
-                <div className="rounded-2xl border border-border bg-surface p-6 space-y-3">
+                <div className="rounded-2xl border border-border bg-surface p-6 space-y-3" aria-live="polite" role="status">
                   <p className="font-mono text-xs uppercase tracking-wider text-silver font-semibold">
                     Brand Campaign Invoice ({slots} Posts)
                   </p>
                   <div className="flex justify-between text-xs text-silver">
                     <span>Escrow Pool Budget ({slots} × {formatInr(feePerPost)}):</span>
-                    <span className="font-mono text-white">{formatInr(prTotalBudget)}</span>
+                    <span className="font-mono text-white">
+                      <NumberTicker value={prTotalBudget} prefix="₹" />
+                    </span>
                   </div>
                   <div className="flex justify-between text-xs text-silver">
                     <span>CIRCLE Service Fee (10% on top):</span>
-                    <span className="font-mono text-white">{formatInr(prOwnerFee)}</span>
+                    <span className="font-mono text-white">
+                      <NumberTicker value={prOwnerFee} prefix="₹" />
+                    </span>
                   </div>
                   <div className="border-t border-border pt-2 flex justify-between items-baseline">
                     <span className="text-xs font-semibold text-white">Total Upfront Invoice:</span>
-                    <span className="font-display text-2xl font-bold text-white">{formatInr(prTotalInvoice)}</span>
+                    <span className="font-display text-2xl font-bold text-white">
+                      <NumberTicker value={prTotalInvoice} prefix="₹" />
+                    </span>
                   </div>
                 </div>
               </div>

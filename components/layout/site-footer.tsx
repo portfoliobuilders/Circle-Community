@@ -8,30 +8,19 @@ import { isPlaceholder, site, social } from "@/lib/site";
 const platformLinks = [
   { href: "/directory", label: "Creator Directory" },
   { href: "/collabs", label: "Collab Briefs" },
+  { href: "/clipping", label: "Video Clipping Hub" },
+  { href: "/clipping/campaigns", label: "Funded Campaigns" },
   { href: "/events", label: "Community Events" },
   { href: "/learn", label: "Free Academy" },
-  { href: "/giveaways", label: "Giveaways" },
   { href: "/help", label: "Help & FAQ" },
 ];
 
-const clippingPrLinks = [
-  { href: "/clipping", label: "Clipping & PR Hub" },
-  { href: "/clipping/campaigns", label: "Active Campaigns" },
-  { href: "/clipping/social-pr", label: "Social Media PR (10K+)" },
-  { href: "/clipping/how-it-works", label: "How It Works" },
-  { href: "/clipping/for-brands", label: "For Campaign Owners" },
-  { href: "/clipping/calculator", label: "Earnings Calculator" },
-  { href: "/clipping/rules", label: "Platform Rules & ASCI" },
-  { href: "/clipping/faq", label: "Clipping FAQ" },
-  { href: "/clipping/guides", label: "Creator Guides" },
-  { href: "/clipping/leaderboard", label: "Leaderboard" },
-];
-
 const communityLinks = [
+  { href: "/giveaways", label: "Community Giveaways" },
   { href: "/affiliates", label: "Affiliate Offers" },
   { href: "/promoters", label: "1K+ Promoters" },
   { href: "/partners", label: "Partner Perks" },
-  { href: "/leaderboard", label: "Points Leaderboard" },
+  { href: "/leaderboard", label: "Leaderboard" },
   { href: "/journal", label: "Journal & Updates" },
   { href: "/resources", label: "Creator Toolkit" },
 ];
@@ -75,9 +64,9 @@ export function SiteFooter() {
         </Container>
       </div>
 
-      {/* 2. Main 5-Column Balanced Navigation */}
+      {/* 2. Main 4-Column Balanced Navigation */}
       <Container className="py-12 md:py-16">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-8 lg:gap-10">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 lg:gap-12">
           {/* Column 1: Brand & Operator Summary */}
           <div className="flex flex-col gap-4">
             <Link href="/" aria-label="CIRCLE Home" className="w-fit">
@@ -124,26 +113,7 @@ export function SiteFooter() {
             </ul>
           </div>
 
-          {/* Column 3: Clipping & PR */}
-          <div>
-            <h4 className="font-mono text-xs font-semibold uppercase tracking-wider text-lime">
-              Clipping & PR
-            </h4>
-            <ul className="mt-4 space-y-2.5">
-              {clippingPrLinks.map((item) => (
-                <li key={item.href}>
-                  <Link
-                    href={item.href}
-                    className="text-xs text-silver hover:text-white transition-colors"
-                  >
-                    {item.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Column 4: Community & Opportunities */}
+          {/* Column 3: Community & Opportunities */}
           <div>
             <h4 className="font-mono text-xs font-semibold uppercase tracking-wider text-white">
               Community
@@ -162,7 +132,7 @@ export function SiteFooter() {
             </ul>
           </div>
 
-          {/* Column 5: Legal & Compliance */}
+          {/* Column 4: Legal & Compliance */}
           <div>
             <h4 className="font-mono text-xs font-semibold uppercase tracking-wider text-white">
               Trust & Legal

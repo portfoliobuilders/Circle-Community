@@ -1,26 +1,15 @@
-import { cn } from "cn";
+"use client";
 
-export function HeroOrbit() {
-  return (
-    <div
-      aria-hidden="true"
-      className={cn(
-        "pointer-events-none absolute -right-24 -top-24 size-[420px] md:size-[560px] opacity-40 lg:opacity-60",
-        "animate-in fade-in duration-1000 motion-reduce:animate-none"
-      )}
-    >
-      <svg
-        viewBox="0 0 560 560"
-        fill="none"
-        className="size-full text-border animate-[spin_60s_linear_infinite] motion-reduce:animate-none"
-      >
-        <circle cx="280" cy="280" r="260" stroke="currentColor" strokeWidth="1" strokeDasharray="4 6" />
-        <circle cx="280" cy="280" r="190" stroke="currentColor" strokeWidth="1" />
-        <circle cx="280" cy="280" r="110" stroke="currentColor" strokeWidth="1" strokeDasharray="8 8" />
-        <circle cx="280" cy="20" r="6" fill="#C6FF00" />
-        <circle cx="90" cy="280" r="4" fill="#C7CBD1" />
-        <circle cx="390" cy="280" r="5" fill="#C6FF00" />
-      </svg>
-    </div>
-  );
+import { OrbitScene, type OrbitNode } from "@/components/visual/orbit-scene";
+
+const clippingOrbitNodes: OrbitNode[] = [
+  { id: "c-footage", label: "Source Footage", role: "Long-form 4K", angle: 30, radius: 140, highlight: true },
+  { id: "c-clips", label: "Vertical Edits", role: "9:16 Shorts/Reels", angle: 110, radius: 140 },
+  { id: "c-pr", label: "Social Media PR", role: "10K+ Verified Pages", angle: 195, radius: 210, highlight: true },
+  { id: "c-audit", label: "Day 7 View Audit", role: "Snapshot Lock", angle: 280, radius: 140, highlight: true },
+  { id: "c-payout", label: "UPI Disbursements", role: "Weekly Net Rates", angle: 345, radius: 210, highlight: true },
+];
+
+export function HeroOrbit({ className, size = 420 }: { className?: string; size?: number }) {
+  return <OrbitScene nodes={clippingOrbitNodes} size={size} className={className} />;
 }

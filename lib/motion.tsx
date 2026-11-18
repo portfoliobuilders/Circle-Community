@@ -88,6 +88,44 @@ export const staggerContainerVariants = {
   },
 } as const
 
+// Step progression & line draw variants
+export const stepSequenceVariants = {
+  hidden: { opacity: 0, y: 16 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: duration.slow,
+      ease: easings.entrance,
+    },
+  },
+} as const
+
+export const stepLineVariants = {
+  hidden: { scaleY: 0, originY: 0 },
+  visible: {
+    scaleY: 1,
+    originY: 0,
+    transition: {
+      duration: duration.slow,
+      ease: easings.entrance,
+    },
+  },
+} as const
+
+export const pulseRingVariants = {
+  initial: { scale: 0.95, opacity: 0.6 },
+  animate: {
+    scale: [0.95, 1.05, 0.95],
+    opacity: [0.6, 1, 0.6],
+    transition: {
+      duration: 3,
+      repeat: Infinity,
+      ease: "easeInOut",
+    },
+  },
+} as const
+
 // 6. Reduced Motion Context & Hook
 // Allows both OS-level preference and the in-app dev-switch to toggle reduced motion.
 interface MotionConfigContextValue {

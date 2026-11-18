@@ -3,6 +3,8 @@
 import { useState } from "react";
 import { formatInr } from "@/lib/format";
 import { CLIPPING_CONFIG } from "@/lib/config/clipping";
+import { NumberTicker } from "@/components/ui-motion/number-ticker";
+import { BudgetRing } from "@/components/clipping/budget-ring";
 
 export function ClippingCalculator() {
   const [views, setViews] = useState<number>(50000);
@@ -94,11 +96,14 @@ export function ClippingCalculator() {
         {/* Breakdown Output Column */}
         <div
           aria-live="polite"
+          role="status"
           className="rounded-xl border border-border bg-surface p-6 flex flex-col gap-4"
         >
           <div className="flex items-center justify-between border-b border-border/80 pb-3">
             <span className="text-sm text-silver">Gross clip earnings</span>
-            <span className="font-mono text-base font-medium text-white">{formatInr(gross)}</span>
+            <span className="font-mono text-base font-medium text-white">
+              <NumberTicker value={gross} prefix="₹" />
+            </span>
           </div>
 
           <div className="flex items-center justify-between border-b border-border/80 pb-3">
@@ -107,20 +112,23 @@ export function ClippingCalculator() {
               <span className="text-[11px] text-silver/70">Covers verification & UPI payouts</span>
             </div>
             <span className="font-mono text-base font-medium text-destructive">
-              - {formatInr(fee)}
+              <NumberTicker value={fee} prefix="- ₹" />
             </span>
           </div>
 
-          <div className="flex items-baseline justify-between pt-1">
+          <div className="flex items-center justify-between pt-1">
             <div className="flex flex-col">
               <span className="font-display text-sm font-bold tracking-wide uppercase text-white">
                 Estimated Net Payout
               </span>
               <span className="text-xs text-silver">Paid directly to your UPI ID</span>
             </div>
-            <span className="font-display text-3xl font-extrabold tracking-tight text-lime">
-              {formatInr(net)}
-            </span>
+            <div className="flex items-center gap-3">
+              <BudgetRing usedPct={90} size={40} strokeWidth={3.5} />
+              <span className="font-display text-3xl font-extrabold tracking-tight text-lime">
+                <NumberTicker value={net} prefix="₹" />
+              </span>
+            </div>
           </div>
 
           <p className="text-[11px] text-silver/80 mt-2 border-t border-border/60 pt-3">

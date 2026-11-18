@@ -23,6 +23,7 @@ export function SiteHeader() {
             height={36}
             priority
             className="hidden size-9 object-contain lg:block"
+            style={{ width: "auto", height: "auto" }}
           />
           <Image
             src="/brand/logo-white.png"
@@ -31,6 +32,7 @@ export function SiteHeader() {
             height={32}
             priority
             className="size-8 object-contain lg:hidden"
+            style={{ width: "auto", height: "auto" }}
           />
         </Link>
 

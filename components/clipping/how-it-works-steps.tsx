@@ -1,7 +1,9 @@
 "use client";
 
 import { useState } from "react";
-import { cn } from "cn";
+import { motion, AnimatePresence } from "motion/react";
+import { cn } from "@/lib/utils";
+import { useReducedMotionPreference, duration, easings, stepSequenceVariants } from "@/lib/motion";
 
 const clipperSteps = [
   {
@@ -59,6 +61,7 @@ const ownerSteps = [
 
 export function HowItWorksSteps() {
   const [activeAudience, setActiveAudience] = useState<"clippers" | "owners">("clippers");
+  const reducedMotion = useReducedMotionPreference();
 
   const steps = activeAudience === "clippers" ? clipperSteps : ownerSteps;
 
@@ -102,31 +105,48 @@ export function HowItWorksSteps() {
         </div>
       </div>
 
-      {/* 4 Steps Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-        {steps.map((step) => (
-          <div
-            key={step.number}
-            className="relative flex flex-col justify-between rounded-2xl border border-border bg-card p-6 transition-all duration-200 hover:border-silver/40"
-          >
-            <div>
-              <div className="flex items-center justify-between">
-                <span className="font-mono text-xs font-bold tracking-widest text-lime">
-                  STEP {step.number}
-                </span>
-                <div className="size-2 rounded-full bg-border" aria-hidden="true" />
+      {/* 4 Steps Grid with animated transitions */}
+      <AnimatePresence mode="wait">
+        <motion.div
+          key={activeAudience}
+          initial={reducedMotion ? false : { opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={reducedMotion ? undefined : { opacity: 0, y: -10 }}
+          transition={{ duration: reducedMotion ? 0 : duration.base, ease: easings.entrance }}
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6"
+        >
+          {steps.map((step, idx) => (
+            <motion.div
+              key={step.number}
+              variants={stepSequenceVariants}
+              initial="hidden"
+              animate="visible"
+              transition={{
+                duration: reducedMotion ? 0 : duration.slow,
+                delay: reducedMotion ? 0 : idx * 0.08,
+                ease: easings.entrance,
+              }}
+              className="group relative flex flex-col justify-between rounded-2xl border border-border bg-card p-6 transition-all duration-200 hover:border-lime/40 hover:bg-card/90"
+            >
+              <div>
+                <div className="flex items-center justify-between">
+                  <span className="font-mono text-xs font-bold tracking-widest text-lime">
+                    STEP {step.number}
+                  </span>
+                  <div className="size-2 rounded-full bg-border group-hover:bg-lime transition-colors" aria-hidden="true" />
+                </div>
+                <h4 className="font-display mt-4 text-lg font-semibold tracking-tight text-white group-hover:text-lime transition-colors">
+                  {step.title}
+                </h4>
+                <p className="mt-2 text-sm text-silver leading-relaxed">
+                  {step.description}
+                </p>
               </div>
-              <h4 className="font-display mt-4 text-lg font-semibold tracking-tight text-white">
-                {step.title}
-              </h4>
-              <p className="mt-2 text-sm text-silver leading-relaxed">
-                {step.description}
-              </p>
-            </div>
-            <div className="mt-6 h-0.5 w-8 bg-lime/40" aria-hidden="true" />
-          </div>
-        ))}
-      </div>
+              <div className="mt-6 h-0.5 w-8 bg-lime/40 group-hover:w-16 group-hover:bg-lime transition-all duration-300" aria-hidden="true" />
+            </motion.div>
+          ))}
+        </motion.div>
+      </AnimatePresence>
     </div>
   );
 }

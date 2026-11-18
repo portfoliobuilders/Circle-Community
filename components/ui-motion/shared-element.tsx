@@ -38,3 +38,6 @@ export function SharedElement({
     </motion.div>
   )
 }
+
+export const SharedCardTransition = SharedElement
+

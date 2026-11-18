@@ -4,6 +4,7 @@ import { BudgetRing } from "./budget-ring";
 import { CampaignAge } from "./campaign-age";
 import { CLIPPING_CONFIG } from "@/lib/config/clipping";
 import type { Campaign } from "@/lib/clipping/types";
+import { SharedCardTransition } from "@/components/ui-motion/shared-element";
 
 interface CampaignCardProps {
   campaign: Campaign;
@@ -16,15 +17,16 @@ export function CampaignCard({ campaign, showPromotedBadge = true }: CampaignCar
   const prNet = prGross - Math.floor((prGross * CLIPPING_CONFIG.pr.creatorFeePct) / 100);
 
   return (
-    <article className="group relative flex flex-col justify-between rounded-2xl border border-border bg-card p-5 transition-all duration-200 hover:-translate-y-1 hover:border-silver/40 motion-reduce:transition-none motion-reduce:hover:translate-y-0">
-      {/* Clickable Card Link Anchor */}
-      <Link
-        href={`/clipping/campaigns/${campaign.slug}`}
-        className="absolute inset-0 z-10 rounded-2xl focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
-        aria-label={`View ${campaign.title} by ${campaign.owner_name}`}
-      >
-        <span className="sr-only">View campaign details</span>
-      </Link>
+    <SharedCardTransition layoutId={`campaign-${campaign.id}`}>
+      <article className="group relative flex h-full flex-col justify-between rounded-2xl border border-border bg-card p-5 transition-colors duration-150 hover:border-silver/60">
+        {/* Clickable Card Link Anchor */}
+        <Link
+          href={`/clipping/campaigns/${campaign.slug}`}
+          className="absolute inset-0 z-10 rounded-2xl focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-lime"
+          aria-label={`View ${campaign.title} by ${campaign.owner_name}`}
+        >
+          <span className="sr-only">View campaign details</span>
+        </Link>
 
       <div>
         {/* Top Header: Category, Campaign Type, Promoted & Age */}
@@ -211,5 +213,6 @@ export function CampaignCard({ campaign, showPromotedBadge = true }: CampaignCar
         </div>
       </div>
     </article>
+  </SharedCardTransition>
   );
 }

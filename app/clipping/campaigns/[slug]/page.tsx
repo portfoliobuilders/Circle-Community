@@ -1,60 +1,139 @@
-import type { Metadata } from "next";
-import { notFound } from "next/navigation";
-import { Container } from "@/components/site/container";
-import { Breadcrumbs } from "@/components/seo/breadcrumbs";
-import { noIndex, pageMetadata } from "@/lib/seo";
-import { formatInr, formatKolkata } from "@/lib/format";
-import { CLIPPING_CONFIG } from "@/lib/config/clipping";
-import { getCampaignBySlug, getTopClips, getClipperPlatforms } from "@/lib/clipping/data";
-import { getOwnProfile } from "@/lib/data/marketplace";
-import { BudgetRing } from "@/components/clipping/budget-ring";
-import { JoinDialog } from "@/components/clipping/join-dialog";
-import { PrApplyDialog } from "@/components/clipping/pr-apply-dialog";
-import { SampleBanner } from "@/components/clipping/sample-banner";
+import type { Metadata } from "next"
+import { notFound } from "next/navigation"
+import { Container } from "@/components/site/container"
+import { Breadcrumbs } from "@/components/seo/breadcrumbs"
+import { noIndex, pageMetadata } from "@/lib/seo"
+import { formatInr, formatKolkata } from "@/lib/format"
+import { CLIPPING_CONFIG } from "@/lib/config/clipping"
+import { getCampaignBySlug, getTopClips, getClipperPlatforms } from "@/lib/clipping/data"
+import { getOwnProfile } from "@/lib/data/marketplace"
+import { BudgetRing } from "@/components/clipping/budget-ring"
+import { JoinDialog } from "@/components/clipping/join-dialog"
+import { PrApplyDialog } from "@/components/clipping/pr-apply-dialog"
+import { SampleBanner } from "@/components/clipping/sample-banner"
+import { SharedCardTransition } from "@/components/ui-motion/shared-element"
+import { AnimatedAccordion, type AccordionItemData } from "@/components/ui-motion/animated-accordion"
+import { CopyButton } from "@/components/ui-motion/copy-button"
+import { ExternalLink, FolderOpen, ShieldCheck } from "lucide-react"
 
 interface PageProps {
-  params: Promise<{ slug: string }>;
+  params: Promise<{ slug: string }>
 }
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
-  const { slug } = await params;
-  const campaign = await getCampaignBySlug(slug);
+  const { slug } = await params
+  const campaign = await getCampaignBySlug(slug)
 
   if (!campaign) {
     return {
       title: "Campaign Not Found",
       robots: noIndex,
-    };
+    }
   }
 
   const meta = pageMetadata(
     campaign.title,
     campaign.summary,
     `/clipping/campaigns/${campaign.slug}`
-  );
+  )
 
-  // Sample campaign pages must be noindex and never in sitemap
   return {
     ...meta,
     robots: noIndex,
-  };
+  }
 }
 
 export default async function CampaignDetailPage({ params }: PageProps) {
-  const { slug } = await params;
-  const campaign = await getCampaignBySlug(slug);
+  const { slug } = await params
+  const campaign = await getCampaignBySlug(slug)
 
   if (!campaign) {
-    notFound();
+    notFound()
   }
 
-  const { userId } = await getOwnProfile();
-  const userPlatforms = userId ? await getClipperPlatforms(userId) : [];
-  const topClips = await getTopClips(campaign.id);
+  const { userId } = await getOwnProfile()
+  const userPlatforms = userId ? await getClipperPlatforms(userId) : []
+  const topClips = await getTopClips(campaign.id)
 
-  const isPr = campaign.campaign_type === "social_pr";
-  const prGross = campaign.fee_per_post_inr || 0;
-  const prNet = prGross - Math.floor((prGross * CLIPPING_CONFIG.pr.creatorFeePct) / 100);
+  const isPr = campaign.campaign_type === "social_pr"
+  const prGross = campaign.fee_per_post_inr || 0
+  const prNet = prGross - Math.floor((prGross * CLIPPING_CONFIG.pr.creatorFeePct) / 100)
+
+  // Construct accordion items
+  const accordionItems: AccordionItemData[] = [
+    {
+      id: "acc-brief",
+      title: "Creative Angles & Campaign Brief",
+      content: (
+        <div className="prose prose-invert max-w-none text-xs sm:text-sm text-silver leading-relaxed whitespace-pre-line">
+          {campaign.brief_md}
+        </div>
+      ),
+    },
+    {
+      id: "acc-rules",
+      title: "Editorial Guidelines & Do's / Don'ts",
+      content: (
+        <div className="prose prose-invert max-w-none text-xs sm:text-sm text-silver leading-relaxed whitespace-pre-line">
+          {campaign.rules_md}
+        </div>
+      ),
+    },
+    {
+      id: "acc-captions",
+      title: "Required Captions, Mentions & ASCI Tags",
+      content: (
+        <div className="space-y-4 text-xs">
+          {campaign.required_caption && (
+            <div>
+              <span className="font-mono text-silver">Suggested Caption:</span>
+              <p className="mt-1 rounded-xl border border-border bg-surface p-3 font-mono text-white">
+                {campaign.required_caption}
+              </p>
+            </div>
+          )}
+
+          <div>
+            <span className="font-mono text-silver">Required Hashtags:</span>
+            <div className="mt-1.5 flex flex-wrap gap-2">
+              {campaign.required_hashtags.map((tag) => (
+                <span
+                  key={tag}
+                  className="rounded-full bg-surface border border-border px-3 py-1 font-mono text-lime"
+                >
+                  {tag}
+                </span>
+              ))}
+            </div>
+          </div>
+
+          {campaign.required_mention && (
+            <div>
+              <span className="font-mono text-silver">Required Tag / Mention:</span>
+              <p className="mt-1 font-mono text-white">{campaign.required_mention}</p>
+            </div>
+          )}
+
+          <div className="rounded-xl border border-lime/30 bg-lime/10 p-3.5 flex items-start gap-2.5">
+            <ShieldCheck className="size-4 text-lime shrink-0 mt-0.5" />
+            <div className="text-silver">
+              <span className="font-semibold text-white">ASCI Compliance Requirement: </span>
+              Under ASCI influencer guidelines, every submitted clip must prominently display the #ad or #collab hashtag in its primary caption.
+            </div>
+          </div>
+        </div>
+      ),
+    },
+    {
+      id: "acc-rights",
+      title: "IP Rights & Authorization Certification",
+      content: (
+        <p className="text-xs text-silver leading-relaxed">
+          The campaign owner has legally affirmed ownership or distribution rights for all source materials provided in accordance with CIRCLE terms. Clippers are granted a non-exclusive license to edit and publish vertical video exclusively for this campaign.
+        </p>
+      ),
+    },
+  ]
 
   return (
     <>
@@ -64,343 +143,279 @@ export default async function CampaignDetailPage({ params }: PageProps) {
         <Breadcrumbs />
 
         <Container className="pt-8">
-          {/* Top Header Card */}
-          <div className="rounded-2xl border border-border bg-card p-6 md:p-10">
-            <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-8">
-              {/* Left Column: Metadata & Title */}
-              <div className="flex-1 max-w-3xl">
-                <div className="flex flex-wrap items-center gap-2 text-xs">
-                  <span className="rounded-full bg-border/60 px-3 py-1 font-medium tracking-wide text-silver">
-                    {campaign.category}
-                  </span>
-                  <span className="rounded-full bg-border/60 px-3 py-1 font-mono uppercase text-silver">
-                    Lang: {campaign.language.toUpperCase()}
-                  </span>
-                  {campaign.isPromoted && (
-                    <span className="rounded-full bg-lime/10 px-3 py-1 font-semibold tracking-wider text-lime uppercase border border-lime/30">
-                      Promoted
+          {/* Top Header Card with Shared Element Transition */}
+          <SharedCardTransition layoutId={`campaign-${campaign.id}`}>
+            <div className="rounded-2xl border border-border bg-card p-6 md:p-10">
+              <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-8">
+                {/* Left Column: Metadata & Title */}
+                <div className="flex-1 max-w-3xl">
+                  <div className="flex flex-wrap items-center gap-2 text-xs">
+                    <span className="rounded-full border border-border bg-surface px-3 py-1 font-mono text-silver">
+                      {campaign.category}
                     </span>
-                  )}
-                  <span className="rounded-full bg-lime/10 px-3 py-1 text-xs font-medium text-lime">
-                    ● {campaign.status === "live" ? "Open for Submissions" : campaign.status}
-                  </span>
-                </div>
-
-                <h1 className="font-display mt-4 text-2xl sm:text-3xl md:text-4xl font-bold tracking-tight text-white">
-                  {campaign.title}
-                </h1>
-
-                {/* Owner info */}
-                <div className="mt-3 flex items-center gap-2 text-sm text-silver">
-                  <span>Commissioned by</span>
-                  <span className="font-semibold text-white">{campaign.owner_name}</span>
-                  {campaign.ownerVerified && (
-                    <span
-                      className="inline-flex items-center text-lime"
-                      title="Verified Campaign Owner"
-                      aria-label="Verified account"
-                    >
-                      <svg className="size-4 fill-current" viewBox="0 0 20 20" aria-hidden="true">
-                        <path
-                          fillRule="evenodd"
-                          d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.857-9.809a.75.75 0 00-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 10-1.06 1.061l2.5 2.5a.75.75 0 001.137-.089l4-5.5z"
-                          clipRule="evenodd"
-                        />
-                      </svg>
+                    <span className="rounded-full border border-border bg-surface px-3 py-1 font-mono uppercase text-silver">
+                      Lang: {campaign.language.toUpperCase()}
                     </span>
-                  )}
-                </div>
-
-                <p className="mt-4 text-base text-silver leading-relaxed">
-                  {campaign.summary}
-                </p>
-
-                {/* Target Platforms */}
-                <div className="mt-6 flex items-center gap-3">
-                  <span className="text-xs font-medium text-silver">Target Platforms:</span>
-                  <div className="flex items-center gap-2">
-                    {campaign.platforms.includes("youtube_shorts") && (
-                      <span className="inline-flex items-center gap-1.5 rounded-full border border-border bg-surface px-3 py-1 text-xs text-silver">
-                        <svg className="size-3.5 fill-current" viewBox="0 0 24 24" aria-hidden="true">
-                          <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z" />
-                        </svg>
-                        YouTube Shorts
+                    {campaign.isPromoted && (
+                      <span className="rounded-full bg-lime/10 px-3 py-1 font-mono font-semibold tracking-wider text-lime uppercase border border-lime/30">
+                        Promoted
                       </span>
                     )}
-                    {campaign.platforms.includes("instagram_reels") && (
-                      <span className="inline-flex items-center gap-1.5 rounded-full border border-border bg-surface px-3 py-1 text-xs text-silver">
-                        <svg className="size-3.5 fill-current" viewBox="0 0 24 24" aria-hidden="true">
-                          <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z" />
-                        </svg>
-                        Instagram Reels
+                    <span className="rounded-full bg-lime/10 px-3 py-1 font-mono text-xs font-medium text-lime border border-lime/20">
+                      ● {campaign.status === "live" ? "Open for Submissions" : campaign.status}
+                    </span>
+                  </div>
+
+                  <h1 className="font-display mt-4 text-2xl sm:text-3xl md:text-4xl font-medium tracking-tight text-white uppercase">
+                    {campaign.title}
+                  </h1>
+
+                  {/* Owner info */}
+                  <div className="mt-3 flex items-center gap-2 text-xs font-mono text-silver">
+                    <span>Commissioned by</span>
+                    <span className="font-semibold text-white">{campaign.owner_name}</span>
+                    {campaign.ownerVerified && (
+                      <span className="text-lime" title="Verified Campaign Owner">
+                        ● Verified
                       </span>
                     )}
                   </div>
-                </div>
-              </div>
 
-              {/* Right Column: Rate Card & Join CTA */}
-              <div className="w-full lg:w-80 shrink-0 rounded-2xl border border-border bg-surface p-6 flex flex-col gap-5">
-                {isPr ? (
-                  <div>
-                    <span className="text-xs font-semibold uppercase tracking-wider text-silver">
-                      {campaign.pricing_mode === "quote" ? "Compensation Model" : "Net Payout per Post"}
-                    </span>
-                    <div className="flex items-baseline gap-2 mt-1">
-                      {campaign.pricing_mode === "quote" ? (
-                        <span className="font-display text-2xl font-extrabold tracking-tight text-lime">
-                          Creator Quotes
+                  <p className="mt-4 text-sm sm:text-base text-silver leading-relaxed">
+                    {campaign.summary}
+                  </p>
+
+                  {/* Target Platforms */}
+                  <div className="mt-6 flex items-center gap-3">
+                    <span className="text-xs font-mono text-silver">Target Platforms:</span>
+                    <div className="flex items-center gap-2">
+                      {campaign.platforms.includes("youtube_shorts") && (
+                        <span className="inline-flex items-center gap-1.5 rounded-full border border-border bg-surface px-3 py-1 text-xs font-mono text-silver">
+                          YouTube Shorts
                         </span>
-                      ) : (
-                        <>
-                          <span className="font-display text-3xl font-extrabold tracking-tight text-lime">
-                            {formatInr(prNet)}
-                          </span>
-                          <span className="text-sm text-silver font-medium">/ post</span>
-                        </>
+                      )}
+                      {campaign.platforms.includes("instagram_reels") && (
+                        <span className="inline-flex items-center gap-1.5 rounded-full border border-border bg-surface px-3 py-1 text-xs font-mono text-silver">
+                          Instagram Reels
+                        </span>
                       )}
                     </div>
-                    <p className="mt-1 text-xs text-silver">
-                      {campaign.pricing_mode === "quote"
-                        ? "Pitch your bespoke angle and custom quote"
-                        : `Gross fee: ${formatInr(prGross)} · Net after CIRCLE 10% platform fee`}
-                    </p>
-                  </div>
-                ) : (
-                  <div>
-                    <span className="text-xs font-semibold uppercase tracking-wider text-silver">
-                      Clipper Net Rate
-                    </span>
-                    <div className="flex items-baseline gap-2 mt-1">
-                      <span className="font-display text-3xl font-extrabold tracking-tight text-lime">
-                        {formatInr(campaign.netRateInrPer1k)}
-                      </span>
-                      <span className="text-sm text-silver font-medium">/ 1,000 views</span>
-                    </div>
-                    <p className="mt-1 text-xs text-silver">
-                      Gross rate: {formatInr(campaign.rate_inr_per_1k)} · CIRCLE 10% fee deducted on lock
-                    </p>
-                  </div>
-                )}
-
-                {/* Budget Gauge */}
-                <div className="border-t border-border pt-4">
-                  <div className="flex items-center gap-3">
-                    <BudgetRing usedPct={campaign.budgetUsedPct} size={48} strokeWidth={4} />
-                    <div className="flex flex-col">
-                      <span className="text-sm font-semibold text-white">
-                        {formatInr(campaign.budget_reserved_inr)} / {formatInr(campaign.budget_inr)}
-                      </span>
-                      <span className="text-xs text-silver">
-                        {formatInr(campaign.budgetLeftInr)} remaining budget
-                      </span>
-                    </div>
                   </div>
                 </div>
 
-                {/* Primary CTA */}
-                <div className="pt-2">
+                {/* Right Column: Rate Card & Join CTA */}
+                <div className="w-full lg:w-80 shrink-0 rounded-2xl border border-border bg-surface p-6 flex flex-col gap-5">
                   {isPr ? (
-                    <PrApplyDialog
-                      campaign={campaign}
-                      userPlatforms={userPlatforms}
-                      isLoggedIn={!!userId}
-                    />
+                    <div>
+                      <span className="text-xs font-mono font-semibold uppercase tracking-wider text-silver">
+                        {campaign.pricing_mode === "quote" ? "Compensation Model" : "Net Payout per Post"}
+                      </span>
+                      <div className="flex items-baseline gap-2 mt-1">
+                        {campaign.pricing_mode === "quote" ? (
+                          <span className="font-display text-2xl font-bold tracking-tight text-lime uppercase">
+                            Creator Quotes
+                          </span>
+                        ) : (
+                          <>
+                            <span className="font-mono text-3xl font-bold tracking-tight text-lime">
+                              {formatInr(prNet)}
+                            </span>
+                            <span className="text-xs text-silver font-mono">/ post</span>
+                          </>
+                        )}
+                      </div>
+                      <p className="mt-1 text-xs text-silver">
+                        10% platform fee deducted upon Day 7 verification lock.
+                      </p>
+                    </div>
                   ) : (
-                    <JoinDialog campaignTitle={campaign.title} />
+                    <div>
+                      <span className="text-xs font-mono font-semibold uppercase tracking-wider text-silver">
+                        Net Payout Rate
+                      </span>
+                      <div className="flex items-baseline gap-2 mt-1">
+                        <span className="font-mono text-3xl font-bold tracking-tight text-lime">
+                          {formatInr(campaign.netRateInrPer1k)}
+                        </span>
+                        <span className="text-xs text-silver font-mono">/ 1K views</span>
+                      </div>
+                      <p className="mt-1 text-xs text-silver">
+                        Gross {formatInr(campaign.rate_inr_per_1k)} · 10% fee covers snapshot verification & UPI.
+                      </p>
+                    </div>
                   )}
+
+                  {/* Budget Progress Meter */}
+                  <div className="rounded-xl border border-border bg-card p-4">
+                    <div className="flex items-center justify-between text-xs font-mono">
+                      <span className="text-silver">Remaining Budget</span>
+                      <span className="font-semibold text-white">
+                        {formatInr(campaign.budgetLeftInr)}
+                      </span>
+                    </div>
+                    <div className="mt-3 flex items-center gap-3">
+                      <BudgetRing usedPct={campaign.budgetUsedPct} size={44} strokeWidth={4} />
+                      <div className="text-xs">
+                        <span className="font-mono text-white font-medium">
+                          {campaign.budgetUsedPct}% Allocated
+                        </span>
+                        <span className="block text-silver text-[11px]">
+                          of {formatInr(campaign.budget_inr)} total pool
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Primary CTA */}
+                  <div className="pt-2">
+                    {isPr ? (
+                      <PrApplyDialog
+                        campaign={campaign}
+                        userPlatforms={userPlatforms}
+                        isLoggedIn={!!userId}
+                      />
+                    ) : (
+                      <JoinDialog campaignTitle={campaign.title} />
+                    )}
+                  </div>
                 </div>
               </div>
+            </div>
+          </SharedCardTransition>
+
+          {/* Key Parameters Row */}
+          <div className="mt-8 grid grid-cols-2 md:grid-cols-4 gap-4">
+            <div className="rounded-xl border border-border bg-card p-4">
+              <span className="text-xs text-silver font-mono uppercase">Deliverable Format</span>
+              <p className="font-display mt-1 text-base font-medium text-white uppercase">
+                {isPr ? campaign.deliverable_type || "Post" : "Vertical Short (9:16)"}
+              </p>
+            </div>
+            <div className="rounded-xl border border-border bg-card p-4">
+              <span className="text-xs text-silver font-mono uppercase">
+                {isPr ? "Total Slots" : "Per-Clip View Cap"}
+              </span>
+              <p className="font-mono mt-1 text-base font-medium text-white">
+                {isPr
+                  ? `${campaign.slots} creator slots`
+                  : `${campaign.per_clip_view_cap.toLocaleString("en-IN")} views`}
+              </p>
+            </div>
+            <div className="rounded-xl border border-border bg-card p-4">
+              <span className="text-xs text-silver font-mono uppercase">
+                {isPr ? "Follower Floor" : "Min Views to Qualify"}
+              </span>
+              <p className="font-mono mt-1 text-base font-medium text-lime">
+                {isPr
+                  ? `≥ ${(campaign.min_followers || 10000).toLocaleString("en-IN")} verified`
+                  : `${campaign.min_views_to_qualify.toLocaleString("en-IN")} views`}
+              </p>
+            </div>
+            <div className="rounded-xl border border-border bg-card p-4">
+              <span className="text-xs text-silver font-mono uppercase">Timeline</span>
+              <p className="font-mono mt-1 text-xs font-medium text-white">
+                {campaign.ends_at ? `Ends ${formatKolkata(campaign.ends_at).split(" at ")[0]}` : "Active"}
+              </p>
             </div>
           </div>
 
-          {/* Key Parameters Row */}
-          {isPr ? (
-            <div className="mt-8 grid grid-cols-2 md:grid-cols-4 gap-4">
-              <div className="rounded-xl border border-border bg-card p-4">
-                <span className="text-xs text-silver font-mono uppercase">Deliverable Format</span>
-                <p className="font-display mt-1 text-lg font-bold text-white capitalize">
-                  {campaign.deliverable_type || "Post"}
-                </p>
+          {/* Source Footage Assets Card */}
+          {(campaign.asset_folder_url || campaign.source_links.length > 0) && (
+            <div className="mt-8 rounded-2xl border border-border bg-surface p-6 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+              <div className="flex items-center gap-3">
+                <div className="flex size-10 shrink-0 items-center justify-center rounded-full bg-lime/10 border border-lime/30 text-lime">
+                  <FolderOpen className="size-5" />
+                </div>
+                <div>
+                  <h3 className="font-display text-base font-medium text-white uppercase">
+                    Official Source Footage & Asset Pack
+                  </h3>
+                  <p className="text-xs text-silver mt-0.5">
+                    Download approved 4K source footage, audio stems, and brand logo packs.
+                  </p>
+                </div>
               </div>
-              <div className="rounded-xl border border-border bg-card p-4">
-                <span className="text-xs text-silver font-mono uppercase">Total Slots</span>
-                <p className="font-display mt-1 text-lg font-bold text-white">
-                  {campaign.slots} creator {campaign.slots === 1 ? "slot" : "slots"}
-                </p>
-              </div>
-              <div className="rounded-xl border border-border bg-card p-4">
-                <span className="text-xs text-silver font-mono uppercase">Follower Floor</span>
-                <p className="font-display mt-1 text-lg font-bold text-lime">
-                  ≥ {(campaign.min_followers || 10000).toLocaleString("en-IN")} verified
-                </p>
-              </div>
-              <div className="rounded-xl border border-border bg-card p-4">
-                <span className="text-xs text-silver font-mono uppercase">Draft Approval</span>
-                <p className="font-display mt-1 text-sm font-semibold text-white">
-                  {campaign.content_approval_required ? "Review required" : "Direct posting"}
-                </p>
-              </div>
-            </div>
-          ) : (
-            <div className="mt-8 grid grid-cols-2 md:grid-cols-4 gap-4">
-              <div className="rounded-xl border border-border bg-card p-4">
-                <span className="text-xs text-silver font-mono uppercase">Per-Clip View Cap</span>
-                <p className="font-display mt-1 text-lg font-bold text-white">
-                  {campaign.per_clip_view_cap.toLocaleString("en-IN")} views
-                </p>
-              </div>
-              <div className="rounded-xl border border-border bg-card p-4">
-                <span className="text-xs text-silver font-mono uppercase">Clipper Cap</span>
-                <p className="font-display mt-1 text-lg font-bold text-white">
-                  {campaign.per_clipper_cap_inr
-                    ? formatInr(campaign.per_clipper_cap_inr)
-                    : "No individual cap"}
-                </p>
-              </div>
-              <div className="rounded-xl border border-border bg-card p-4">
-                <span className="text-xs text-silver font-mono uppercase">Min Views to Qualify</span>
-                <p className="font-display mt-1 text-lg font-bold text-white">
-                  {campaign.min_views_to_qualify.toLocaleString("en-IN")} views
-                </p>
-              </div>
-              <div className="rounded-xl border border-border bg-card p-4">
-                <span className="text-xs text-silver font-mono uppercase">Timeline</span>
-                <p className="font-display mt-1 text-sm font-semibold text-white">
-                  {campaign.ends_at ? `Ends ${formatKolkata(campaign.ends_at)}` : "Ongoing"}
-                </p>
+
+              <div className="flex items-center gap-3">
+                {campaign.asset_folder_url && (
+                  <CopyButton value={campaign.asset_folder_url} label="Copy Asset Link" />
+                )}
+                {campaign.source_links[0]?.url && (
+                  <a
+                    href={campaign.source_links[0].url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-1.5 rounded-full border border-border bg-card px-4 py-2 text-xs font-mono text-white hover:border-lime transition-colors"
+                  >
+                    <span>Open Drive</span>
+                    <ExternalLink className="size-3 text-silver" />
+                  </a>
+                )}
               </div>
             </div>
           )}
 
           {/* Two-Column Detail Grid */}
-          <div className="mt-8 grid grid-cols-1 lg:grid-cols-3 gap-8">
-            {/* Left 2 Cols: Brief, Rules, Disclosures */}
-            <div className="lg:col-span-2 flex flex-col gap-8">
-              {/* Campaign Brief */}
-              <section aria-labelledby="brief-heading" className="rounded-2xl border border-border bg-card p-6 md:p-8">
-                <h2 id="brief-heading" className="font-display text-xl font-bold tracking-tight text-white uppercase">
-                  Campaign Brief
+          <div className="mt-8 grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
+            {/* Left 2 Cols: Creative Brief Accordion (2 cols) */}
+            <div className="lg:col-span-2 space-y-6">
+              <div className="rounded-2xl border border-border bg-card p-6 md:p-8">
+                <h2 className="font-display text-xl font-medium tracking-tight text-white uppercase mb-6">
+                  Campaign Specs & Editorial Guidelines
                 </h2>
-                <div className="mt-4 prose prose-invert max-w-none text-sm text-silver leading-relaxed whitespace-pre-line">
-                  {campaign.brief_md}
-                </div>
-              </section>
-
-              {/* Editing Rules */}
-              <section aria-labelledby="rules-heading" className="rounded-2xl border border-border bg-card p-6 md:p-8">
-                <h2 id="rules-heading" className="font-display text-xl font-bold tracking-tight text-white uppercase">
-                  Editorial & Submission Rules
-                </h2>
-                <div className="mt-4 prose prose-invert max-w-none text-sm text-silver leading-relaxed whitespace-pre-line">
-                  {campaign.rules_md}
-                </div>
-              </section>
-
-              {/* Tags, Mentions, Disclosures */}
-              <section aria-labelledby="tags-heading" className="rounded-2xl border border-border bg-card p-6 md:p-8">
-                <h2 id="tags-heading" className="font-display text-xl font-bold tracking-tight text-white uppercase">
-                  Required Captions & Mentions
-                </h2>
-                <div className="mt-4 space-y-4 text-sm">
-                  {campaign.required_caption && (
-                    <div>
-                      <span className="text-xs font-medium text-silver">Suggested Caption:</span>
-                      <p className="mt-1 rounded-xl border border-border bg-surface p-3 font-mono text-xs text-white">
-                        {campaign.required_caption}
-                      </p>
-                    </div>
-                  )}
-
-                  <div>
-                    <span className="text-xs font-medium text-silver">Required Hashtags:</span>
-                    <div className="mt-1.5 flex flex-wrap gap-2">
-                      {campaign.required_hashtags.map((tag) => (
-                        <span key={tag} className="rounded-full bg-surface border border-border px-3 py-1 font-mono text-xs text-lime">
-                          {tag}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-
-                  {campaign.required_mention && (
-                    <div>
-                      <span className="text-xs font-medium text-silver">Required Account Tag / Mention:</span>
-                      <p className="mt-1 font-mono text-xs text-white">
-                        {campaign.required_mention}
-                      </p>
-                    </div>
-                  )}
-
-                  <div className="rounded-xl border border-lime/20 bg-lime/5 p-4 text-xs text-silver">
-                    <strong className="text-white block font-medium mb-1">
-                      ASCI Compliance Notice:
-                    </strong>
-                    Under India&apos;s ASCI guidelines, every submitted clip must prominently display the #ad or #collab disclosure tag in its primary caption.
-                  </div>
-                </div>
-              </section>
-
-              {/* Rights Affirmation Notice */}
-              <section className="rounded-2xl border border-border bg-surface/50 p-6">
-                <div className="flex items-start gap-3">
-                  <span className="size-2 rounded-full bg-lime shrink-0 mt-1.5" />
-                  <div>
-                    <h3 className="text-sm font-semibold text-white">
-                      Intellectual Property & Rights Certification
-                    </h3>
-                    <p className="mt-1 text-xs text-silver leading-relaxed">
-                      The campaign owner has legally affirmed ownership or distribution rights for all source materials provided in accordance with CIRCLE terms. Clippers are granted a non-exclusive license to edit and publish vertical video exclusively for this campaign.
-                    </p>
-                  </div>
-                </div>
-              </section>
+                <AnimatedAccordion items={accordionItems} defaultOpenIds={["acc-brief", "acc-rules"]} />
+              </div>
             </div>
 
-            {/* Right Column: How You Get Paid & Top Clips */}
-            <div className="flex flex-col gap-8">
+            {/* Right Column: Payout Mechanics & Top Clips (1 col) */}
+            <div className="flex flex-col gap-6">
               {/* How You Get Paid Box */}
               <section aria-labelledby="paid-heading" className="rounded-2xl border border-border bg-card p-6">
-                <h3 id="paid-heading" className="font-display text-lg font-bold tracking-tight text-white uppercase">
-                  How You Get Paid
+                <h3 id="paid-heading" className="font-display text-lg font-medium tracking-tight text-white uppercase">
+                  Payout Verification
                 </h3>
                 <ul className="mt-4 space-y-4 text-xs text-silver">
                   <li className="flex items-start gap-3">
                     <span className="font-mono font-bold text-lime">01</span>
                     <div>
-                      <strong className="text-white block">Day 7 Single Snapshot:</strong>
+                      <strong className="text-white block font-medium">Day 7 Single Snapshot:</strong>
                       Views are snapshotted exactly 7 days after submission. Views after day 7 do not accrue additional earnings.
                     </div>
                   </li>
                   <li className="flex items-start gap-3">
                     <span className="font-mono font-bold text-lime">02</span>
                     <div>
-                      <strong className="text-white block">10% Platform Fee:</strong>
-                      CIRCLE retains 10% from gross earnings upon lock. Net rate is ₹{campaign.netRateInrPer1k} per 1K views.
+                      <strong className="text-white block font-medium">10% Platform Fee:</strong>
+                      CIRCLE retains 10% from gross earnings upon lock. Net rate is {formatInr(campaign.netRateInrPer1k)} per 1K views.
                     </div>
                   </li>
                   <li className="flex items-start gap-3">
                     <span className="font-mono font-bold text-lime">03</span>
                     <div>
-                      <strong className="text-white block">Weekly UPI Disbursements:</strong>
+                      <strong className="text-white block font-medium">Weekly UPI Disbursements:</strong>
                       Withdraw to your UPI ID once your wallet reaches the ₹{CLIPPING_CONFIG.minPayoutInr} minimum threshold.
                     </div>
                   </li>
                 </ul>
               </section>
 
-              {/* Top Clips Grid (Hidden when empty) */}
+              {/* Top Clips Grid */}
               {topClips.length > 0 && (
                 <section aria-labelledby="topclips-heading" className="rounded-2xl border border-border bg-card p-6">
-                  <h3 id="topclips-heading" className="font-display text-lg font-bold tracking-tight text-white uppercase">
-                    Top Approved Clips
-                  </h3>
+                  <div className="flex items-center justify-between">
+                    <h3 id="topclips-heading" className="font-display text-lg font-medium tracking-tight text-white uppercase">
+                      Top Approved Clips
+                    </h3>
+                    <span className="text-xs font-mono text-silver">
+                      {topClips.length} verified
+                    </span>
+                  </div>
                   <div className="mt-4 flex flex-col divide-y divide-border">
                     {topClips.map((clip) => (
                       <div key={clip.id} className="py-3 flex items-center justify-between gap-2 text-xs">
                         <div>
                           <p className="font-mono font-medium text-white">{clip.clipper_handle}</p>
-                          <span className="text-[11px] text-silver">
+                          <span className="text-[11px] text-silver font-mono">
                             {clip.verified_views.toLocaleString("en-IN")} views
                           </span>
                         </div>
@@ -420,5 +435,5 @@ export default async function CampaignDetailPage({ params }: PageProps) {
         </Container>
       </main>
     </>
-  );
+  )
 }

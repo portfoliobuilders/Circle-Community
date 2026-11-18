@@ -75,6 +75,7 @@ export function OrbitScene({
         maxWidth: size,
         aspectRatio: "1 / 1",
         perspective: 1000,
+        contain: "paint",
       }}
     >
       <motion.div
@@ -115,8 +116,8 @@ export function OrbitScene({
         {/* Orbiting / Positioned Nodes */}
         {nodes.map((node) => {
           const rad = (node.angle * Math.PI) / 180
-          const x = Math.cos(rad) * node.radius
-          const y = Math.sin(rad) * node.radius
+          const x = Math.round(Math.cos(rad) * node.radius)
+          const y = Math.round(Math.sin(rad) * node.radius)
 
           return (
             <motion.div

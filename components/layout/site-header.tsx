@@ -19,13 +19,13 @@ export function SiteHeader() {
           <Image
             src="/brand/logo-white.png"
             alt="CIRCLE"
-            width={120}
+            width={36}
             height={36}
             priority
-            className="hidden h-9 w-auto object-contain lg:block"
+            className="hidden size-9 object-contain lg:block"
           />
           <Image
-            src="/brand/emblem-white.png"
+            src="/brand/logo-white.png"
             alt="CIRCLE"
             width={32}
             height={32}
@@ -52,9 +52,7 @@ export function SiteHeader() {
           >
             Join CIRCLE
           </PillLink>
-          <Suspense fallback={null}>
-            <MobileNav />
-          </Suspense>
+          <MobileNav />
         </div>
       </Container>
     </header>

@@ -39,15 +39,16 @@ export default function CreatorsPage() {
       </div>
 
       <section className="mt-16 rounded-2xl border border-border bg-surface p-6 sm:p-10">
-        <span className="text-small tracking-[0.18em] text-silver uppercase font-mono">Performance Engine</span>
+        <span className="text-small tracking-[0.18em] text-silver uppercase font-mono">Performance & PR Engine</span>
         <h2 className="font-display mt-2 text-title font-medium tracking-tight uppercase">
-          Monetise through video clipping
+          Video clipping & Social media PR
         </h2>
         <p className="mt-3 max-w-xl text-silver">
-          Edit compelling vertical clips from brand source footage. Post to your channels and earn guaranteed milestone payouts per 100K verified views.
+          Earn per 1,000 verified views editing vertical video clips, or book guaranteed fixed-fee sponsored posts on your 10K+ follower accounts with 100% upfront escrow.
         </p>
-        <div className="mt-6">
-          <PillLink href="/clipping" variant="secondary">Browse clipping campaigns</PillLink>
+        <div className="mt-6 flex flex-wrap gap-3">
+          <PillLink href="/clipping">Browse clipping briefs</PillLink>
+          <PillLink href="/clipping/social-pr" variant="secondary">PR (10K+ followers)</PillLink>
         </div>
       </section>
 

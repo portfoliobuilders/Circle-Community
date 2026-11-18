@@ -98,8 +98,8 @@ export function HomePage() {
             </div>
 
             {/* Right Column: Interactive Ecosystem Orbit Scene */}
-            <div className="lg:col-span-5 flex items-center justify-center">
-              <div className="relative w-full max-w-[480px] aspect-square flex items-center justify-center">
+            <div className="lg:col-span-5 flex items-center justify-center overflow-hidden">
+              <div className="relative w-full max-w-[480px] aspect-square flex items-center justify-center scale-[0.72] sm:scale-90 lg:scale-100 origin-center -my-14 sm:my-0">
                 <OrbitScene size={460} />
               </div>
             </div>

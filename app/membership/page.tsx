@@ -111,10 +111,10 @@ export default function MembershipPage() {
               <span className="font-mono text-xs font-bold text-lime">Pay-Per-View</span>
             </div>
             <h2 className="font-display text-xl font-bold text-white uppercase">
-              Video Clipper
+              Clipping & PR Creator
             </h2>
             <p className="mt-2 text-xs text-silver leading-relaxed">
-              For video editors editing short-form YouTube Shorts & Instagram Reels from source footage.
+              For video editors editing short-form video and established pages (10K+ followers) publishing PR deliverables.
             </p>
 
             <ul className="mt-6 space-y-2.5 text-xs text-silver">
@@ -124,11 +124,11 @@ export default function MembershipPage() {
               </li>
               <li className="flex items-center gap-2">
                 <Check className="size-3.5 text-lime shrink-0" />
-                <span>Earn ₹10–₹200 per 1,000 verified views</span>
+                <span>Earn ₹10–₹200 per 1,000 views or fixed post fees</span>
               </li>
               <li className="flex items-center gap-2">
                 <Check className="size-3.5 text-lime shrink-0" />
-                <span>Automated view snapshot verification</span>
+                <span>Automated view snapshot & live hold audits</span>
               </li>
               <li className="flex items-center gap-2">
                 <Check className="size-3.5 text-lime shrink-0" />
@@ -145,7 +145,7 @@ export default function MembershipPage() {
               href="/clipping"
               className="inline-flex min-h-11 w-full items-center justify-center rounded-full bg-lime text-xs font-bold text-bg hover:bg-lime/90 transition-colors"
             >
-              Browse clipping briefs
+              Browse clipping & PR briefs
             </Link>
           </div>
         </div>

@@ -34,16 +34,19 @@ export default function BrandsPage() {
       </div>
 
       <section className="mt-16 rounded-2xl border border-border bg-surface p-6 sm:p-10">
-        <span className="text-small tracking-[0.18em] text-silver uppercase font-mono">Performance Engine</span>
+        <span className="text-small tracking-[0.18em] text-silver uppercase font-mono">Performance & PR Engine</span>
         <h2 className="font-display mt-2 text-title font-medium tracking-tight uppercase">
-          Video clipping campaigns
+          Video clipping & Social media PR
         </h2>
         <p className="mt-3 max-w-2xl text-silver">
-          Turn existing long-form video into high-velocity vertical reels. Set your payout rate per 100K views. Hundreds of clippers edit and post clips across social channels—you pay only for verified view milestones.
+          Scale your reach across India with two performance models: pay clippers per 1,000 verified views, or book established pages and creators (10K+ followers) for guaranteed fixed-fee PR with 100% upfront escrow.
         </p>
-        <div className="mt-6">
-          <PillLink href="/clipping" variant="secondary">
-            Explore clipping engine
+        <div className="mt-6 flex flex-wrap gap-3">
+          <PillLink href="/clipping/for-brands">
+            Brand guide & selection
+          </PillLink>
+          <PillLink href="/dashboard/clipping/campaigns/new" variant="secondary">
+            Launch a campaign
           </PillLink>
         </div>
       </section>

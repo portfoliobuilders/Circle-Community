@@ -1,36 +1,40 @@
 # CIRCLE
 
-CIRCLE is a free community for creators, freelancers, service providers, and brands, operated by Portfolix Enterprise Pvt Ltd in Kochi, India, with Portfolix.Media and Portfolix.Tech.
+CIRCLE is an invite-free Indian community connecting creators, freelancers, video clippers, and brands, operated by Portfolix Enterprise Pvt Ltd in Kochi, India, with Portfolix.Media and Portfolix.Tech.
 
-This file lists public pages. It is not a ranking signal and it does not replace the HTML pages.
+## Video Clipping (Pay-per-view)
+CIRCLE's performance video clipping marketplace connects long-form content creators and brands with skilled vertical video editors. Clippers edit YouTube Shorts and Instagram Reels from approved source footage and earn ₹10 to ₹200 per 1,000 verified views based on a single view count snapshot taken on Day 7. CIRCLE invoices a 10% owner fee on budgets and deducts a 10% platform fee from creator earnings upon payout.
 
+## Social Media PR (Pay-per-post, 10K+ Followers)
+CIRCLE's pay-per-post PR campaign engine allows brands and verified individuals to book established creators and niche pages with 10,000+ admin-verified followers. Brands pay 100% upfront into escrow. Creator deliverables undergo optional draft approval and must remain live, public, and unedited for 7 days with ASCI ad disclosures (#ad or #collab) before escrow payout release.
+
+## Public Index
 - Home: https://circlecommunity.in/
+- Video Clipping Hub: https://circlecommunity.in/clipping
+- Clipping & PR Campaigns: https://circlecommunity.in/clipping/campaigns
+- Social Media PR Handbook: https://circlecommunity.in/clipping/social-pr
+- How Clipping & PR Works: https://circlecommunity.in/clipping/how-it-works
+- For Campaign Owners & Brands: https://circlecommunity.in/clipping/for-brands
+- Payout Calculator: https://circlecommunity.in/clipping/calculator
+- Platform Rules & ASCI Standards: https://circlecommunity.in/clipping/rules
+- Clipping FAQ: https://circlecommunity.in/clipping/faq
+- Creator Guides: https://circlecommunity.in/clipping/guides
+- Monthly Leaderboard: https://circlecommunity.in/clipping/leaderboard
 - About: https://circlecommunity.in/about
 - Membership: https://circlecommunity.in/membership
-- For brands: https://circlecommunity.in/brands
-- For creators: https://circlecommunity.in/creators
 - Directory: https://circlecommunity.in/directory
+- Collab Briefs: https://circlecommunity.in/collabs
 - Giveaways: https://circlecommunity.in/giveaways
 - Affiliates: https://circlecommunity.in/affiliates
-- Leaderboard: https://circlecommunity.in/leaderboard
-- Challenges: https://circlecommunity.in/challenges
-- Journal: https://circlecommunity.in/journal
-- Blog: https://circlecommunity.in/blog
-- News: https://circlecommunity.in/news
-- Updates: https://circlecommunity.in/updates
-- Guides: https://circlecommunity.in/guides
-- Promoters: https://circlecommunity.in/promoters
-- Collabs: https://circlecommunity.in/collabs
 - Events: https://circlecommunity.in/events
 - Learn: https://circlecommunity.in/learn
 - Help: https://circlecommunity.in/help
 - Contact: https://circlecommunity.in/contact
 - Partners: https://circlecommunity.in/partners
-- Resources: https://circlecommunity.in/resources
-- Community guidelines: https://circlecommunity.in/guidelines
+- Community Guidelines: https://circlecommunity.in/guidelines
 - Terms: https://circlecommunity.in/legal/terms
 - Privacy: https://circlecommunity.in/legal/privacy
 - Cookies: https://circlecommunity.in/legal/cookies
-- Grievance officer: https://circlecommunity.in/legal/grievance
+- Grievance: https://circlecommunity.in/legal/grievance
 
-Membership is free. CIRCLE does not process collab payments in v1. The brand pays the creator directly. Follower counts are labelled self-reported until verified. Contact: info@circlecommunity.in
+Membership is free. CIRCLE does not process collab payments in v1 (brands pay creators directly). Video clipping and social media PR operate with 100% upfront escrow and a dual 10% platform fee. Contact: info@circlecommunity.in

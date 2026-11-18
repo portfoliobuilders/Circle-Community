@@ -3,6 +3,7 @@ import type { MetadataRoute } from "next";
 import { guides } from "@/lib/content/guides";
 import { posts } from "@/lib/content/posts";
 import { agencyServices, servicePath } from "@/lib/content/agency-services";
+import { CLIPPING_GUIDES } from "@/lib/clipping/guides-data";
 import { site } from "@/lib/site";
 
 const paths = [
@@ -16,6 +17,14 @@ const paths = [
   "/collabs",
   "/clipping",
   "/clipping/campaigns",
+  "/clipping/social-pr",
+  "/clipping/how-it-works",
+  "/clipping/for-brands",
+  "/clipping/calculator",
+  "/clipping/rules",
+  "/clipping/faq",
+  "/clipping/guides",
+  "/clipping/leaderboard",
   "/events",
   "/giveaways",
   "/affiliates",
@@ -39,6 +48,7 @@ const paths = [
   "/legal/privacy",
   ...agencyServices.map((service) => servicePath(service)),
   ...guides.map((guide) => `/guides/${guide.slug}`),
+  ...CLIPPING_GUIDES.map((g) => `/clipping/guides/${g.slug}`),
   ...posts.map((post) => `/${post.kind === "update" ? "updates" : post.kind}/${post.slug}`),
 ];
 
